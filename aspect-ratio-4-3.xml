@@ -124,10 +124,12 @@ based on 640x480
       </image>
       <text name="game-description" extra="true">
          <x>0.55078125</x><!-- 352.5 -->
-         <y ifHelpPrompts="true">0.58125</y><!-- 279 -->
+         <!-- Reserve the existing horizontal metadata row even with help on. -->
+         <y ifHelpPrompts="true">0.65</y><!-- 312 -->
          <y ifHelpPrompts="false">0.691666666666667</y><!-- 332 -->
          <w>0.3984375</w><!-- 255 -->
-         <h>0.25</h><!-- 120 -->
+         <h ifHelpPrompts="true">0.1875</h><!-- 90; description still scrolls -->
+         <h ifHelpPrompts="false">0.25</h><!-- 120 -->
          <lineSpacing ifSubset="font-size:small">1.46</lineSpacing>
          <lineSpacing ifSubset="font-size:default|large">1.21</lineSpacing>
       </text>
@@ -138,7 +140,7 @@ based on 640x480
       <gamelistMetadataFontSize ifSubset="font-size:large">0.039583333333333</gamelistMetadataFontSize><!-- 19 -->
       <gamelistMetadataFontSize ifSubset="font-size:xlarge">0.04791667</gamelistMetadataFontSize><!-- 23 -->
    </variables>
-   <view name="detailed" ifHelpPrompts="false" ifSubset="gamelist-view-metadata:on">
+   <view name="detailed" ifSubset="gamelist-view-metadata:on">
       <image name="game-releasedate-icon">
          <pos>0.55078125 0.616666666666667</pos><!-- 352.5 296 -->
          <maxSize>0.03125 0.0416666666666667</maxSize><!-- 20 20 -->
@@ -168,7 +170,7 @@ based on 640x480
       <gamelistMetadataFontSize ifSubset="font-size:xlarge,gamelist-view-metadata:play-stats">0.05</gamelistMetadataFontSize><!-- 24 -->
       <gamelistMetadataFontSize ifSubset="font-size:xlarge,gamelist-view-metadata:mixed">0.04583333</gamelistMetadataFontSize><!-- 22 -->
    </variables>
-   <view name="detailed" ifHelpPrompts="false" ifSubset="gamelist-view-metadata:play-stats|mixed">
+   <view name="detailed" ifSubset="gamelist-view-metadata:play-stats|mixed">
       <stackpanel name="gamedata" extra="true">
          <separator>0.015625</separator><!-- 10 -->
          <pos>0.55078125 0.6</pos><!-- 352.5 288 -->

@@ -1,4 +1,56 @@
-# Art Book Next for EmulationStation
+# Art Book Next 1702 — conservative 4:3 Batocera fork
+
+Maintained as **[nschuster/art-book-next-1702](https://github.com/nschuster/art-book-next-1702)**. Based on **Anthony Caccese's [Art Book Next](https://github.com/anthonycaccese/art-book-next-es)**; original artwork, fonts, credits and CC-BY-NC-SA 2.0 licensing are retained below.
+
+## What this fork changes
+
+In upstream 4:3, the metadata rows are explicitly enabled **only when On-Screen Help is off**. This is a theme condition, not a Raspberry Pi 5 performance problem. This fork enables those same horizontal rows with help either on or off, above the scrolling description, without redesigning the theme.
+
+Only `aspect-ratio-4-3.xml` changes at runtime:
+
+- **Default**: release date and rating, using the original icons and native datetime/rating components.
+- **Release Date & Play Time**: release **year** and elapsed play time, using the existing horizontal row.
+- **Play Time & Play Count**: elapsed time and count; upstream hides the count when recorded game time is zero.
+- **Off**: unchanged (no description or metadata).
+
+With help enabled, the description moves down from y=279 to y=312 at 640×480 and its scrolling viewport becomes 90 pixels high instead of 120. Its text, width, font, color and scrolling behavior are retained. Artwork/video, system selection, Basic view, help footer and other aspect ratios are unchanged. With help disabled, the entire original 4:3 layout is unchanged.
+
+## Install on Batocera
+
+Keep the original theme installed for easy comparison/rollback. Install this fork into its **own** folder; do not overwrite `art-book-next`.
+
+Via SSH (if Git is available on your Batocera installation):
+
+```sh
+cd /userdata/themes
+git clone https://github.com/nschuster/art-book-next-1702.git art-book-next-1702
+```
+
+Alternatively, download this repository's ZIP on another computer, extract it, rename the extracted folder to `art-book-next-1702`, and copy it to `\\BATOCERA\share\themes\` over the network. The final layout must be `/userdata/themes/art-book-next-1702/theme.xml` (not an extra nested folder).
+
+Restart EmulationStation, then select **User Interface Settings → Theme Set → art-book-next-1702**. In **Theme Configuration**, start with:
+
+| Setting | Recommended value |
+| --- | --- |
+| Distribution | **Batocera/Knulli** |
+| Aspect Ratio | **4:3** (force this for the Commodore 1702) |
+| Game Metadata | **Release Date & Play Time** |
+| Font Size | **Default** initially |
+| Game Artwork | **Image** initially; all four existing choices remain supported |
+
+Use the **Detailed** game-list view (not Basic); the exact game-list view selector location can vary by Batocera version. **On-Screen Help may remain enabled.** Automatic aspect selection also applies the fix when the framebuffer is recognized as 4:3. A physical 4:3 CRT can have a non-4:3 framebuffer; forcing this setting changes theme geometry, not video timings or pixel-aspect correction.
+
+For updates to a Git installation, run `git -C /userdata/themes/art-book-next-1702 pull --ff-only`, then restart EmulationStation. For ZIP installations, replace this fork's folder with a fresh download. To roll back visually, select your original Art Book Next theme. Existing customizations intentionally still use `/userdata/theme-customizations/art-book-next/` so they remain compatible with upstream.
+
+## Verification and limitations
+
+Run `python -m unittest discover -s tests -v` from a Git checkout. Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
+
+**Not hardware tested:** no Raspberry Pi 5, Commodore 1702 or running Batocera frontend was used for this patch. Tests check the XML conditions and unchanged layouts; they are not native rendering tests. At 320×240, the description viewport is only 45 pixels high and metadata text is small; composite sharpness, overscan and interlace require on-device review. Try Default first; Large/Extra Large preserve upstream metrics and can clip long play-time strings in the fixed-width row. This patch does not add every metadata field simultaneously: choose one of the existing pairs above. Missing scraped release data and missing play-time records cannot be recovered by a theme.
+
+---
+
+# Original Art Book Next documentation
 A simple theme based on the style of a coffee table book for distributions that use this fork of [EmulationStation](https://github.com/batocera-linux/batocera-emulationstation).  Specifically [Batocera](https://batocera.org/) (v40 and above), [Knulli](https://www.knulli.org/), [RockNIX](https://rocknix.org/) and [RetroBat](https://www.retrobat.org/)
 
 ## Preview
