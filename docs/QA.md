@@ -1,52 +1,42 @@
-# 4:3 metadata fix — verification notes
+# 4:3 original-media / icon-metadata candidate
 
-## Cause and deliberately narrow change
+The preview-approved layout preserves original media geometry and uses icon-based metadata.
 
-Upstream baseline: `9a50ef366e750aabfab29e6915a2867607212971` (anthonycaccese/art-book-next-es).
+## Layout contract
 
-The shared theme hides native metadata initially. In `aspect-ratio-4-3.xml`, the release-date/rating view and the play-statistics stackpanel view both require `ifHelpPrompts="false"`. Consequently, enabling On-Screen Help suppresses every 4:3 metadata pair, while leaving the description visible. This fork removes those two guards and reserves space above the description when help is enabled. It does not introduce new metadata bindings or alter the original styles.
+Only `aspect-ratio-4-3.xml` changes at runtime. Manual and dispatched automatic 4:3 Detailed mode, metadata `on|mixed|play-stats`, help on/off: replace description with seven fields. Developer/publisher and all text labels are hidden. Retain release date, rating, players, play count, play time, last played and genre.
 
-The existing Aspect Ratio subset already supplies both forced `4:3` (`4-3`) and Automatic (`4-3-auto`) activation. Select the separately installed upstream theme for the exact original help-on behavior; no new subset or global theme changes are necessary.
+The image, video and marquee components are identical to upstream baseline `9a50ef366e750aabfab29e6915a2867607212971`, including sizing, positions, origin, crop and effects. Game list, logo, help footer, Metadata Off, Basic/system and other ratios remain unchanged. No output timing changes.
 
-## Engine implementation inspected
+## Original metadata styling
 
-Batocera EmulationStation revision: `b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9`.
+Reviewed upstream `aspect-ratio-16-9.xml`, original 4:3 declarations and shared `theme.xml`: icon/value pairs, rating stars, Roboto Bold and metadata palette. Reuse existing `metadata-icon-{releasedate,players,playcount,gametime,lastplayed,genre}.svg` assets; no invented icons or label/value table. Font size `.033333333333333` is the upstream default release/play-time font size, fixed here across presets to fit compact rows.
 
-- [ThemeData.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9/es-core/src/ThemeData.cpp): format-7 nodes process in document order; conditional includes therefore override preceding shared views. `ifHelpPrompts` reads `ShowHelpPrompts`. Comma-separated subset clauses are conjunctive, pipe-separated values are alternatives. The production patch uses only existing schema properties.
-- [DetailedContainer.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9/es-app/src/views/gamelist/DetailedContainer.cpp): native release date is looked up as `datetime` / `md_releasedate`, and rating as `rating` / `md_rating`; these types remain intact.
-- [DetailedGameListView.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9/es-app/src/views/gamelist/DetailedGameListView.cpp): selection updates the detail container and theme-extra bindings.
-- [StackPanelComponent.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9/es-core/src/components/StackPanelComponent.cpp): horizontal layout sizes children within the panel and clips to its bounds. Long strings can be truncated, not automatically wrapped into another metadata row. The inherited fractional separator is scaled against parent **height** for horizontal orientation (the upstream `10` pixel comment is not exact at 640×480). No new separator or size assumptions were introduced.
+Five row centers: `.58, .64, .70, .76, .82`. Release date and rating share the first row; players and play count share the second. The following rows contain play time, last played and genre. Left icons x `.55`, values x `.59`; play count icon/value x `.78`/`.82`. Rating is right-anchored at `.95`. Value boxes are `.045833333333333` screen height; icons fit `.03125 .041666666666667`; dates use `YYYY-MM-DD`. The first row begins below the original media/marquee region, which ends no later than `.541666666666667`; the final row ends before `.86`, above the help footer.
 
-This is an inspection of a pinned engine revision, not a claim that every Batocera release has been executed.
+## Native component semantics
 
-## Test-first evidence
+Inspected Batocera ES revision `b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9`:
 
-Command: `python -m unittest discover -s tests -v`
+- `DetailedContainer.cpp`: native `md_gametime` is play time; release and last played are `datetime`, rating is `rating`, remaining values are `text`. Preserve native data bindings and missing-value behavior.
+- `DateTimeComponent.cpp`: supports `format`, `displayRelative`, font and color. Both dates set `%Y-%m-%d`, `displayRelative=false`; no unsupported text-only properties on datetime.
+- `TextComponent.cpp`: bounded single-line values use native ellipsis with `multiLine=false`, `autoScroll=none`.
+- `RatingComponent.cpp`: width zero derives five-star width from pixel height; bounds tests include that actual width.
+- `ThemeData.cpp`: source-order includes and conditional overrides are retained. Resolver selects automatic dispatch but does not exercise native aspect detection.
 
-1. Tests were added before any theme edits.
-2. Initial harness run encountered upstream bare ampersands (`&&` and `fade & slide`) rejected by strict Python ElementTree. The resolver escapes bare ampersands in memory only; no upstream XML was normalized or rewritten.
-3. Corrected RED run: **6 test methods, 97 failed assertions/subtests**. Release date stayed hidden, the horizontal panel was absent with help on, and the description occupied the metadata area. Existing unaffected-mode tests passed.
-4. GREEN after the scoped XML change: **6 test methods pass**. Metadata visibility covers 96 combinations: explicit/automatic 4:3 × four font sizes × four artwork modes × three enabled metadata settings.
-5. Additional regression checks compare help-off configurations, Basic/system views and Metadata Off against upstream; all other aspect files and the shared theme/font/color/splash files are byte-identical. Style and media properties of existing help-on components are also compared.
+## Verification
 
-The small test resolver follows the include order, subset filters, help filters, name lists and property overrides used in these cases. It does **not** implement arbitrary engine expressions, native text shaping, font scaling, dynamic stackpanel layout, subset automatic detection, or game-data evaluation. Baseline comparisons require the upstream commit in Git history.
+```sh
+python3 -m unittest discover -s tests -v
+python3 tools/render_metadata_panel.py
+python3 tools/validate_metadata_preview.py
+git diff --check
+```
 
-## Geometry (help enabled)
+Test-first: replacement tests failed with 27 expected assertion/subtest failures on the rejected smaller-media/table candidate. After correction, seven test methods pass. Tests compare entire resolved media components against upstream across help/artwork/metadata settings, verify seven-field visibility, excluded fields, original assets/colors and bounds. Retained tests cover unaffected modes and byte-identical shared/other-ratio files. Git baseline history is required; the resolver sanitizes pre-existing upstream bare ampersands in memory, without modifying shared XML.
 
-| Region | 640×480 | 320×240 |
-| --- | --- | --- |
-| Play-statistics / mixed row y bounds | 288–308 | 144–154 |
-| Description y bounds | 312–402 | 156–201 |
-| Description viewport height | 90 | 45 |
-| Help background starts | 425 | 212.5 |
+Current preview outputs: `previews/original-style/`. Static Pillow/CairoSVG compositions use actual resolved geometry/assets and sample Super Metroid metadata; source screenshot is from libretro thumbnails. No gameplay or native frontend is running. Legacy preview directories show superseded candidates. Preview validation checks sample values, six icons, bounds, non-overlap and truncation at 320×240 and 640×480.
 
-The metadata panel retains its 255-pixel width at 640×480. Description x/width, artwork, video and marquee geometry remain upstream. The smaller viewport still vertically scrolls the complete description; it does not concatenate metadata into or overwrite scraped description text.
+## Remaining device checks
 
-## Outstanding device checks
-
-- Not run in native EmulationStation; not tested on Pi 5 / Commodore 1702.
-- Check actual composite-output readability and overscan at the user's output resolution.
-- Try short/long descriptions, unknown release dates, never-played games, long play times and high play counts.
-- Check all metadata selections with help on/off; Large/Extra Large may retain upstream clipping.
-- Check artwork missing, video absent/present, and cropped-image marquee layering on device.
-- Static screenshots in the original README are **upstream examples**, not screenshots of this patch. No synthetic preview is presented as native evidence; a separate preview was omitted to keep this minimal conditional/layout fix efficient.
+No native Batocera/Pi 5/Commodore 1702 rendering was performed. Static font metrics and bounding boxes cannot prove analog readability, overscan, native text rasterization or video/marquee layering. Long real-world values may ellipsize; test long times, translated genres, missing dates, never-played games, folders and missing artwork/video on-device. Original icon color/contrast is preserved, not certified as CRT-optimal. Screenshot previews show Image mode; exact geometry preservation tests also cover cropped image, boxart, logo and video components.

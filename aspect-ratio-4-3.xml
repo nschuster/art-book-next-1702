@@ -225,6 +225,53 @@ based on 640x480
       </stackpanel>
    </view>
 
+   <!-- Icon/value metadata replaces description; original media geometry is untouched. -->
+   <view name="detailed" ifSubset="gamelist-view-metadata:on|play-stats|mixed">
+      <text name="game-description,md_description,game-gametime-formatted,md_developer,md_publisher,md_lbl_releasedate,md_lbl_rating,md_lbl_players,md_lbl_genre,md_lbl_developer,md_lbl_publisher,md_lbl_gametime,md_lbl_playcount,md_lbl_lastplayed">
+         <visible>false</visible>
+      </text>
+      <stackpanel name="gamedata"><visible>false</visible></stackpanel>
+      <image name="game-releasedate-icon,game-players-icon,game-gametime-icon,game-playcount-icon,game-lastplayed-icon,game-genre-icon" extra="true">
+         <visible>true</visible><origin>0 0.5</origin><maxSize>0.03125 0.041666666666667</maxSize>
+         <color>${gamelistListMetadataIconColor}</color><zIndex>99</zIndex>
+      </image>
+      <image name="game-lastplayed-icon" extra="true"><path>./_inc/images/metadata-icon-lastplayed.svg</path></image>
+      <image name="game-genre-icon" extra="true"><path>./_inc/images/metadata-icon-genre.svg</path></image>
+      <text name="md_players,md_genre,md_gametime,md_playcount">
+         <visible>true</visible><origin>0 0.5</origin>
+         <fontPath>${fontBold}</fontPath><fontSize>0.033333333333333</fontSize>
+         <color>${gamelistListMetadataColor}</color><lineSpacing>1</lineSpacing>
+         <multiLine>false</multiLine><autoScroll>none</autoScroll>
+         <alignment>left</alignment><verticalAlignment>center</verticalAlignment>
+         <zIndex>99</zIndex>
+      </text>
+      <text name="md_players,md_genre,md_gametime,md_playcount">
+         <size>0.36 0.045833333333333</size>
+      </text>
+      <datetime name="md_releasedate,md_lastplayed">
+         <visible>true</visible><origin>0 0.5</origin><size>0.36 0.045833333333333</size>
+         <fontPath>${fontBold}</fontPath><fontSize>0.033333333333333</fontSize>
+         <color>${gamelistListMetadataColor}</color><lineSpacing>1</lineSpacing>
+         <format>%Y-%m-%d</format><displayRelative>false</displayRelative><zIndex>99</zIndex>
+      </datetime>
+      <rating name="md_rating">
+         <visible>true</visible><origin>1 0.5</origin><pos>0.95 0.58</pos>
+         <size>0 0.035</size><zIndex>99</zIndex>
+      </rating>
+      <image name="game-releasedate-icon"><pos>0.55 0.58</pos></image>
+      <datetime name="md_releasedate"><pos>0.59 0.58</pos><size>0.19 0.045833333333333</size></datetime>
+      <image name="game-players-icon"><pos>0.55 0.64</pos></image>
+      <text name="md_players"><pos>0.59 0.64</pos><size>0.16 0.045833333333333</size></text>
+      <image name="game-playcount-icon"><pos>0.78 0.64</pos></image>
+      <text name="md_playcount"><pos>0.82 0.64</pos><size>0.13 0.045833333333333</size></text>
+      <image name="game-gametime-icon"><pos>0.55 0.70</pos></image>
+      <text name="md_gametime"><pos>0.59 0.70</pos></text>
+      <image name="game-lastplayed-icon"><pos>0.55 0.76</pos></image>
+      <datetime name="md_lastplayed"><pos>0.59 0.76</pos></datetime>
+      <image name="game-genre-icon"><pos>0.55 0.82</pos></image>
+      <text name="md_genre"><pos>0.59 0.82</pos></text>
+   </view>
+
    <!--
    ///
    View: Gamelist (Detailed - Metadata Off)

@@ -4,16 +4,15 @@ Maintained as **[nschuster/art-book-next-1702](https://github.com/nschuster/art-
 
 ## What this fork changes
 
-In upstream 4:3, the metadata rows are explicitly enabled **only when On-Screen Help is off**. This is a theme condition, not a Raspberry Pi 5 performance problem. This fork enables those same horizontal rows with help either on or off, above the scrolling description, without redesigning the theme.
+The 4:3 layout keeps the original media geometry and replaces the description with icon-based metadata.
 
-Only `aspect-ratio-4-3.xml` changes at runtime:
+Only `aspect-ratio-4-3.xml` changes at runtime. In Detailed view, manual 4:3 and Automatic when dispatched to 4:3 replace the description with **seven metadata fields**: release date, rating, players, genre, play time, play count and last played. Developer and publisher are omitted.
 
-- **Default**: release date and rating, using the original icons and native datetime/rating components.
-- **Release Date & Play Time**: release **year** and elapsed play time, using the existing horizontal row.
-- **Play Time & Play Count**: elapsed time and count; upstream hides the count when recorded game time is zero.
-- **Off**: unchanged (no description or metadata).
+- **Default**, **Release Date & Play Time**, and **Play Time & Play Count** all display the same complete panel, with help on or off. Existing option names remain for compatibility; they still select the original pairs at other ratios.
+- **Off** is unchanged (no description or metadata).
+- Original theme SVG metadata icons and rating stars accompany native typed values, rather than a label/value table. Both dates use full `YYYY-MM-DD`.
 
-With help enabled, the description moves down from y=279 to y=312 at 640×480 and its scrolling viewport becomes 90 pixels high instead of 120. Its text, width, font, color and scrolling behavior are retained. Artwork/video, system selection, Basic view, help footer and other aspect ratios are unchanged. With help disabled, the entire original 4:3 layout is unchanged.
+Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, palette, system selection, Basic view and help footer remain. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
 
 ## Install on Batocera
 
@@ -46,7 +45,7 @@ For updates to a Git installation, run `git -C /userdata/themes/art-book-next-17
 
 Run `python -m unittest discover -s tests -v` from a Git checkout. Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
 
-**Not hardware tested:** no Raspberry Pi 5, Commodore 1702 or running Batocera frontend was used for this patch. Tests check the XML conditions and unchanged layouts; they are not native rendering tests. At 320×240, the description viewport is only 45 pixels high and metadata text is small; composite sharpness, overscan and interlace require on-device review. Try Default first; Large/Extra Large preserve upstream metrics and can clip long play-time strings in the fixed-width row. This patch does not add every metadata field simultaneously: choose one of the existing pairs above. Missing scraped release data and missing play-time records cannot be recovered by a theme.
+**Not hardware tested:** no Raspberry Pi 5, Commodore 1702 or running Batocera frontend was used for this candidate. Tests check conditions, native component types, bounds, original media geometry and unchanged layouts, not native rendering. Composite sharpness, overscan, native font scaling, long values and cropped-image marquee layering require on-device review. Metadata font size is deliberately fixed independently of the global font preset. Missing scraped dates and play-time records retain engine fallback behavior; a theme cannot recover missing data. Upstream screenshots below are not candidate screenshots. Current static approximations are under `previews/original-style/`; older preview directories show superseded designs.
 
 ---
 

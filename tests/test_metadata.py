@@ -65,40 +65,12 @@ def resolve(ratio='4-3', metadata='mixed', help=True, font='default', artwork='i
 
 
 class MetadataTests(unittest.TestCase):
-    def test_metadata_remains_visible_with_help(self):
-        for ratio, font, artwork, metadata in itertools.product(
-                ['4-3', '4-3-auto'], ['small', 'default', 'large', 'xlarge'],
-                ['image', 'image-cropped', 'boxart', 'logo'], ['on', 'mixed', 'play-stats']):
-            with self.subTest(ratio=ratio, font=font, artwork=artwork, metadata=metadata):
-                state = resolve(ratio, metadata, True, font, artwork)
-                if metadata == 'on':
-                    self.assertEqual(state[('datetime', 'md_releasedate')]['visible'], 'true')
-                    self.assertEqual(state[('rating', 'md_rating')]['visible'], 'true')
-                else:
-                    panel = state.get(('stackpanel', 'gamedata'))
-                    self.assertIsNotNone(panel, 'Horizontal metadata disappears when help is enabled')
-                    assert panel is not None
-                    self.assertEqual(panel['orientation'], 'horizontal')
-                    children = {name: props for _, name, props in panel['children']}
-                    self.assertIn('game:gametime', children['gamedata-gametime']['text'])
-                    expected = 'gamedata-releasedate' if metadata == 'mixed' else 'gamedata-playcount'
-                    self.assertIn(expected, children)
-
-    def test_description_reserves_metadata_row_and_footer(self):
-        for metadata in ['on', 'mixed', 'play-stats']:
-            state = resolve(metadata=metadata)
-            desc = state[('text', 'game-description')]
-            self.assertGreaterEqual(float(desc['y']), 0.65)
-            self.assertGreaterEqual(float(desc['h']), 0.1875)
-            self.assertLessEqual(float(desc['y']) + float(desc['h']), 0.85)
-            self.assertEqual(desc['text'], '{game:desc}')
-            self.assertEqual(desc['autoScroll'], 'vertical')
-            self.assertEqual(desc['w'], '0.3984375')
-
-    def test_help_off_is_identical_to_upstream(self):
-        for metadata, font in itertools.product(['on', 'mixed', 'play-stats', 'off'], ['small', 'default', 'large', 'xlarge']):
-            self.assertEqual(resolve(metadata=metadata, help=False, font=font),
-                             resolve(metadata=metadata, help=False, font=font, baseline=True))
+    # Pair/description assertions were intentionally superseded by
+    # test_all_metadata.py: enabled help-off modes now also show all nine fields.
+    def test_metadata_off_help_off_is_identical_to_upstream(self):
+        for ratio, font in itertools.product(['4-3', '4-3-auto'], ['small', 'default', 'large', 'xlarge']):
+            self.assertEqual(resolve(ratio, metadata='off', help=False, font=font),
+                             resolve(ratio, metadata='off', help=False, font=font, baseline=True))
 
     def test_off_and_basic_system_views_are_unchanged(self):
         for help in [True, False]:
@@ -111,13 +83,6 @@ class MetadataTests(unittest.TestCase):
                      'aspect-ratio-16-10.xml', 'aspect-ratio-3-2.xml', 'aspect-ratio-1-1.xml']:
             self.assertEqual(source(path), source(path, True), path)
 
-    def test_only_description_geometry_changes_in_existing_help_on_components(self):
-        for metadata in ['on', 'mixed', 'play-stats']:
-            old, new = resolve(metadata=metadata, baseline=True), resolve(metadata=metadata)
-            exceptions = {('text', 'game-description'), ('datetime', 'md_releasedate'),
-                          ('rating', 'md_rating'), ('image', 'game-releasedate-icon')}
-            for key in old.keys() - exceptions:
-                self.assertEqual(new[key], old[key], key)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,264 @@
+{
+  "480": {
+    "md_playcount": {
+      "text": "12",
+      "display": "12",
+      "bounds": [
+        525,
+        296,
+        83,
+        22
+      ],
+      "font_pixels": 19
+    },
+    "md_players": {
+      "text": "1",
+      "display": "1",
+      "bounds": [
+        378,
+        296,
+        102,
+        22
+      ],
+      "font_pixels": 19
+    },
+    "md_genre": {
+      "text": "Action / Adventure",
+      "display": "Action / Adventure",
+      "bounds": [
+        378,
+        383,
+        230,
+        22
+      ],
+      "font_pixels": 19
+    },
+    "md_gametime": {
+      "text": "2 h 35 mn",
+      "display": "2 h 35 mn",
+      "bounds": [
+        378,
+        325,
+        230,
+        22
+      ],
+      "font_pixels": 19
+    },
+    "md_releasedate": {
+      "text": "1994-03-19",
+      "display": "1994-03-19",
+      "bounds": [
+        378,
+        267,
+        122,
+        22
+      ],
+      "font_pixels": 19
+    },
+    "md_lastplayed": {
+      "text": "2026-10-20",
+      "display": "2026-10-20",
+      "bounds": [
+        378,
+        354,
+        230,
+        22
+      ],
+      "font_pixels": 19
+    },
+    "md_rating": {
+      "bounds": [
+        524.0,
+        270.0,
+        84.0,
+        16.8
+      ],
+      "sample_rating": 0.8
+    },
+    "game-releasedate-icon": {
+      "asset": "./_inc/images/metadata-icon-releasedate.svg",
+      "bounds": [
+        352.0,
+        268.4,
+        20,
+        20
+      ]
+    },
+    "game-players-icon": {
+      "asset": "./_inc/images/metadata-icon-players.svg",
+      "bounds": [
+        352.0,
+        297.2,
+        20,
+        20
+      ]
+    },
+    "game-gametime-icon": {
+      "asset": "./_inc/images/metadata-icon-gametime.svg",
+      "bounds": [
+        352.0,
+        326.0,
+        20,
+        20
+      ]
+    },
+    "game-playcount-icon": {
+      "asset": "./_inc/images/metadata-icon-playcount.svg",
+      "bounds": [
+        499.20000000000005,
+        297.2,
+        20,
+        20
+      ]
+    },
+    "game-lastplayed-icon": {
+      "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+      "bounds": [
+        352.0,
+        354.8,
+        20,
+        20
+      ]
+    },
+    "game-genre-icon": {
+      "asset": "./_inc/images/metadata-icon-genre.svg",
+      "bounds": [
+        352.0,
+        383.59999999999997,
+        20,
+        20
+      ]
+    }
+  },
+  "240": {
+    "md_playcount": {
+      "text": "12",
+      "display": "12",
+      "bounds": [
+        262,
+        148,
+        42,
+        11
+      ],
+      "font_pixels": 10
+    },
+    "md_players": {
+      "text": "1",
+      "display": "1",
+      "bounds": [
+        189,
+        148,
+        51,
+        11
+      ],
+      "font_pixels": 10
+    },
+    "md_genre": {
+      "text": "Action / Adventure",
+      "display": "Action / Adventure",
+      "bounds": [
+        189,
+        191,
+        115,
+        11
+      ],
+      "font_pixels": 10
+    },
+    "md_gametime": {
+      "text": "2 h 35 mn",
+      "display": "2 h 35 mn",
+      "bounds": [
+        189,
+        163,
+        115,
+        11
+      ],
+      "font_pixels": 10
+    },
+    "md_releasedate": {
+      "text": "1994-03-19",
+      "display": "1994-03-19",
+      "bounds": [
+        189,
+        134,
+        61,
+        11
+      ],
+      "font_pixels": 10
+    },
+    "md_lastplayed": {
+      "text": "2026-10-20",
+      "display": "2026-10-20",
+      "bounds": [
+        189,
+        177,
+        115,
+        11
+      ],
+      "font_pixels": 10
+    },
+    "md_rating": {
+      "bounds": [
+        262.0,
+        135.0,
+        42.0,
+        8.4
+      ],
+      "sample_rating": 0.8
+    },
+    "game-releasedate-icon": {
+      "asset": "./_inc/images/metadata-icon-releasedate.svg",
+      "bounds": [
+        176.0,
+        134.2,
+        10,
+        10
+      ]
+    },
+    "game-players-icon": {
+      "asset": "./_inc/images/metadata-icon-players.svg",
+      "bounds": [
+        176.0,
+        148.6,
+        10,
+        10
+      ]
+    },
+    "game-gametime-icon": {
+      "asset": "./_inc/images/metadata-icon-gametime.svg",
+      "bounds": [
+        176.0,
+        163.0,
+        10,
+        10
+      ]
+    },
+    "game-playcount-icon": {
+      "asset": "./_inc/images/metadata-icon-playcount.svg",
+      "bounds": [
+        249.60000000000002,
+        148.6,
+        10,
+        10
+      ]
+    },
+    "game-lastplayed-icon": {
+      "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+      "bounds": [
+        176.0,
+        177.4,
+        10,
+        10
+      ]
+    },
+    "game-genre-icon": {
+      "asset": "./_inc/images/metadata-icon-genre.svg",
+      "bounds": [
+        176.0,
+        191.79999999999998,
+        10,
+        10
+      ]
+    }
+  }
+}
