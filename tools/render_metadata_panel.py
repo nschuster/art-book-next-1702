@@ -12,9 +12,20 @@ OPTIONS={'aspect-ratio':'4-3','gamelist-view-metadata':'mixed','font-size':'defa
 LABELS={'rating':'Rating:','releasedate':'Released:','developer':'Developer:','publisher':'Publisher:','genre':'Genre:','players':'Players:','gametime':'Game time:','playcount':'Times played:','lastplayed':'Last played:','favorite':'Favorite:'}
 VALUES={'releasedate':'1994-03-19','developer':'Nintendo R&D1','publisher':'Nintendo','genre':'Action / Adventure','players':'1','gametime':'2 h 35 mn','playcount':'12','lastplayed':'2026-10-20','favorite':'Yes'}
 
-def resolve(scheme='default'):
+def registered_schemes():
+    """Use native registrations, including the user-editable Custom slot."""
+    xml=re.sub(rb'&(?!#?\w+;)',b'&amp;', (ROOT/'theme.xml').read_bytes())
+    subset=ET.fromstring(xml).find("subset[@name='color-scheme']")
+    return {node.get('name'):node.get('displayName') for node in subset}
+
+
+def resolve(scheme='default', custom_palette=None):
+    if scheme not in registered_schemes():
+        raise ValueError('Unregistered color scheme: '+scheme)
+    # Explicit shipped Custom template, not a skipped /userdata include.
+    custom_palette=Path(custom_palette) if custom_palette is not None else ROOT/'resources/customizations/colors.xml'
     options=dict(OPTIONS, **{'color-scheme':scheme})
-    variables={'system.theme':'snes'};components={}
+    variables={'system.theme':'snes','system.name':'snes'};components={}
     def active(e):
         if e.get('ifHelpPrompts')=='false':return False
         for clause in e.get('ifSubset','').split(','):
@@ -31,6 +42,9 @@ def resolve(scheme='default'):
             if not active(e):continue
             if e.tag=='include' and e.text:
                 p=expand(e.text.strip())
+                if e.text.strip()=='${themeCustomizationsPath}colors.xml':
+                    load(custom_palette)
+                    continue
                 if '${' not in p and (path.parent/p).exists():load(path.parent/p)
             if e.tag=='variables':
                 for p in e:
@@ -44,6 +58,8 @@ def resolve(scheme='default'):
                         for p in c:
                             if active(p) and not p.get('name'):props[p.tag]=expand((p.text or '').strip())
     load(ROOT/'theme.xml')
+    unresolved=[(key,prop,value) for key,props in components.items() for prop,value in props.items() if '${' in value]
+    if unresolved:raise ValueError('Unresolved preview properties: '+repr(unresolved))
     return components,variables
 
 def pair(s):return tuple(map(float,s.split()))
@@ -86,7 +102,9 @@ def text(im,p,value,h,bg='222222'):
         value=shortened+'...'
     align=p.get('alignment','left');px=bw/2 if align=='center' else bw if align=='right' else 0
     anchor=('m' if align=='center' else 'r' if align=='right' else 'l')+'m'
-    d.text((px,bh/2),value,font=f,anchor=anchor,fill=color(p.get('color','ffffff'),bg))
+    ink=p.get('color','ffffff')
+    fill=tuple(bytes.fromhex(ink if len(ink)==8 else ink+'ff')) if bg is None else color(ink,bg)
+    d.text((px,bh/2),value,font=f,anchor=anchor,fill=fill)
     im.alpha_composite(layer,(round(x),round(y)))
     return {'text':full,'display':value,'bounds':[round(x),round(y),bw,bh],'font_pixels':f.size}
 
@@ -153,7 +171,7 @@ def render(h, scheme='default'):
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--scheme',default='default',choices=['default','light','steam-os','snes','famicom','oled','commodore-64'])
+    parser.add_argument('--scheme',default='default',choices=list(registered_schemes()))
     args=parser.parse_args()
     if args.scheme!='default':OUT=ROOT/'previews'/args.scheme
     OUT.mkdir(parents=True,exist_ok=True)

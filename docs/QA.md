@@ -47,6 +47,77 @@ Test-first evidence: revised hardware-palette and selector expectations failed a
 
 Generate with `python tools/render_metadata_panel.py --scheme commodore-64`. Both 320×240 and 640×480 previews in `previews/commodore-64/` were inspected: seven fields present, original media geometry, understated rainbow underline, no obvious sample clipping or overlaps. The regenerated `geometry.json` records the requested metadata reorder only. The ordering regression first failed with 36 expected subtest failures, then all 14 test methods passed. Both default and hardware-palette sample validators pass at 320×240 and 640×480, including the complete `2 h 35 mn` value in the narrowed shared-row box. Tests check the actual selector accent pixels in the selected row, not game art. These are static approximations, not native captures; SVG filtering/subpixel placement, long or translated values, native system/menu/splash screens and physical CRT readability remain unverified.
 
+## RetroAchievements integration checks
+
+The optional integration is documented in [RETROACHIEVEMENTS.md](RETROACHIEVEMENTS.md). Theme registration initially failed its new tests, then passed after implementation. The helper was tested with an explicit local HTTP fixture server and subprocess CLI calls, not fabricated live API results. Review regressions reproduced wrong vertical anchoring, stale extras after account/game remapping, removed mappings, and partial installation on an unsafe example path; these were corrected and rerun. The revised full suite has 43 passing tests, including strict opt-in geometry guards and the prior metadata/palette guards. Latest bottom-bar regressions were observed failing before implementation. Players stays at x=.78/.82, y=.70 beside Last Played; Genre moves to y=.76. The actual generated SVG track occupies x=.55–.95, y=.815–.870 (256×26 pixels at 640×480), below metadata and above the unchanged footer. Native white count text is centered at (.75, .8425) on a dark .14×.055 background badge with higher zIndex; there is no separate count row. The pinned Batocera 42 ThemeData.cpp text schema and TextComponent.cpp applyTheme implementation both support backgroundColor. The renderer respects exact extra origins, colors, background and zIndex. A pixel test verifies the badge and centered count in both palettes/resolutions, with clearance from Genre and footer. SVG aspect-ratio regression prevents a taller image box from merely letterboxing the old thin track. RA-off and other views/ratios remain guarded; asset ownership/cache code is unchanged. Zero, full, fractional and separate softcore/hardcore fills are tested, along with content-addressed asset ownership, bounded cleanup and offline retention. New static previews at 640×480 and 320×240 in both palettes use generated XML **and the helper-generated SVG asset**, and sample values pass no-truncation/no-overlap checks. All four previews were visually inspected. See [primary labeled preview](../previews/retroachievements-bottom/commodore-64-480-labeled.png); the 55-pixel caption is outside the 640×480 framebuffer. No native Batocera/account test was performed. At 320×240 text remains inherently small; physical CRT legibility is unverified.
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 tools/render_ra_preview.py
+python3 tools/validate_metadata_preview.py
+```
+
+## Historical dark-track correction (superseded by refinement below)
+
+The old SVG painted its full unfilled track `#77736a`; the centered `#292621` native text badge interrupted it, producing pale patches after the rainbow and at the right end. This was an empty-progress track, not another gradient stop or stroke. The track now matches the subdued badge color. Raster tests also exposed transparent end strips from default SVG aspect fitting when 26.4 pixels rounds to 26: `preserveAspectRatio="none"` makes the asset fill the specified rectangle. Regression tests sample top/middle/bottom and right-edge pixels at zero/partial/full progress.
+
+Latest verification: `python -m pytest tests/ -q` → **47 passed, 104 subtests passed**. New track, registration, custom-loading and gallery tests were witnessed failing first. `python tools/render_ra_preview.py --all-palettes` renders all **8 registrations** directly from `theme.xml`: Default, Light, SteamOS, SNES, Famicom, OLED, Commodore 64, Custom. Every palette variable is checked against its selected `colors.xml` block; unresolved properties and unknown scheme names fail loudly. Custom explicitly loads the shipped `resources/customizations/colors.xml` template, whose default colors intentionally match Default—not a silent missing-file fallback and not a capture of the user's on-device custom file. A distinct override fixture verifies Custom really loads, and a missing custom file raises an error.
+
+Latest gallery: `previews/retroachievements-palettes/`, two full-size 2×2 contact sheets and eight raw 640×480 framebuffer images with corresponding labeled 640×535 canvases. Labels sit outside the unchanged framebuffer. Both sheets were visually inspected: all seven native fields, original media, centered count and clean dark remainder are intact; no new sample clipping. Inherited low-contrast unselected text in several palettes is unchanged. `manifest.json` records resolved variables, provenance, geometry and pixel hashes (seven distinct designs; Custom template equals Default). `fixture/sample.xml` references the actual generated SVG used by all renders. These remain static approximations with fictional 12/40 progress; native Batocera/CRT behavior is not verified. No commit or push.
+
+## Latest metadata-height / palette-bound RA refinement
+
+The older white-count/dark-badge and .055-height descriptions above are historical,
+not the current candidate. [Current specification](RETROACHIEVEMENTS.md) takes precedence.
+New bindings/geometry tests failed before implementation. The track now uses a white
+SVG tinted by `${gamelistListTextlistBackgroundColor}`; the separate transparent
+rainbow SVG remains proportional. The latest approved count refinement uses
+`${gamelistListTextlistUnselectedColor}` (normal sidebar text), font
+`${themePath}/${fontBold}`, fontSize `.027777777777777` (16.67% smaller), without
+a background badge or shadow. Metadata typography is unchanged. Height .045833333333333
+matches normal metadata (22px at 480p, 11px at 240p); center y=.837916666666667.
+Glyph fit, full count width, metadata clearance, footer whitespace, exact edges,
+all eight palette-resolved sidebar pixels and native XML bindings are tested.
+Both generated image paths participate in the ownership journal and full-manifest
+cleanup; offline and repeated-refresh tests guard retention and bounded asset counts.
+Setup/example no longer install stale template overrides. Image.open warnings in
+the palette gallery tests were fixed with context managers.
+
+Previous refinement execution: `python3 -m pytest tests -q` → **50 passed, 104 subtests passed
+in 18.53s**. `python3 tools/validate_metadata_preview.py` → both palettes' seven
+sample values and six icons fit at 240p/480p without truncation/overlap.
+`git -c core.whitespace=cr-at-eol diff --check` passed. Pinned ThemeData source was
+re-fetched and byte-matched to the inspected cache (SHA256
+`a0073b73d1747fd75e4216ca3bb9152b10e7fa2e3492ce2f3cb358334a6b6c14`).
+
+Pinned ES42 ThemeData.cpp was inspected: clone copies variables; appendFile keeps
+them; placeholders resolve before native COLOR/PATH parsing. Native palette switches
+therefore do not depend on network/cache regeneration. Generated font paths explicitly
+anchor relative fontBold to themePath, rather than the appended extra directory.
+
+Latest gallery: `previews/retroachievements-final-text/contact-sheet-1.png` and
+`contact-sheet-2.png`, plus eight raw 640×480, labeled 640×535 and secondary 320×240
+images. Both sheets were visually inspected. No pale right-end artifact, badge patch,
+metadata overlap or new sample clipping. **Important:** sidebar text alpha is
+preserved. Famicom remains faint (1.80:1 on the empty track), whereas C64 ivory now
+has 10.74:1 empty-track contrast. At full progress both lose contrast over the
+yellow/green fill (Famicom 1.11–1.17:1; C64 1.29–1.61:1). These are full-coverage
+glyph calculations, not anti-aliasing or CRT certification. Zero/sample/full
+crops were also inspected; no unrequested badge/outline/shadow was added.
+Custom uses the explicitly labeled shipped template. These are actual generated
+component compositions with fictional counts, not native screenshots.
+
+Final-text verification: `python -m unittest discover -s tests -v` passed all
+51 tests, including setup-output equality to defaults, count width/height at both
+resolutions, ownership/cache lifecycle and all palettes. The new color tests were
+observed failing against the previous metadata binding before the implementation.
+`python tools/validate_ra_final_text.py` validates all gallery sizes and 12
+zero/sample/full fixtures and records glyph dimensions and contrast in
+`previews/retroachievements-final-text/contrast.json`. The sample count uses
+17px/9px scaled fonts with 13px/8px glyph heights at 480p/240p respectively;
+integer scaling quantizes the nominal 16.67% reduction. Existing private template
+overrides require removal plus one sync; fresh setup's empty template is tested.
+
 ## Remaining device checks
 
 No native Batocera/Pi 5/Commodore 1702 rendering was performed. Static font metrics and bounding boxes cannot prove analog readability, overscan, native text rasterization or video/marquee layering. Long real-world values may ellipsize; test long times, translated genres, missing dates, never-played games, folders and missing artwork/video on-device. Original icon color/contrast is preserved, not certified as CRT-optimal. Screenshot previews show Image mode; exact geometry preservation tests also cover cropped image, boxart, logo and video components.

@@ -1,0 +1,242 @@
+{
+  "famicom-480-0": {
+    "color": "ffffff33",
+    "font_pixels": 17,
+    "glyph_width": 35.59375,
+    "glyph_height": 13,
+    "text_box": [
+      435,
+      391,
+      90,
+      22
+    ],
+    "track_box": [
+      352,
+      391,
+      256,
+      22
+    ],
+    "contrast_min": 1.8002070015867484,
+    "contrast_max": 1.8002070015867484
+  },
+  "famicom-240-0": {
+    "color": "ffffff33",
+    "font_pixels": 9,
+    "glyph_width": 18.828125,
+    "glyph_height": 8,
+    "text_box": [
+      218,
+      196,
+      45,
+      11
+    ],
+    "track_box": [
+      176,
+      196,
+      128,
+      11
+    ],
+    "contrast_min": 1.8002070015867484,
+    "contrast_max": 1.8002070015867484
+  },
+  "famicom-480-12": {
+    "color": "ffffff33",
+    "font_pixels": 17,
+    "glyph_width": 45.34375,
+    "glyph_height": 13,
+    "text_box": [
+      435,
+      391,
+      90,
+      22
+    ],
+    "track_box": [
+      352,
+      391,
+      256,
+      22
+    ],
+    "contrast_min": 1.8002070015867484,
+    "contrast_max": 1.8002070015867484
+  },
+  "famicom-240-12": {
+    "color": "ffffff33",
+    "font_pixels": 9,
+    "glyph_width": 23.984375,
+    "glyph_height": 8,
+    "text_box": [
+      218,
+      196,
+      45,
+      11
+    ],
+    "track_box": [
+      176,
+      196,
+      128,
+      11
+    ],
+    "contrast_min": 1.8002070015867484,
+    "contrast_max": 1.8002070015867484
+  },
+  "famicom-480-40": {
+    "color": "ffffff33",
+    "font_pixels": 17,
+    "glyph_width": 45.34375,
+    "glyph_height": 13,
+    "text_box": [
+      435,
+      391,
+      90,
+      22
+    ],
+    "track_box": [
+      352,
+      391,
+      256,
+      22
+    ],
+    "contrast_min": 1.1072243841563303,
+    "contrast_max": 1.1717772727944171
+  },
+  "famicom-240-40": {
+    "color": "ffffff33",
+    "font_pixels": 9,
+    "glyph_width": 23.984375,
+    "glyph_height": 8,
+    "text_box": [
+      218,
+      196,
+      45,
+      11
+    ],
+    "track_box": [
+      176,
+      196,
+      128,
+      11
+    ],
+    "contrast_min": 1.115355118119219,
+    "contrast_max": 1.1717772727944171
+  },
+  "commodore-64-480-0": {
+    "color": "e9e1cc",
+    "font_pixels": 17,
+    "glyph_width": 35.59375,
+    "glyph_height": 13,
+    "text_box": [
+      435,
+      391,
+      90,
+      22
+    ],
+    "track_box": [
+      352,
+      391,
+      256,
+      22
+    ],
+    "contrast_min": 10.743452044893322,
+    "contrast_max": 10.743452044893322
+  },
+  "commodore-64-240-0": {
+    "color": "e9e1cc",
+    "font_pixels": 9,
+    "glyph_width": 18.828125,
+    "glyph_height": 8,
+    "text_box": [
+      218,
+      196,
+      45,
+      11
+    ],
+    "track_box": [
+      176,
+      196,
+      128,
+      11
+    ],
+    "contrast_min": 10.743452044893322,
+    "contrast_max": 10.743452044893322
+  },
+  "commodore-64-480-12": {
+    "color": "e9e1cc",
+    "font_pixels": 17,
+    "glyph_width": 45.34375,
+    "glyph_height": 13,
+    "text_box": [
+      435,
+      391,
+      90,
+      22
+    ],
+    "track_box": [
+      352,
+      391,
+      256,
+      22
+    ],
+    "contrast_min": 10.743452044893322,
+    "contrast_max": 10.743452044893322
+  },
+  "commodore-64-240-12": {
+    "color": "e9e1cc",
+    "font_pixels": 9,
+    "glyph_width": 23.984375,
+    "glyph_height": 8,
+    "text_box": [
+      218,
+      196,
+      45,
+      11
+    ],
+    "track_box": [
+      176,
+      196,
+      128,
+      11
+    ],
+    "contrast_min": 10.743452044893322,
+    "contrast_max": 10.743452044893322
+  },
+  "commodore-64-480-40": {
+    "color": "e9e1cc",
+    "font_pixels": 17,
+    "glyph_width": 45.34375,
+    "glyph_height": 13,
+    "text_box": [
+      435,
+      391,
+      90,
+      22
+    ],
+    "track_box": [
+      352,
+      391,
+      256,
+      22
+    ],
+    "contrast_min": 1.2884014652755613,
+    "contrast_max": 1.6143598520003668
+  },
+  "commodore-64-240-40": {
+    "color": "e9e1cc",
+    "font_pixels": 9,
+    "glyph_width": 23.984375,
+    "glyph_height": 8,
+    "text_box": [
+      218,
+      196,
+      45,
+      11
+    ],
+    "track_box": [
+      176,
+      196,
+      128,
+      11
+    ],
+    "contrast_min": 1.297862645594069,
+    "contrast_max": 1.6143598520003668
+  }
+}

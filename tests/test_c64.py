@@ -42,6 +42,17 @@ class C64Tests(unittest.TestCase):
             self.assertEqual(len(matches), 1, path)
             parent.remove(matches[0])
             if path == 'theme.xml':
+                # The separately tested opt-in RA registration is the only new
+                # exception; test_ra_theme compares its full surrounding tree.
+                ra = root.find("subset[@name='retroachievements-progress']")
+                self.assertIsNotNone(ra)
+                self.assertEqual([(n.get('name'), n.get('displayName')) for n in ra],
+                                 [('off', 'Off'), ('on', 'On (sync helper required)')])
+                root.remove(ra)
+                inc = root.find("include[.='./retroachievements.xml']")
+                self.assertIsNotNone(inc)
+                self.assertEqual(inc.attrib, {'ifSubset': 'retroachievements-progress:on'})
+                root.remove(inc)
                 overlays = root.findall(".//textlist[@ifSubset='color-scheme:commodore-64']")
                 self.assertEqual(len(overlays), 1)
                 overlay = overlays[0]

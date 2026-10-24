@@ -1,0 +1,1661 @@
+{
+  "notice": "Static approximation, not native Batocera; fictional RA 12/40.",
+  "framebuffer": [
+    640,
+    480
+  ],
+  "labeled_canvas": [
+    640,
+    535
+  ],
+  "schemes": {
+    "default": {
+      "label": "Default",
+      "palette_source": "colors.xml: default",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "000000",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffffdd",
+        "systemLogoColor": "ffffff",
+        "gamelistListBackgroundColor": "222222",
+        "gamelistListTextlistBackgroundColor": "111111",
+        "gamelistListLogoColor": "ffffffaa",
+        "gamelistListTextlistSelectedColor": "ffffff",
+        "gamelistListTextlistUnselectedColor": "ffffff33",
+        "gamelistListMetadataColor": "ffffff88",
+        "gamelistListMetadataIconColor": "ffffff33",
+        "gamelistListRatingColor": "ffffff33",
+        "gamelistListDescriptionColor": "ffffffee",
+        "menuBackgroundColor": "111111",
+        "menuSelectorColor": "444444",
+        "systemIndicatorColor": "eeeeee",
+        "helpBackgroundColor": "000000",
+        "helpIconColor": "ffffff88",
+        "helpTextColor": "ffffffaa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "ffffff33",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "7fd8e9c30f29c23a5cca676e77d2bfce85da8465dc6340f7624ad3d868a50b80"
+    },
+    "light": {
+      "label": "Light",
+      "palette_source": "colors.xml: light",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "000000",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffffdd",
+        "systemLogoColor": "ffffff",
+        "gamelistListBackgroundColor": "dddddd",
+        "gamelistListTextlistBackgroundColor": "eeeeee",
+        "gamelistListLogoColor": "000000cc",
+        "gamelistListTextlistSelectedColor": "000000",
+        "gamelistListTextlistUnselectedColor": "aaaaaa",
+        "gamelistListMetadataColor": "000000",
+        "gamelistListMetadataIconColor": "00000055",
+        "gamelistListRatingColor": "000000cc",
+        "gamelistListDescriptionColor": "000000",
+        "menuBackgroundColor": "111111",
+        "menuSelectorColor": "444444",
+        "systemIndicatorColor": "eeeeee",
+        "helpBackgroundColor": "070707",
+        "helpIconColor": "ffffff88",
+        "helpTextColor": "ffffffaa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "aaaaaa",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "6000517ea81dc64871030ee52a8daeb4ff1a221b403852a7c878ab6ec852d831"
+    },
+    "steam-os": {
+      "label": "SteamOS",
+      "palette_source": "colors.xml: steam-os",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "070a0f",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffffdd",
+        "systemLogoColor": "ffffff",
+        "gamelistListBackgroundColor": "23262F",
+        "gamelistListTextlistBackgroundColor": "0D141C",
+        "gamelistListLogoColor": "ffffffaa",
+        "gamelistListTextlistSelectedColor": "ffffff",
+        "gamelistListTextlistUnselectedColor": "ffffff33",
+        "gamelistListMetadataColor": "ffffff88",
+        "gamelistListMetadataIconColor": "ffffff33",
+        "gamelistListRatingColor": "ffffff33",
+        "gamelistListDescriptionColor": "ffffffee",
+        "menuBackgroundColor": "0D141C",
+        "menuSelectorColor": "324d6c",
+        "systemIndicatorColor": "eeeeee",
+        "helpBackgroundColor": "070a0f",
+        "helpIconColor": "ffffff88",
+        "helpTextColor": "ffffffaa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "ffffff33",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "f857df1fe980d20eab90aeac9db0809c9d4503fc3b079733a839eb8d35b6b2c5"
+    },
+    "snes": {
+      "label": "SNES",
+      "palette_source": "colors.xml: snes",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "140e26",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffffdd",
+        "systemLogoColor": "ffffff",
+        "gamelistListBackgroundColor": "231942",
+        "gamelistListTextlistBackgroundColor": "140e26",
+        "gamelistListLogoColor": "ffffffaa",
+        "gamelistListTextlistSelectedColor": "ffffff",
+        "gamelistListTextlistUnselectedColor": "ffffff44",
+        "gamelistListMetadataColor": "ffffff88",
+        "gamelistListMetadataIconColor": "ffffff44",
+        "gamelistListRatingColor": "ffffff44",
+        "gamelistListDescriptionColor": "ffffff",
+        "menuBackgroundColor": "140e26",
+        "menuSelectorColor": "514689",
+        "systemIndicatorColor": "eeeeee",
+        "helpBackgroundColor": "0e091a",
+        "helpIconColor": "a293d5",
+        "helpTextColor": "ffffffaa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "ffffff44",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "d55613e2a5ccb58b1c087e5e0554c71a64abaa0bdd1a119c70c4eaeeed034b2b"
+    },
+    "famicom": {
+      "label": "Famicom",
+      "palette_source": "colors.xml: famicom",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "000000",
+        "systemArtSaturation": "0",
+        "systemArtColor": "DCD6B6aa",
+        "systemLogoColor": "DCD6B6",
+        "gamelistListBackgroundColor": "DCD6B6",
+        "gamelistListTextlistBackgroundColor": "2f090e",
+        "gamelistListLogoColor": "DCD6B6",
+        "gamelistListTextlistSelectedColor": "DCD6B6",
+        "gamelistListTextlistUnselectedColor": "ffffff33",
+        "gamelistListMetadataColor": "2f090e",
+        "gamelistListMetadataIconColor": "4d1116",
+        "gamelistListRatingColor": "4d1116",
+        "gamelistListDescriptionColor": "0e0304",
+        "menuBackgroundColor": "2f090e",
+        "menuSelectorColor": "4d1116",
+        "systemIndicatorColor": "DCD6B6",
+        "helpBackgroundColor": "1e0609",
+        "helpIconColor": "DCD6B688",
+        "helpTextColor": "DCD6B6aa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "ffffff33",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "204bac555bad4269f45ee61120ceb34712d58fb9f66fb519f8ef6491fa097246"
+    },
+    "oled": {
+      "label": "OLED",
+      "palette_source": "colors.xml: oled",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "000000",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffff",
+        "systemLogoColor": "ffffff",
+        "gamelistListBackgroundColor": "000000",
+        "gamelistListTextlistBackgroundColor": "000000",
+        "gamelistListLogoColor": "ffffffaa",
+        "gamelistListTextlistSelectedColor": "ffffff",
+        "gamelistListTextlistUnselectedColor": "ffffff33",
+        "gamelistListMetadataColor": "ffffff88",
+        "gamelistListMetadataIconColor": "ffffff33",
+        "gamelistListDescriptionColor": "ffffffee",
+        "gamelistListRatingColor": "ffffff33",
+        "menuBackgroundColor": "111111",
+        "menuSelectorColor": "444444",
+        "systemIndicatorColor": "ffffff",
+        "helpBackgroundColor": "000000",
+        "helpIconColor": "ffffff88",
+        "helpTextColor": "ffffffaa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "ffffff33",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "4e4a7f4466be62b64eaea614d08b492768d671fc9177fee61694d6d4cfdfd638"
+    },
+    "commodore-64": {
+      "label": "Commodore 64",
+      "palette_source": "colors.xml: commodore-64",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "d8cfb6",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffff",
+        "systemLogoColor": "3b3028",
+        "gamelistListBackgroundColor": "d8cfb6",
+        "gamelistListTextlistBackgroundColor": "302b26",
+        "gamelistListLogoColor": "e9e1cc",
+        "gamelistListTextlistSelectedColor": "f1c879",
+        "gamelistListTextlistUnselectedColor": "e9e1cc",
+        "gamelistListMetadataColor": "3b3028",
+        "gamelistListMetadataIconColor": "59574f",
+        "gamelistListRatingColor": "3b3028",
+        "gamelistListDescriptionColor": "3b3028",
+        "menuBackgroundColor": "292929",
+        "menuSelectorColor": "65513c",
+        "systemIndicatorColor": "59574f",
+        "helpBackgroundColor": "292929",
+        "helpIconColor": "c2beb4",
+        "helpTextColor": "e9e1cc",
+        "splashBackgroundColor": "d8cfb6",
+        "splashProgressBarColor": "aaa394",
+        "splashProgressBarColorEnd": "aaa394",
+        "splashProgressBarActiveColor": "65513c",
+        "splashProgressBarActiveColorEnd": "65513c",
+        "splashProgressBarTextColor": "3b3028",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "e9e1cc",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "6f467f62e1aa9d825592c17e7eb64ad67d07ad2b497d08ade78a26bb694e86ab"
+    },
+    "custom": {
+      "label": "Custom",
+      "palette_source": "shipped resources/customizations/colors.xml; not on-device Custom colors",
+      "resolved_variables": {
+        "system.theme": "snes",
+        "system.name": "snes",
+        "lang.games": "Games",
+        "lang.game": "Game",
+        "spacerImage": "./_inc/images/space.png",
+        "distributionPath": "/userdata/",
+        "themeCustomizationsPath": "/userdata/theme-customizations/art-book-next/",
+        "fontBold": "./_inc/fonts/Roboto-Bold.ttf",
+        "fontRegular": "./_inc/fonts/Roboto-Regular.ttf",
+        "fontLight": "./_inc/fonts/Roboto-Light.ttf",
+        "fontLogo": "./_inc/fonts/ChangaOne-Italic.ttf",
+        "systemBackgroundColor": "000000",
+        "systemArtSaturation": "1",
+        "systemArtColor": "ffffffdd",
+        "systemLogoColor": "ffffff",
+        "gamelistListBackgroundColor": "222222",
+        "gamelistListTextlistBackgroundColor": "111111",
+        "gamelistListLogoColor": "ffffffaa",
+        "gamelistListTextlistSelectedColor": "ffffff",
+        "gamelistListTextlistUnselectedColor": "ffffff33",
+        "gamelistListMetadataColor": "ffffff88",
+        "gamelistListMetadataIconColor": "ffffff33",
+        "gamelistListRatingColor": "ffffff33",
+        "gamelistListDescriptionColor": "ffffffee",
+        "menuBackgroundColor": "111111",
+        "menuSelectorColor": "444444",
+        "systemIndicatorColor": "eeeeee",
+        "helpBackgroundColor": "000000",
+        "helpIconColor": "ffffff88",
+        "helpTextColor": "ffffffaa",
+        "splashBackgroundColor": "000000",
+        "splashProgressBarColor": "222222",
+        "splashProgressBarColorEnd": "222222",
+        "splashProgressBarActiveColor": "333333",
+        "splashProgressBarActiveColorEnd": "333333",
+        "splashProgressBarTextColor": "ffffff",
+        "gamelistMetadataFontSize": "0.033333333333333"
+      },
+      "geometry": {
+        "md_playcount": {
+          "text": "12",
+          "display": "12",
+          "bounds": [
+            525,
+            296,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_players": {
+          "text": "1",
+          "display": "1",
+          "bounds": [
+            525,
+            325,
+            83,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_genre": {
+          "text": "Action / Adventure",
+          "display": "Action / Adventure",
+          "bounds": [
+            378,
+            354,
+            230,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_gametime": {
+          "text": "2 h 35 mn",
+          "display": "2 h 35 mn",
+          "bounds": [
+            378,
+            296,
+            102,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_releasedate": {
+          "text": "1994-03-19",
+          "display": "1994-03-19",
+          "bounds": [
+            378,
+            267,
+            122,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_lastplayed": {
+          "text": "2026-10-20",
+          "display": "2026-10-20",
+          "bounds": [
+            378,
+            325,
+            115,
+            22
+          ],
+          "font_pixels": 19
+        },
+        "md_rating": {
+          "bounds": [
+            524.0,
+            270.0,
+            84.0,
+            16.8
+          ],
+          "sample_rating": 0.8
+        },
+        "game-releasedate-icon": {
+          "asset": "./_inc/images/metadata-icon-releasedate.svg",
+          "bounds": [
+            352.0,
+            268.4,
+            20,
+            20
+          ]
+        },
+        "game-players-icon": {
+          "asset": "./_inc/images/metadata-icon-players.svg",
+          "bounds": [
+            499.20000000000005,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-gametime-icon": {
+          "asset": "./_inc/images/metadata-icon-gametime.svg",
+          "bounds": [
+            352.0,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-playcount-icon": {
+          "asset": "./_inc/images/metadata-icon-playcount.svg",
+          "bounds": [
+            499.20000000000005,
+            297.2,
+            20,
+            20
+          ]
+        },
+        "game-lastplayed-icon": {
+          "asset": "./_inc/images/metadata-icon-lastplayed.svg",
+          "bounds": [
+            352.0,
+            326.0,
+            20,
+            20
+          ]
+        },
+        "game-genre-icon": {
+          "asset": "./_inc/images/metadata-icon-genre.svg",
+          "bounds": [
+            352.0,
+            354.8,
+            20,
+            20
+          ]
+        },
+        "ra_progress_track": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/a8fe9e736798f35d110ea4d211a8dd7c067f8d15ac4153b55c7656b5d5da4eee.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress_bar": {
+          "asset": "/root/art-book-next-1702/previews/retroachievements-final-text/fixture/system/retroachievements/assets/6547281a1eb5e44071ea26e05a8aebd57a3f13502c7bf5b18f038d28fa498e94.svg",
+          "bounds": [
+            352,
+            391,
+            256,
+            22
+          ]
+        },
+        "ra_progress": {
+          "text": "12/40",
+          "display": "12/40",
+          "bounds": [
+            435,
+            391,
+            90,
+            22
+          ],
+          "font_pixels": 17,
+          "color": "ffffff33",
+          "glyph_height": 13
+        }
+      },
+      "pixel_sha256": "7fd8e9c30f29c23a5cca676e77d2bfce85da8465dc6340f7624ad3d868a50b80"
+    }
+  }
+}

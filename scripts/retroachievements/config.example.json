@@ -1,0 +1,12 @@
+{
+  "username": "YOUR_RA_USERNAME",
+  "api_key": "YOUR_RA_WEB_API_KEY",
+  "mode": "hardcore",
+  "systems": ["snes", "megadrive", "nes"],
+  "mapping_file": "mapping.json",
+  "cache_ttl": 900,
+  "min_interval": 1.0,
+  "retries": 2,
+  "backoff": 2.0,
+  "template": {}
+}

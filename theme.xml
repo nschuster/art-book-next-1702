@@ -803,4 +803,9 @@ https://github.com/anthonycaccese/art-book-next-es
    <include ifSubset="aspect-ratio:1-1|1-1-auto|720-square-auto">./aspect-ratio-1-1.xml</include>
    <include ifSubset="aspect-ratio:3-2|3-2-auto">./aspect-ratio-3-2.xml</include>
 
+   <subset name="retroachievements-progress" displayName="Achievement Progress">
+      <include name="off" displayName="Off" />
+      <include name="on" displayName="On (sync helper required)" />
+   </subset>
+   <include ifSubset="retroachievements-progress:on">./retroachievements.xml</include>
 </theme>

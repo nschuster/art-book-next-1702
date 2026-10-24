@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+   <formatVersion>7</formatVersion>
+   <view name="detailed" ifSubset="aspect-ratio:4-3|4-3-auto">
+      <gameextras name="gameextras" ifSubset="gamelist-view-metadata:on|mixed|play-stats">
+         <path>/userdata/system/retroachievements/extras/${system.name}/</path>
+      </gameextras>
+      <datetime name="md_lastplayed" ifSubset="gamelist-view-metadata:on|mixed|play-stats">
+         <size>0.18 0.045833333333333</size>
+      </datetime>
+      <image name="game-players-icon" ifSubset="gamelist-view-metadata:on|mixed|play-stats">
+         <pos>0.78 0.70</pos>
+      </image>
+      <text name="md_players" ifSubset="gamelist-view-metadata:on|mixed|play-stats">
+         <pos>0.82 0.70</pos>
+         <size>0.13 0.045833333333333</size>
+      </text>
+      <image name="game-genre-icon" ifSubset="gamelist-view-metadata:on|mixed|play-stats">
+         <pos>0.55 0.76</pos>
+      </image>
+      <text name="md_genre" ifSubset="gamelist-view-metadata:on|mixed|play-stats">
+         <pos>0.59 0.76</pos>
+      </text>
+   </view>
+</theme>

@@ -51,6 +51,12 @@ The option name **Commodore 64** is retained. This palette uses the hardware ext
 
 Static previews: [320×240 enlarged](previews/commodore-64/metadata-240-enlarged.png) and [640×480 enlarged](previews/commodore-64/metadata-480-enlarged.png). These are XML/palette-aware compositions with sample game values and a sample help row, **not native Batocera screenshots**. The real game screenshot is not recolored. Generate with `python tools/render_metadata_panel.py --scheme commodore-64` (Pillow and CairoSVG required). Native font rasterization, dynamic help prompts, system/menu/splash rendering and physical CRT readability remain unverified.
 
+## Optional RetroAchievements progress (Batocera 42)
+
+**Achievement Progress → On (sync helper required)** moves Players beside Last Played, puts Genre at y=.76, and adds a separate full-panel smooth Commodore-rainbow bar below metadata (x=.55–.95, y=.815, 22px high at 640×480). A smaller `unlocked/total` count is centered inside, using normal sidebar text color with no badge. All seven fields and media geometry remain; Off retains the original layout. Palette changes need no sync, though older generated extras need a one-time refresh after upgrading. Sidebar alpha and the bright rainbow still limit count contrast in some palettes; see the guide. The optional Python helper uses your account's web API key and known game IDs, caches progress locally, and refreshes after game exit; startup sync is separately enabled. No custom frontend binary or gamelist rewriting is required.
+
+Follow the [installation and limitations guide](docs/RETROACHIEVEMENTS.md). Installing the theme alone does **not** fetch progress. Preview counts are fictional test fixtures, not your account. Native Batocera rendering, your account and actual CRT output still need device validation.
+
 ## Verification and limitations
 
 Run `python -m unittest discover -s tests -v` from a Git checkout. Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` and approved pre-palette revision `d3109da` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
