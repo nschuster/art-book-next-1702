@@ -220,7 +220,7 @@ def progress_asset(data, cfg, root):
     stops = ''.join(f'<stop offset="{offset}%" stop-color="{color}"/>' for offset, color in
                     [(0, '#cf493e'), (25, '#df8c38'), (50, '#e4c653'), (75, '#6b9b62'), (100, '#527eb0')])
     content = (f'<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="85.9375" viewBox="0 0 1000 85.9375" preserveAspectRatio="none">'
-               f'<defs><linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0">{stops}</linearGradient></defs>'
+               f'<defs><linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">{stops}</linearGradient></defs>'
                f'<rect id="fill" width="{width:.15g}" height="85.9375" fill="url(#rainbow)"/></svg>').encode()
     digest = hashlib.sha256(content).hexdigest()
     return Path(root).absolute() / 'system/retroachievements/assets' / (digest + '.svg'), content
