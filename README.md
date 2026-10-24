@@ -67,6 +67,8 @@ Run these blocks in an **SSH terminal connected to Batocera**, not on your PC. F
 
 If sync reports missing/expired credentials, reauthenticate in Batocera's RetroAchievements settings and rerun block 2. If it reports **zero extras**, game IDs may need mapping; see the [helper guide](scripts/retroachievements/README.md). An existing manual Web API configuration stays unchanged; see that guide for migration rather than deleting it.
 
+**Ambiguous ROM stems are skipped, not a library-wide failure.** Batocera uses one extras filename per system/ROM stem, so games sharing a stem (even across extensions, subdirectories or case, including unmapped games) cannot safely share progress. The helper skips the entire conflicting group, prints only group/game counts, and syncs the rest. You do **not** need to rename your whole library: leave affected games skipped, or give just those games distinct stems and update their gamelist/mapping paths. Previously generated, unchanged helper-owned extras for newly ambiguous groups are removed, even during targeted syncs. Unrelated/modified files are preserved; modified owned extras needing cleanup cause an explicit error rather than deletion.
+
 **3. Restart EmulationStation from its menu**, after leaving any running game. Select **Theme Set → art-book-next-1702**, **Aspect Ratio → 4:3**, **Detailed** game-list view, enabled Game Metadata, and **Achievement Progress → On (sync helper required)**. Choose your preferred Color Scheme. These commands do not interrupt gameplay or change display settings.
 
 ### Alternative: Git or network copy

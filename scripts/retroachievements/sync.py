@@ -108,12 +108,21 @@ def mappings(cfg, root, config_dir):
             if type(gid) is not int or gid <= 0:
                 raise SyncError('game_id must be a positive integer')
             result[rom_key(item['system'], item['rom'], root)] = gid
-    outputs = set()
+    # ES addresses extras by stem, not ROM path. Include unmapped games so
+    # their mapped neighbours cannot publish misleading shared progress.
+    groups = {}
     for system, rom in known_roms | set(result):
         target = (system.casefold(), PurePosixPath(rom).stem.casefold())
-        if target in outputs: raise SyncError('ROM stem collision: use unique ROM filenames within each system')
-        outputs.add(target)
-    return result
+        groups.setdefault(target, set()).add((system, rom))
+    ambiguous = [games for games in groups.values() if len(games) > 1]
+    skipped = set().union(*ambiguous) if ambiguous else set()
+    if skipped:
+        # Counts only: filenames, system names and credentials stay private.
+        print(f'Warning: skipped {len(skipped)} games in {len(ambiguous)} ambiguous ROM stem groups; '
+              'Batocera extras share a per-system filename stem. Unambiguous games continue; '
+              'use distinct stems only for affected games to enable their progress.', file=sys.stderr)
+    # Exclusion also invalidates previously owned extras during full reconciliation.
+    return {key: gid for key, gid in result.items() if key not in skipped}
 
 def progress(payload, gid):
     if not isinstance(payload, dict) or payload.get('ID') != gid:

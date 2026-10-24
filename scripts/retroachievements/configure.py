@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import sys
 
 
@@ -54,7 +55,9 @@ def main():
         else:
             path = configure(args.data_root)
         print('Created private config. Systems discovered from existing gamelists.')
-        print('Next run sync.py using --config', path)
+        print('Next run:')
+        print(shlex.join(['python3', str(path.parent / 'sync.py'), '--config', str(path),
+                          '--data-root', str(Path(args.data_root).absolute())]))
         return 0
     except (OSError, ValueError, EOFError, KeyboardInterrupt):
         print('Setup refused or cancelled; existing config was not overwritten.', file=sys.stderr)

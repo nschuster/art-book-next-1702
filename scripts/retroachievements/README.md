@@ -48,15 +48,25 @@ modified owned XML defers collection conservatively. Do not manually edit the
 managed files or reference these private assets from unrelated XML. Interrupted
 writes are reconciled on the next completed sync. Uninstall retains these assets.
 
-Batocera loads ROM **stem**, not relative ROM pathname. Therefore two same-stem
-ROMs anywhere within one system are unsafe: the sync aborts before requests/writes
-when collisions occur in its configured gamelists/mapping, including unmapped
-entries. It does not inventory ROM files absent from gamelists; ensure filenames
-are unique. Cross-system identical stems are safe. A checksum-backed ownership
-manifest reconciles generated extras against the full mapping, even during targeted
-refreshes: removed/remapped games and account/mode changes invalidate old output
-before fetching. Unrelated or locally modified XML is not silently deleted or
-overwritten. Do not repurpose this helper's output directory for unrelated extras.
+Batocera loads ROM **stem**, not relative ROM pathname. Same-stem ROMs within a
+system (including different extensions, subdirectories, or case) therefore cannot
+safely share progress. The helper **skips every game in each ambiguous group**,
+including mapped/unmapped conflicts, and continues syncing unambiguous games. It
+never picks a winner, even if explicit mappings supply IDs. A single warning gives
+only group/game counts (including unmapped entries), never private filenames or
+credentials. You do **not** need to rename your whole library; leave these games
+skipped, or give only affected ROMs distinct stems and update their gamelist/mapping
+paths to enable their progress. Files absent from configured gamelists and explicit
+mappings are not inventoried; ensure those cannot share a generated stem.
+Cross-system identical stems are safe (system and stem comparisons ignore case).
+A checksum-backed ownership manifest reconciles generated extras against the full
+mapping, even during targeted refreshes: newly ambiguous groups, removed/remapped
+games and account/mode changes invalidate old output before fetching. Unchanged
+owned XML for newly ambiguous groups is removed, and unused owned assets are
+collected. Unrelated or locally modified files are not deleted or overwritten;
+modified owned XML that needs pruning stops sync with an explicit error. Restore
+it or disable the theme's RA option. Do not repurpose this helper's output directory
+for unrelated extras. Reload/reselect the game to clear an already displayed panel.
 
 ## Install and configure
 
@@ -216,6 +226,17 @@ Inspected Batocera ES commit `4adf26b43900d1a33887af6d8af3da2e99e398a5`:
 - [Batocera script documentation](https://wiki.batocera.org/launch_a_script): gameStop arguments `(event, system, emulator, core, ROM)` and separately named user services. This wiki is current, not pinned to v42; actual startup/event execution still needs device verification.
 
 ## Local verification / TDD evidence
+
+Collision recovery regression: before the fix, the new test module reported
+**17 failed, 1 passed** (the existing modified-file safety behavior already passed).
+The updated legacy unmapped-collision test also failed as expected. After the fix,
+the collision and legacy sync tests passed; an additional multi-group count test
+covers duplicate normalized records and shared IDs. Full suite:
+**91 passed, 104 subtests passed** with `python -m pytest tests -q`.
+Coverage includes extension/subdirectory/case collisions, mapped/unmapped groups,
+explicit overrides, unchanged-owned pruning after a real prior sync, targeted
+full-mapping reconciliation, modified/unrelated XML and SVG preservation, sanitized
+warnings, and shell-quoted full configure output. No device/live API calls were made.
 
 Token-backend regression cycle: 13 new subprocess cases first failed against the
 old helper, then passed after implementation. An upgrade regression caught old

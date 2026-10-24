@@ -84,8 +84,8 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(self.output().read_bytes(), before)
         self.assertEqual(len(self.requests), 3)
         self.assertNotIn('secret-test-key', p.stdout+p.stderr)
-    def test_rejects_unsafe_paths_and_collisions_before_network(self):
-        for maps in ([{'system': '../bad', 'rom': 'A.sfc', 'game_id': 1}], [{'system': 'snes', 'rom': '../A.sfc', 'game_id': 1}], self.maps + [{'system': 'snes', 'rom': 'sub/A & B.zip', 'game_id': 2}]):
+    def test_rejects_unsafe_paths_before_network(self):
+        for maps in ([{'system': '../bad', 'rom': 'A.sfc', 'game_id': 1}], [{'system': 'snes', 'rom': '../A.sfc', 'game_id': 1}]):
             self.maps = maps; self.save(); self.assertNotEqual(self.run_sync().returncode, 0)
         self.assertEqual(self.requests, [])
     def test_permissions_rejected_before_network(self):
@@ -109,10 +109,13 @@ class SyncTests(unittest.TestCase):
         parent.symlink_to(outside, target_is_directory=True)
         self.assertNotEqual(self.run_sync().returncode, 0); self.assertEqual(list(outside.iterdir()), [])
 
-    def test_collision_with_unmapped_gamelist_rom_is_rejected(self):
+    def test_collision_with_unmapped_gamelist_rom_is_skipped(self):
         d = self.root / 'roms/snes'; d.mkdir(parents=True)
         (d / 'gamelist.xml').write_text('<gameList><game><path>sub/A &amp; B.zip</path></game></gameList>')
-        self.assertEqual(self.run_sync().returncode, 2)
+        p = self.run_sync()
+        self.assertEqual(p.returncode, 0, p.stderr)
+        self.assertIn('skipped 2 games in 1 ambiguous ROM stem groups', p.stderr)
+        self.assertFalse(self.output().exists())
         self.assertEqual(self.requests, [])
     def test_lock_skips_concurrent_run_without_network(self):
         import fcntl
