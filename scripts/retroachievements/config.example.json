@@ -1,7 +1,5 @@
 {
-  "username": "YOUR_RA_USERNAME",
-  "api_key": "YOUR_RA_WEB_API_KEY",
-  "mode": "hardcore",
+  "backend": "batocera",
   "systems": ["snes", "megadrive", "nes"],
   "mapping_file": "mapping.json",
   "cache_ttl": 900,

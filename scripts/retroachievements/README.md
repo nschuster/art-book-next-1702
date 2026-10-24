@@ -1,8 +1,9 @@
 # RetroAchievements per-game extras helper (Batocera v42)
 
 This is an optional, short-lived **Python 3 standard-library** synchronizer, not an
-emulator plugin or daemon. It never modifies a gamelist and never reads Batocera
-credentials. Supply your RA **web API key**, not your password/token. No live RA
+emulator plugin or daemon. It never modifies a gamelist. By default it reuses the
+username and login token already stored by Batocera 42, without prompting for credentials.
+It ignores passwords and never modifies Batocera settings. No live RA
 requests or device tests were performed during development: tests use an explicitly
 injected loopback HTTP server and synthetic fixture counts.
 
@@ -74,19 +75,23 @@ tracks generated file hashes. Managed upgrades roll back on write failures.
 Create a first-run private config without hand-editing JSON:
 
 ```sh
-python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/configure.py --data-root /userdata --mode hardcore
+python3 /userdata/system/retroachievements/configure.py --data-root /userdata
 ```
 
-This prompts for username and a hidden web API key, discovers systems with existing
-gamelists, writes mode 0600, and refuses to overwrite an existing config. It does not
-contact RA. Review the discovered systems before syncing. The empty template uses current defaults.
+This is noninteractive: it discovers systems with existing gamelists, writes mode
+0600, and refuses to overwrite an existing config. It stores no username, token,
+password or API key and does not contact RA. Enable/sign into RetroAchievements in
+Batocera's Game Settings first. Each sync reads only enabled, username, token and
+hardcore settings from `<data-root>/system/batocera.conf`; password values are ignored.
+Missing/expired login token: reauthenticate using Batocera's normal menu, then retry.
+No password login, developer-key extraction, session activity or award API is used.
 
-Alternatively create `/userdata/system/retroachievements/config.json` by copying the supplied
-`config.example.json` **only if no config already exists**. Set `username` and
-`api_key`, list your systems, choose `hardcore` or `softcore`. Keep `template: {}`
-for current native bindings. Remove obsolete overrides when upgrading, reinstall
-the helper and sync once; later palette changes need no refresh. An explicit
-fontPath override must be absolute. Then:
+Old manually configured Web API configs remain supported. For an explicit new manual
+setup use `configure.py --backend webapi --mode hardcore` (prompts for username and
+hidden web API key). Never use the Batocera login token as a Web API key.
+To switch an old config to automatic setup, privately back it up/move it out of the
+way, then run configure again; existing configs are never overwritten. Keep `template: {}`
+for current native bindings. Then:
 
 ```sh
 chmod 600 /userdata/system/retroachievements/config.json
@@ -94,7 +99,7 @@ python3 /userdata/system/retroachievements/sync.py --config /userdata/system/ret
 ```
 
 The config must be owned by the invoking user and inaccessible to group/others.
-The supplied example contains placeholders, not credentials. Do not commit your
+The supplied example contains nonsensitive settings only. Do not commit your
 private config. Errors never print response bodies, exception URLs, or API keys.
 
 Optional startup enablement, after the manual sync works:
@@ -155,14 +160,29 @@ use Batocera's native lookup or the explicit mapping fallback.
 
 ## API / cache behavior
 
-Production endpoint is fixed HTTPS:
+Default `backend: batocera` uses fixed HTTPS form POST to
+`https://retroachievements.org/dorequest.php`, with `r=patch` or `r=unlocks`,
+`u=username`, `t=login token`, `g=game ID` and unlock mode `h=0` / `h=1`.
+Credentials are in the POST body, never the URL. Only unique official achievements
+(`Flags == 3`) count; unlock IDs are intersected with that set. Both modes are cached
+together; softcore includes hardcore unlocks. Responses must have boolean Success,
+the matching game ID and correctly typed/bounded IDs. Errors never become zero progress.
+Redirects are refused and the same request/retry limits below apply to every POST.
+
+When RA is disabled or credentials are missing, the next sync removes unchanged
+owned extras across all systems, including on a targeted sync. Modified owned files
+cause an explicit error: restore them or turn the theme option Off. Reselect/reload
+the game list to clear an already displayed native panel. This is not a watcher:
+run sync after disabling RA if no startup/game-exit refresh occurs.
+
+Legacy `backend: webapi` (also assumed for old configs without backend) endpoint:
 `https://retroachievements.org/API/API_GetGameInfoAndUserProgress.php`
 with `y=<web API key>`, `u=<username>`, `g=<game ID>`. Redirects are refused to avoid
 credential forwarding. `hardcore` selects `NumAwardedToUserHardcore`; `softcore`
 selects `NumAwardedToUser` (includes achievements also earned hardcore, not a
 softcore-minus-hardcore calculation). Denominator is `NumAchievements`.
 
-Cache namespace is username-specific and stores only validated ID/count fields;
+Cache namespace is backend- and username-specific and stores only validated ID/count fields;
 keys and full API responses are never persisted. XML/JSON writes use temporary
 files, fsync and atomic replacement. Valid existing XML remains unchanged when
 refresh fails, including forced/expired refreshes. Summary exit codes: 0 success or
@@ -184,6 +204,9 @@ concurrently with an active sync.
 
 Inspected Batocera ES commit `4adf26b43900d1a33887af6d8af3da2e99e398a5`:
 
+- `es-app/src/guis/GuiRetroAchievementsSettings.cpp:70–94` stores the verified login token and clears it when RA is disabled; `es-core/src/Paths.cpp:70` locates batocera.conf.
+- Pinned `external/libcheevos/rcheevos/src/rapi/rc_api_common.c:1009–1039` defines HTTPS client form fields `r/u/t`; `rc_api_runtime.c:56–68,85–110,178–195` defines patch request and achievement IDs/flags; `rc_api_user.c:116–150` defines unlocks request and integer-ID response. Core category is 3 (`include/rc_api_runtime.h:123–124`). No compiled developer credentials are used.
+
 - [MetaData.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/4adf26b43900d1a33887af6d8af3da2e99e398a5/es-app/src/MetaData.cpp): `cheevosHash`/`cheevosId`, lines 94–95.
 - [FileData.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/4adf26b43900d1a33887af6d8af3da2e99e398a5/es-app/src/FileData.cpp): `checkCheevosHash`, lines 1605–1623.
 - [RetroAchievements.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/4adf26b43900d1a33887af6d8af3da2e99e398a5/es-app/src/RetroAchievements.cpp): console-specific hashing, lines 574–646; [cheevos.cpp](https://github.com/batocera-linux/batocera-emulationstation/blob/4adf26b43900d1a33887af6d8af3da2e99e398a5/external/libcheevos/cheevos.cpp) invokes `rc_hash_generate_from_file`.
@@ -193,6 +216,15 @@ Inspected Batocera ES commit `4adf26b43900d1a33887af6d8af3da2e99e398a5`:
 - [Batocera script documentation](https://wiki.batocera.org/launch_a_script): gameStop arguments `(event, system, emulator, core, ROM)` and separately named user services. This wiki is current, not pinned to v42; actual startup/event execution still needs device verification.
 
 ## Local verification / TDD evidence
+
+Token-backend regression cycle: 13 new subprocess cases first failed against the
+old helper, then passed after implementation. An upgrade regression caught old
+installed examples copying credentials; a separate RED verified password lines
+must not be parsed. Final full suite: **72 passed, 104 subtests passed** using
+`python -m pytest tests -q`. This preserves all 51 pre-existing tests and adds 21
+cases including malformed unlocks. The installed CLI smoke runs install → installed
+configure (empty stdin) → installed sync against a loopback fixture in a temporary
+data root and checks the generated count. No live-account calls were made.
 
 ```sh
 python3 -m unittest discover -s tests -p test_ra_sync.py -v

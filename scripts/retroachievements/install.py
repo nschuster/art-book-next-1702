@@ -22,6 +22,7 @@ def install(root, uninstall=False):
     command = f"python3 {q(str(state / 'sync.py'))} --config {q(str(state / 'config.json'))} --data-root {q(str(root))}"
     files = {
         'system/retroachievements/sync.py': (source / 'sync.py').read_bytes(),
+        'system/retroachievements/configure.py': (source / 'configure.py').read_bytes(),
         'system/scripts/ra-progress-sync.sh': (
             '#!/bin/sh\n# Managed by RA extras installer.\n'
             'case "$1" in\n  gameStop)\n'
@@ -74,7 +75,9 @@ def install(root, uninstall=False):
         elif manifest.exists(): manifest.unlink()
         raise
     print('Installed RA helper and gameStop hook; startup service is NOT enabled.')
-    print('Create private config.json, then optionally: batocera-services enable ra-progress-sync')
+    print('Run: python3', state / 'configure.py', '--data-root', root)
+    print('Then run:', command)
+    print('No credential prompts: uses Batocera RA login. Optionally: batocera-services enable ra-progress-sync')
 
 
 def main():

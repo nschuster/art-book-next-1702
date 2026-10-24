@@ -21,6 +21,28 @@ API = 'https://retroachievements.org/API/'
 class SyncError(Exception):
     pass
 
+AUTH_HELP = 'In Batocera Game Settings > RetroAchievements, enable RA and reauthenticate your account, then sync again.'
+
+def batocera_settings(root):
+    """Read only the four allowed settings; ignore all other values without parsing."""
+    prefix = 'global.retroachievements'
+    allowed = {prefix, prefix + '.username', prefix + '.token', prefix + '.hardcore'}
+    values = {}
+    try:
+        with (root / 'system/batocera.conf').open() as stream:
+            for line in stream:
+                separator = line.find('=')
+                if separator < 0: continue
+                key = line[:separator].strip()
+                if key in allowed:
+                    values[key] = line[separator + 1:].strip()
+    except OSError:
+        return {'username': '', 'token': '', 'enabled': True, 'mode': 'softcore'}
+    return {'username': values.get(prefix + '.username', ''),
+            'token': values.get(prefix + '.token', ''),
+            'enabled': values.get(prefix, '0').lower() in ('1', 'true', 'on'),
+            'mode': 'hardcore' if values.get(prefix + '.hardcore', '0').lower() in ('1', 'true', 'on') else 'softcore'}
+
 def safe_path(path):
     path = Path(path).absolute()
     if any(p.is_symlink() for p in (path, *path.parents)):
@@ -43,7 +65,9 @@ def load_config(path):
     if path.is_symlink() or not stat.S_ISREG(st.st_mode) or st.st_mode & 0o077 or st.st_uid != os.getuid():
         raise SyncError('config must be an owned regular file with mode 0600 (or 0400)')
     cfg = json.loads(path.read_text())
-    if not cfg.get('username') or not cfg.get('api_key'):
+    if cfg.get('backend', 'webapi') not in ('batocera', 'webapi'):
+        raise SyncError('invalid backend')
+    if cfg.get('backend', 'webapi') == 'webapi' and (not cfg.get('username') or not cfg.get('api_key')):
         raise SyncError('username and api_key are required')
     if cfg.get('mode', 'hardcore') not in ('hardcore', 'softcore'):
         raise SyncError('mode must be hardcore or softcore')
@@ -123,16 +147,19 @@ class Client:
     def fetch(self, gid):
         query = urllib.parse.urlencode({'y': self.cfg['api_key'], 'u': self.cfg['username'], 'g': gid})
         url = self.base + 'API_GetGameInfoAndUserProgress.php?' + query
+        return progress(self.request(url), gid)
+
+    def request(self, url, data=None):
         retries = max(0, min(4, int(self.cfg.get('retries', 2))))
         for attempt in range(retries + 1):
             time.sleep(max(0, self.last + self.interval - time.monotonic()))
             self.last = time.monotonic()
             try:
-                req = urllib.request.Request(url, headers={'User-Agent': 'Batocera-RA-Extras/1.0', 'Accept': 'application/json'})
+                req = urllib.request.Request(url, data=data, headers={'User-Agent': 'Batocera-RA-Extras/1.0', 'Accept': 'application/json'})
                 with self.opener.open(req, timeout=15) as response:
                     body = response.read(8 * 1024 * 1024 + 1)
                 if len(body) > 8 * 1024 * 1024: raise SyncError('API response too large')
-                return progress(json.loads(body), gid)
+                return json.loads(body)
             except urllib.error.HTTPError as exc:
                 if exc.code != 429 and exc.code < 500: break
             except (urllib.error.URLError, TimeoutError, OSError):
@@ -141,6 +168,40 @@ class Client:
                 break
             if attempt < retries: time.sleep(min(30, self.backoff * 2 ** attempt))
         raise SyncError('API unavailable or invalid response; existing cache retained')
+
+class TokenClient(Client):
+    def __init__(self, cfg, test_base):
+        super().__init__(cfg, test_base)
+        self.endpoint = self.base + 'dorequest.php' if test_base else 'https://retroachievements.org/dorequest.php'
+
+    def call(self, operation, gid, **fields):
+        body = urllib.parse.urlencode(dict(r=operation, u=self.cfg['username'], t=self.cfg['token'], g=gid, **fields)).encode()
+        payload = self.request(self.endpoint, body)
+        if not isinstance(payload, dict) or payload.get('Success') is not True:
+            raise SyncError('invalid client API response')
+        return payload
+
+    def fetch(self, gid):
+        def valid_id(value):
+            return type(value) is int and 0 < value <= 0xffffffff
+        if not valid_id(gid): raise SyncError('invalid game ID')
+        patch = self.call('patch', gid).get('PatchData')
+        if not isinstance(patch, dict) or not valid_id(patch.get('ID')) or patch['ID'] != gid or not isinstance(patch.get('Achievements'), list):
+            raise SyncError('invalid patch')
+        core = set()
+        for achievement in patch['Achievements']:
+            if not isinstance(achievement, dict) or not valid_id(achievement.get('ID')) or type(achievement.get('Flags')) is not int or not 0 <= achievement['Flags'] <= 0xffffffff:
+                raise SyncError('invalid achievement')
+            if achievement['Flags'] == 3: core.add(achievement['ID'])
+        modes = []
+        for mode in (0, 1):
+            unlocked = self.call('unlocks', gid, h=mode).get('UserUnlocks')
+            if not isinstance(unlocked, list) or any(not valid_id(value) for value in unlocked):
+                raise SyncError('invalid unlocks')
+            modes.append(core.intersection(unlocked))
+        return progress({'ID': gid, 'NumAchievements': len(core),
+                         'NumAwardedToUser': len(modes[0] | modes[1]),
+                         'NumAwardedToUserHardcore': len(modes[1])}, gid)
 
 def progress_asset(data, cfg, root):
     """Exact vector fill; the complete smooth rainbow spans the unlocked fill."""
@@ -233,7 +294,11 @@ def run(args):
     cfg_path = Path(args.config).absolute()
     cfg = load_config(cfg_path)
     root = Path(args.data_root).absolute()
+    native = cfg.get('backend') == 'batocera'
+    if native: cfg.update(batocera_settings(root))
+    inactive = native and (not cfg['enabled'] or not cfg['username'] or not cfg['token'])
     records = mappings(cfg, root, cfg_path.parent)
+    if inactive: records = {}
     all_records = dict(records)
     if args.rom and not args.system:
         raise SyncError('--rom requires --system')
@@ -251,7 +316,7 @@ def run(args):
         try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             print('Sync already running; skipped.'); return 0
-        client = Client(cfg, args.test_api_base)
+        client = (TokenClient if native else Client)(cfg, args.test_api_base)
         # SHA256 namespaces account caches, never hashes ROMs.
         account = hashlib.sha256(cfg['username'].encode()).hexdigest()[:24]
         manifest = safe_path(state / 'extras-manifest.json')
@@ -275,9 +340,16 @@ def run(args):
                     path.unlink()
                 del owned[relative]
         atomic_write(manifest, json.dumps(owned).encode())
+        if inactive:
+            collect_assets(state, owned)
+            if cfg['enabled']:
+                print(AUTH_HELP, file=sys.stderr)
+                return 2
+            print('Batocera RA is disabled; owned progress extras removed. Reload the game list to clear an already displayed panel.')
+            return 0
         failures = 0; fetched = {}; count = 0
         for key, gid in records.items():
-            cache = safe_path(state / 'cache' / account / (str(gid) + '.json'))
+            cache = safe_path(state / 'cache' / ('batocera' if native else 'webapi') / account / (str(gid) + '.json'))
             try:
                 if gid in fetched and fetched[gid] is None:
                     raise SyncError('game already failed this run')
@@ -309,6 +381,7 @@ def run(args):
             except (SyncError, OSError):
                 failures += 1
                 print('Game sync failed; existing files retained.', file=sys.stderr)
+                if native: print(AUTH_HELP, file=sys.stderr)
         collect_assets(state, owned)
         print(f'Sync complete: {count} extras written, {failures} failures.')
         return 1 if failures else 0
@@ -325,7 +398,7 @@ def main():
     try: return run(args)
     except (SyncError, OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
         # Never print exception details: upstream URLs and JSON may contain secrets.
-        print('Sync rejected configuration, mapping, or filesystem; check private config, safe paths and permissions.', file=sys.stderr)
+        print('Sync rejected configuration, mapping, or filesystem; check private config, safe paths and permissions. If owned extras were modified, restore them or disable the theme RA display; modified files cannot be safely removed.', file=sys.stderr)
         return 2
 
 if __name__ == '__main__':

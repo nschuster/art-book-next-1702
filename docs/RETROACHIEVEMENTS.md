@@ -26,13 +26,15 @@ On Batocera, with this theme installed at `/userdata/themes/art-book-next-1702`:
 
 ```sh
 python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/install.py
-python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/configure.py
+python3 /userdata/system/retroachievements/configure.py
 python3 /userdata/system/retroachievements/sync.py --config /userdata/system/retroachievements/config.json
 ```
 
-Setup prompts for RA username and hidden **web API key**, not a password/token; defaults to Hardcore (`--mode softcore` is available). It discovers systems with gamelists and refuses to overwrite an existing configuration. Credentials stay local/private. After successful manual sync, optionally run `batocera-services enable ra-progress-sync`. The installer also supplies a targeted game-exit hook. Restart ES to load the updated theme, then enable the option.
+**No credential input is required.** Enable/sign into RA in Batocera's normal Game Settings first. Setup discovers systems with gamelists and writes only nonsensitive settings; it refuses to overwrite an existing configuration. Each sync reads Batocera's enabled state, username, login token and hardcore mode from `/userdata/system/batocera.conf`, ignoring passwords and never changing that file. Missing/expired token: reauthenticate in Batocera's RetroAchievements menu. The read-only client API uses HTTPS form POST, never credentials in URLs; both modes are cached. After successful manual sync, optionally run `batocera-services enable ra-progress-sync`. The installer also supplies a targeted game-exit hook. Restart ES to load the updated theme, then enable the option.
 
-**Upgrading an earlier candidate:** reinstall the helper and run a sync once to regenerate old XML/SVG geometry. Remove stale layout/color/font overrides from your private config's `template` (use `{}` for current defaults). Do not erase credentials. The shipped example and interactive setup now use empty templates. Subsequent palette changes need no sync. Reselect the game after refreshing progress; redraw of an already selected game is not guaranteed. Restart ES is a fallback, never forced during gameplay.
+Old Web API configs remain supported; new manual setup is explicit (`configure.py --backend webapi`). To migrate, privately back up/move the existing config and rerun configure. Do not put the login token in an API-key field. Disabling RA or losing credentials removes unchanged owned extras on the next sync, not immediately: run sync and reload/reselect the game. Modified extras are preserved with an error directing you to restore them or disable the theme option. Same-account network/auth failures retain previously validated progress, never publish fake zeros.
+
+**Upgrading an earlier candidate:** reinstall the helper and run a sync once to regenerate old XML/SVG geometry. Remove stale layout/color/font overrides from your private config's `template` (use `{}` for current defaults). Do not erase credentials. The shipped example and automatic setup use empty templates. Subsequent palette changes need no sync. Reselect the game after refreshing progress; redraw of an already selected game is not guaranteed. Restart ES is a fallback, never forced during gameplay.
 
 ## Mapping and lifecycle safety
 

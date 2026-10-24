@@ -53,13 +53,24 @@ Static previews: [320×240 enlarged](previews/commodore-64/metadata-240-enlarged
 
 ## Optional RetroAchievements progress (Batocera 42)
 
-**Achievement Progress → On (sync helper required)** moves Players beside Last Played, puts Genre at y=.76, and adds a separate full-panel smooth Commodore-rainbow bar below metadata (x=.55–.95, y=.815, 22px high at 640×480). A smaller `unlocked/total` count is centered inside, using normal sidebar text color with no badge. All seven fields and media geometry remain; Off retains the original layout. Palette changes need no sync, though older generated extras need a one-time refresh after upgrading. Sidebar alpha and the bright rainbow still limit count contrast in some palettes; see the guide. The optional Python helper uses your account's web API key and known game IDs, caches progress locally, and refreshes after game exit; startup sync is separately enabled. No custom frontend binary or gamelist rewriting is required.
+**Achievement Progress → On (sync helper required)** moves Players beside Last Played, puts Genre at y=.76, and adds a separate full-panel smooth Commodore-rainbow bar below metadata (x=.55–.95, y=.815, 22px high at 640×480). A smaller `unlocked/total` count is centered inside, using normal sidebar text color with no badge. All seven fields and media geometry remain; Off retains the original layout. Palette changes need no sync, though older generated extras need a one-time refresh after upgrading. Sidebar alpha and the bright rainbow still limit count contrast in some palettes; see the guide. The optional Python helper automatically reuses Batocera 42's stored RA login token and known game IDs, caches both progress modes locally, and refreshes after game exit; startup sync is separately enabled. No username/API-key entry is needed. It reads enabled/hardcore settings each sync, ignores passwords and never writes Batocera configuration. No custom frontend binary or gamelist rewriting is required.
 
 Follow the [installation and limitations guide](docs/RETROACHIEVEMENTS.md). Installing the theme alone does **not** fetch progress. Preview counts are fictional test fixtures, not your account. Native Batocera rendering, your account and actual CRT output still need device validation.
 
+Already signed into RA in Batocera? Install/configure/sync without entering credentials:
+
+```sh
+python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/install.py
+python3 /userdata/system/retroachievements/configure.py
+python3 /userdata/system/retroachievements/sync.py --config /userdata/system/retroachievements/config.json
+```
+
+Missing or expired token: reauthenticate in Batocera's RetroAchievements menu.
+Existing manual Web API configurations remain supported; see the guide to migrate.
+
 ## Verification and limitations
 
-Run `python -m unittest discover -s tests -v` from a Git checkout. Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` and approved pre-palette revision `d3109da` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
+Run `python -m pytest tests -q` from a Git checkout (includes the new token-backend subprocess tests as well as existing unittest cases). Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` and approved pre-palette revision `d3109da` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
 
 **Not hardware tested:** no Raspberry Pi 5, Commodore 1702 or running Batocera frontend was used for this candidate. Tests check conditions, native component types, bounds, original media geometry and unchanged layouts, not native rendering. Composite sharpness, overscan, native font scaling, long values and cropped-image marquee layering require on-device review. Metadata font size is deliberately fixed independently of the global font preset. Missing scraped dates and play-time records retain engine fallback behavior; a theme cannot recover missing data. Upstream screenshots below are not candidate screenshots. Current static approximations are under `previews/original-style/`; older preview directories show superseded designs.
 
