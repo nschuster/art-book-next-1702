@@ -18,7 +18,9 @@ class MetadataStyleTests(unittest.TestCase):
         for ratio,help,font,mode in itertools.product(['4-3','4-3-auto'],[True,False],['small','default','large','xlarge'],['on','mixed','play-stats']):
             state=resolve(ratio=ratio,metadata=mode,help=help,font=font)
             for kind,field in FIELDS:
-                self.assertEqual(state[kind,'md_'+field]['visible'],'true')
+                name='game-gametime-totalhours' if field=='gametime' else 'md_'+field
+                self.assertEqual(state[kind,name]['visible'],'true')
+                if field=='gametime':self.assertEqual(state[kind,'md_'+field]['visible'],'false')
                 self.assertEqual(state['text','md_lbl_'+field]['visible'],'false')
             for name in ['md_developer','md_publisher','md_lbl_developer','md_lbl_publisher','md_description','game-description','game-gametime-formatted']:
                 self.assertEqual(state['text',name]['visible'],'false')

@@ -4,8 +4,8 @@ FIELDS={'md_releasedate','md_rating','md_players','md_genre','md_gametime','md_p
 for scheme in ['default', 'commodore-64']:
     for h in [240,480]:
         im,records=render(h, scheme)
-        assert {n for n in records if n.startswith('md_')}==FIELDS
-        assert records['md_gametime']['display']=='2 h 35 mn'
+        assert {n for n in records if n.startswith('md_')}==FIELDS-{'md_gametime'}
+        assert records['game-gametime-totalhours']['display']=='2h 35m'
         for n,p in records.items():
             if 'text' in p:assert p['text']==p['display'],(scheme,h,n,p)
             x,y,w,hh=p['bounds']

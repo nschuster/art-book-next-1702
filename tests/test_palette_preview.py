@@ -22,7 +22,8 @@ class PalettePreviewTests(unittest.TestCase):
             self.assertEqual(im.getpixel((0, h-1)), (41, 41, 41))
             footer = im.crop((0, round(h*.886), im.width, h))
             self.assertIn((194, 190, 180), {rgb for count, rgb in footer.getcolors(footer.width*footer.height)})
-            self.assertEqual(sum(k.startswith('md_') for k in records), 7)
+            self.assertEqual(sum(k.startswith('md_') for k in records), 6)
+            self.assertEqual(records['game-gametime-totalhours']['display'], '2h 35m')
             p = state['textlist', 'gamelist']
             x, y = renderer.xy(p, im.width, h)
             bw, bh = renderer.wh(p, im.width, h)

@@ -10,6 +10,8 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'previews'/'original-style'
 OPTIONS={'aspect-ratio':'4-3','gamelist-view-metadata':'mixed','font-size':'default','fonts':'default','color-scheme':'default','distribution':'batocera','gamelist-view-artwork':'image','system-view-artwork':'default','system-logos':'default'}
 LABELS={'rating':'Rating:','releasedate':'Released:','developer':'Developer:','publisher':'Publisher:','genre':'Genre:','players':'Players:','gametime':'Game time:','playcount':'Times played:','lastplayed':'Last played:','favorite':'Favorite:'}
+# Static fixture only, NOT a MathExpr evaluator or live game binding.
+TOTAL_HOURS_FIXTURE='2h 35m'  # 9300 seconds, checked with the pinned C++ parser.
 VALUES={'releasedate':'1994-03-19','developer':'Nintendo R&D1','publisher':'Nintendo','genre':'Action / Adventure','players':'1','gametime':'2 h 35 mn','playcount':'12','lastplayed':'2026-10-20','favorite':'Yes'}
 
 def registered_schemes():
@@ -139,6 +141,8 @@ def render(h, scheme='default'):
             x,y=xy(p,w,h);ox,oy=pair(p.get('origin','0 0'))
             im.alpha_composite(icon,(round(x-icon.width*ox),round(y-icon.height*oy)))
             records[name]={'asset':p['path'],'bounds':[x-icon.width*ox,y-icon.height*oy,icon.width,icon.height]}
+        elif kind=='text' and name=='game-gametime-totalhours':
+            records[name]=text(im,p,TOTAL_HOURS_FIXTURE,h,bg)
         elif name.startswith('md_lbl_'):
             key=name.removeprefix('md_lbl_');records[name]=text(im,p,LABELS.get(key,key),h,bg)
         elif name.startswith('md_') and kind in ['text','datetime'] and name.removeprefix('md_') in VALUES:
@@ -151,7 +155,8 @@ def render(h, scheme='default'):
                 path=p['filledPath' if i<4 else 'unfilledPath'];star=asset(path,(bw/5,bh),p['color']);im.alpha_composite(star,(round(x+i*bw/5),round(y)))
             records[name]={'bounds':[x,y,bw,bh],'sample_rating':.8}
     for key in ['releasedate','rating','players','genre','gametime','playcount','lastplayed']:
-        assert 'md_'+key in records,f'Missing rendered native field {key}'
+        name='game-gametime-totalhours' if key=='gametime' else 'md_'+key
+        assert name in records,f'Missing rendered metadata field {key}'
     # Render a sample prompt row from current XML colors/assets, never a screenshot crop.
     p=state['image','help-background'];x,y=xy(p,w,h);bw,bh=wh(p,w,h)
     ox,oy=pair(p.get('origin','0 0'));helpbg=p['color']

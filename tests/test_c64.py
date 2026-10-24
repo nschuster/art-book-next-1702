@@ -89,6 +89,8 @@ class C64Tests(unittest.TestCase):
             elif name == 'md_gametime':
                 self.assertIsNone(node.find('size'))
                 ET.SubElement(node, 'size').text = '0.16 0.045833333333333'
+        from test_playtime import approved_transform
+        approved_transform(expected)
         self.assertEqual(structure(parse((ROOT/'aspect-ratio-4-3.xml').read_bytes())),
                          structure(expected))
 

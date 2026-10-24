@@ -11,6 +11,9 @@ The layout change is confined to `aspect-ratio-4-3.xml`; an optional **Commodore
 - **Default**, **Release Date & Play Time**, and **Play Time & Play Count** all display the same complete panel, with help on or off. Existing option names remain for compatibility; they still select the original pairs at other ratios.
 - **Off** is unchanged (no description or metadata).
 - Original theme SVG metadata icons and rating stars accompany native typed values, rather than a label/value table. Both dates use full `YYYY-MM-DD`.
+- Play time now shows **total hours and minutes** (`49h 15m`, never days; unplayed: `0h 0m`) in the same icon/value position. Stock Batocera 42 supplies raw seconds to a bound text extra; no helper, gamelist edit or new setting is needed, and Achievement Progress can remain Off. The parser uses floats: minute rounding can be off at very large totals (observed around 4,660 hours). This accepted limitation does not change recorded playtime. Other ratios retain their original formatter.
+
+For this playtime update, only `aspect-ratio-4-3.xml` needs replacing on an existing installation; restart EmulationStation afterward. No RA reinstall, configuration or resync is needed. This candidate is verified by the pinned parser and static previews, not yet on the device.
 
 Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, system selection, Basic view and help-footer geometry remain; original colors remain unless the optional palette is selected. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
 

@@ -270,6 +270,16 @@ based on 640x480
       <datetime name="md_lastplayed"><pos>0.59 0.70</pos></datetime>
       <image name="game-genre-icon"><pos>0.55 0.82</pos></image>
       <text name="md_genre"><pos>0.59 0.82</pos></text>
+      <text name="md_gametime"><visible>false</visible></text>
+      <text name="game-gametime-totalhours" extra="true">
+         <visible>true</visible><origin>0 0.5</origin>
+         <fontPath>${fontBold}</fontPath><fontSize>0.033333333333333</fontSize>
+         <color>${gamelistListMetadataColor}</color><lineSpacing>1</lineSpacing>
+         <multiLine>false</multiLine><autoScroll>none</autoScroll>
+         <alignment>left</alignment><verticalAlignment>center</verticalAlignment>
+         <zIndex>99</zIndex><pos>0.59 0.64</pos><size>0.16 0.045833333333333</size>
+         <text>"" + (({game:gametime} / 3600) &gt;&gt; 0) + "h " + ((({game:gametime} / 60) &gt;&gt; 0) - ((({game:gametime} / 3600) &gt;&gt; 0) * 60)) + "m"</text>
+      </text>
    </view>
 
    <!--

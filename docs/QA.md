@@ -26,8 +26,26 @@ Inspected Batocera ES revision `b2ceb55a7e3d205a11f055b7d93c8be50cd6f9c9`:
 
 ## Verification
 
+### Cumulative playtime (current candidate)
+
+Only enabled 4:3 Detailed metadata replaces native `md_gametime` with the `extra="true"` text component `game-gametime-totalhours`. The native field is hidden there only. All its resolved geometry, fonts, palette and clock icon remain identical; RA on/off is independent. No new subset or helper changes. Stock Batocera 42 ES pin: `4adf26b43900d1a33887af6d8af3da2e99e398a5`.
+
+Verified `ThemeData.cpp:228–275` text schema and `1681–1687` automatic `text_binding` registration: **there is no `<boundtext>` element**. `BindingManager` substitutes integer `game:gametime`, evaluates compound expressions, and excludes built-ins; `DetailedContainer` refreshes extras before its same-state early return. Therefore a separate text extra is necessary. Selection refresh still needs on-device QA.
+
+Expression (XML escapes `>>` as `&gt;&gt;`):
+
+```text
+"" + (({game:gametime} / 3600) >> 0) + "h " + ((({game:gametime} / 60) >> 0) - ((({game:gametime} / 3600) >> 0) * 60)) + "m"
+```
+
+Test-first: three expected failures (native visibility, strict approved-tree transform, hidden-native preview) before implementation. Full pytest: **96 passed, 104 subtests passed**. Scoped tree comparisons preserve every unrelated node/property; activation coverage includes automatic/manual 4:3, metadata modes, help/font presets and RA states. Metadata preview validator and whitespace check pass.
+
+Actual unchanged pinned MathExpr/HtmlColor C++ sources were rebuilt in `/tmp/playtime-probe` (see its `REPORT.md` for build/stubs/source hashes). Run `python tools/check_playtime_parser.py /tmp/playtime-probe/probe` against that binary: 0/59/60/3599/3600/9300/86400/172800/177300/3599999 seconds pass, including `0h 0m`, `48h 0m`, `49h 15m`. This is a separate native-parser check, not a Python evaluator or a dependency of portable pytest. Accepted float limitation: 16777259 seconds gives `4660h 21m` instead of exact `4660h 20m`; no claim of unrestricted minute accuracy.
+
+Static renderer explicitly maps the new extra to a known fixture (`9300` seconds → `2h 35m`); it does **not** evaluate live bindings or arbitrary expressions. Comparative C64 previews in `previews/playtime-total-hours/` use the verified `49h 15m` sample, with RA off/on and 640×480/320×240 coverage. No Recalbox artwork. These are static compositions, not native captures. Check game selection, zero playtime, long values/ellipsis and CRT readability on-device. Only runtime file to update is `aspect-ratio-4-3.xml`; restart ES, with no RA helper resync.
+
 ```sh
-python3 -m unittest discover -s tests -v
+python3 -m pytest tests/ -q
 python3 tools/render_metadata_panel.py
 python3 tools/validate_metadata_preview.py
 git diff --check
