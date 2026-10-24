@@ -18,6 +18,59 @@ Image/video size, position, cropping and marquee geometry are **identical to ups
 
 Keep the original theme installed for easy comparison/rollback. Install this fork into its **own** folder; do not overwrite `art-book-next`.
 
+### Copy-paste directly on Batocera (no Git required)
+
+Run these blocks in an **SSH terminal connected to Batocera**, not on your PC. First enable/sign into RetroAchievements in Batocera's normal settings if you want the progress bar. These commands do not ask for credentials.
+
+**1. Download/install or update the theme.** The download is extracted and checked first. An existing installation is moved into `/userdata/system/theme-backups/`; the original Art Book Next theme and helper configuration are left alone.
+
+```sh
+(
+  set -eu
+  command -v curl >/dev/null
+  command -v tar >/dev/null
+  work="$(mktemp -d /userdata/art-book-next-1702.XXXXXX)"
+  trap 'rm -rf "$work"' EXIT
+  curl --fail --location --retry 3 \
+    https://codeload.github.com/nschuster/art-book-next-1702/tar.gz/refs/heads/master \
+    --output "$work/theme.tar.gz"
+  tar -xzf "$work/theme.tar.gz" -C "$work"
+  extracted="$work/art-book-next-1702-master"
+  test -f "$extracted/theme.xml"
+  test -f "$extracted/scripts/retroachievements/install.py"
+  mkdir -p /userdata/themes /userdata/system/theme-backups
+  target=/userdata/themes/art-book-next-1702
+  if [ -e "$target" ] || [ -L "$target" ]; then
+    backup="$(mktemp -d /userdata/system/theme-backups/art-book-next-1702.XXXXXX)"
+    mv "$target" "$backup/theme"
+    printf 'Previous theme saved in %s/theme\n' "$backup"
+  fi
+  mv "$extracted" "$target"
+  printf 'Theme installed: %s\n' "$target"
+)
+```
+
+**2. Install/update the achievement helper and sync.** New installations automatically use Batocera's saved login and Hardcore setting. Existing helper configuration is preserved. Startup syncing is enabled only after a successful sync; the installer also adds the game-exit hook.
+
+```sh
+(
+  set -eu
+  python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/install.py
+  if [ ! -e /userdata/system/retroachievements/config.json ]; then
+    python3 /userdata/system/retroachievements/configure.py
+  fi
+  python3 /userdata/system/retroachievements/sync.py \
+    --config /userdata/system/retroachievements/config.json
+  batocera-services enable ra-progress-sync
+)
+```
+
+If sync reports missing/expired credentials, reauthenticate in Batocera's RetroAchievements settings and rerun block 2. If it reports **zero extras**, game IDs may need mapping; see the [helper guide](scripts/retroachievements/README.md). An existing manual Web API configuration stays unchanged; see that guide for migration rather than deleting it.
+
+**3. Restart EmulationStation from its menu**, after leaving any running game. Select **Theme Set → art-book-next-1702**, **Aspect Ratio → 4:3**, **Detailed** game-list view, enabled Game Metadata, and **Achievement Progress → On (sync helper required)**. Choose your preferred Color Scheme. These commands do not interrupt gameplay or change display settings.
+
+### Alternative: Git or network copy
+
 Via SSH (if Git is available on your Batocera installation):
 
 ```sh
