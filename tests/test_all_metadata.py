@@ -40,6 +40,25 @@ class MetadataStyleTests(unittest.TestCase):
                 self.assertEqual(p['filledPath'],'./_inc/images/metadata-icon-star-filled.svg')
                 self.assertEqual(p['color'],'${gamelistListRatingColor}')
 
+    def test_players_directly_above_genre_and_play_time_shares_count_row(self):
+        for ratio, help, mode in itertools.product(['4-3', '4-3-auto'], [True, False], ['on', 'mixed', 'play-stats']):
+            s = resolve(ratio=ratio, help=help, metadata=mode)
+            for kind, name, y, width in [
+                ('datetime', 'releasedate', .58, .19),
+                ('text', 'gametime', .64, .16),
+                ('datetime', 'lastplayed', .70, .36),
+                ('text', 'players', .76, .36),
+                ('text', 'genre', .82, .36),
+                ('text', 'playcount', .64, .13),
+            ]:
+                with self.subTest(ratio=ratio, help=help, mode=mode, field=name):
+                    x = .82 if name == 'playcount' else .59
+                    ix = .78 if name == 'playcount' else .55
+                    self.assertEqual(tuple(map(float, s[kind, 'md_'+name]['pos'].split())), (x, y))
+                    self.assertEqual(tuple(map(float, s['image', 'game-'+name+'-icon']['pos'].split())), (ix, y))
+                    self.assertEqual(float(s[kind, 'md_'+name]['size'].split()[0]), width)
+            self.assertEqual(s['rating', 'md_rating']['pos'], '0.95 0.58')
+
     def test_metadata_inside_original_description_region(self):
         s=resolve()
         for kind,name in FIELDS:

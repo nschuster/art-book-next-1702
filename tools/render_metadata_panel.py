@@ -101,6 +101,14 @@ def render(h, scheme='default'):
     p=state['image','logo'];a,b=pair(p['maxSize']);logo=asset(p['path'],(a*w,b*h),p['color']);x,y=xy(p,w,h);im.alpha_composite(logo,(round(x-logo.width/2),round(y-logo.height/2)))
     p=state['textlist','gamelist'];x,y=xy(p,w,h);bw,bh=wh(p,w,h);f=font(p,h)
     layer=Image.new('RGBA',(round(bw),round(bh)));ld=ImageDraw.Draw(layer)
+    if p.get('selectorImagePath'):
+        # Native TextListComponent stretches the selector to list width × row height.
+        # The image has a transparent body and a short rainbow underline only.
+        row_height=bh/int(p['lines'])
+        selector=Image.open(io.BytesIO(cairosvg.svg2png(
+            url=str(ROOT/p['selectorImagePath']), output_width=round(bw),
+            output_height=round(row_height)))).convert('RGBA')
+        layer.alpha_composite(selector,(0,round(3*row_height)))
     for i,name in enumerate(['Donkey Kong Country','F-Zero','Mega Man X','Super Metroid','Super Mario World','Super Castlevania IV','The Legend of Zelda']):
         ld.text((0,(i+.5)*bh/int(p['lines'])),name,font=f,anchor='lm',fill=color(p['selectedColor' if i==3 else 'primaryColor'],listbg))
     im.alpha_composite(layer,(round(x),round(y)))

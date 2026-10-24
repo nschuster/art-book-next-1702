@@ -559,6 +559,10 @@ https://github.com/anthonycaccese/art-book-next-es
          <scrollSound>./_inc/sounds/scroll.wav</scrollSound>
          <zIndex>5</zIndex>
       </textlist>
+      <textlist name="gamelist" ifSubset="color-scheme:commodore-64">
+         <selectorImagePath>./_inc/commodore-selector.svg</selectorImagePath>
+         <selectorColor>ffffff</selectorColor>
+      </textlist>
    </view>
 
    <!--
