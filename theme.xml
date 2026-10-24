@@ -179,6 +179,7 @@ https://github.com/anthonycaccese/art-book-next-es
       <include name="snes" displayName="SNES" />
       <include name="famicom" displayName="Famicom" />
       <include name="oled" displayName="OLED" />
+      <include name="commodore-64" displayName="Commodore 64" />
       <include name="custom" displayName="Custom" />
    </subset>
    <include>./colors.xml</include>

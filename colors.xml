@@ -198,4 +198,32 @@
       <splashProgressBarActiveColorEnd>333333</splashProgressBarActiveColorEnd>
       <splashProgressBarTextColor>ffffff</splashProgressBarTextColor>
    </variables>
+   <variables ifSubset="color-scheme:commodore-64">
+      <!-- C64 BASIC-inspired blue/light blue, lifted text for CRT readability. -->
+      <systemBackgroundColor>40318d</systemBackgroundColor>
+      <systemArtSaturation>1</systemArtSaturation>
+      <systemArtColor>ffffff</systemArtColor>
+      <systemLogoColor>b8b0ff</systemLogoColor>
+      <gamelistListBackgroundColor>40318d</gamelistListBackgroundColor>
+      <gamelistListTextlistBackgroundColor>302568</gamelistListTextlistBackgroundColor>
+      <gamelistListLogoColor>b8b0ff</gamelistListLogoColor>
+      <gamelistListTextlistSelectedColor>ffffff</gamelistListTextlistSelectedColor>
+      <gamelistListTextlistUnselectedColor>b8b0ff</gamelistListTextlistUnselectedColor>
+      <gamelistListMetadataColor>b8b0ff</gamelistListMetadataColor>
+      <gamelistListMetadataIconColor>b8b0ff</gamelistListMetadataIconColor>
+      <gamelistListRatingColor>b8b0ff</gamelistListRatingColor>
+      <gamelistListDescriptionColor>b8b0ff</gamelistListDescriptionColor>
+      <menuBackgroundColor>302568</menuBackgroundColor>
+      <menuSelectorColor>5748a5</menuSelectorColor>
+      <systemIndicatorColor>b8b0ff</systemIndicatorColor>
+      <helpBackgroundColor>302568</helpBackgroundColor>
+      <helpIconColor>b8b0ff</helpIconColor>
+      <helpTextColor>b8b0ff</helpTextColor>
+      <splashBackgroundColor>40318d</splashBackgroundColor>
+      <splashProgressBarColor>302568</splashProgressBarColor>
+      <splashProgressBarColorEnd>302568</splashProgressBarColorEnd>
+      <splashProgressBarActiveColor>b8b0ff</splashProgressBarActiveColor>
+      <splashProgressBarActiveColorEnd>b8b0ff</splashProgressBarActiveColorEnd>
+      <splashProgressBarTextColor>ffffff</splashProgressBarTextColor>
+   </variables>
 </theme>

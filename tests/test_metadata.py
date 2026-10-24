@@ -79,7 +79,9 @@ class MetadataTests(unittest.TestCase):
                 self.assertEqual(resolve(view=view, help=help), resolve(view=view, help=help, baseline=True))
 
     def test_other_ratios_and_shared_theme_byte_identical(self):
-        for path in ['theme.xml', 'colors.xml', 'fonts.xml', 'splash.xml', 'aspect-ratio-16-9.xml',
+        # Palette/theme preservation is checked structurally against d3109da
+        # in test_c64.py; all other upstream byte guards remain unchanged.
+        for path in ['fonts.xml', 'splash.xml', 'aspect-ratio-16-9.xml',
                      'aspect-ratio-16-10.xml', 'aspect-ratio-3-2.xml', 'aspect-ratio-1-1.xml']:
             self.assertEqual(source(path), source(path, True), path)
 

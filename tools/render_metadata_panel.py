@@ -7,19 +7,20 @@ import re, io, json, xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont
 import cairosvg
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'previews'/'original-style';OUT.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/'previews'/'original-style'
 OPTIONS={'aspect-ratio':'4-3','gamelist-view-metadata':'mixed','font-size':'default','fonts':'default','color-scheme':'default','distribution':'batocera','gamelist-view-artwork':'image','system-view-artwork':'default','system-logos':'default'}
 LABELS={'rating':'Rating:','releasedate':'Released:','developer':'Developer:','publisher':'Publisher:','genre':'Genre:','players':'Players:','gametime':'Game time:','playcount':'Times played:','lastplayed':'Last played:','favorite':'Favorite:'}
 VALUES={'releasedate':'1994-03-19','developer':'Nintendo R&D1','publisher':'Nintendo','genre':'Action / Adventure','players':'1','gametime':'2 h 35 mn','playcount':'12','lastplayed':'2026-10-20','favorite':'Yes'}
 
-def resolve():
+def resolve(scheme='default'):
+    options=dict(OPTIONS, **{'color-scheme':scheme})
     variables={'system.theme':'snes'};components={}
     def active(e):
         if e.get('ifHelpPrompts')=='false':return False
         for clause in e.get('ifSubset','').split(','):
             if clause:
                 k,v=clause.split(':')
-                if OPTIONS.get(k) not in v.split('|'):return False
+                if options.get(k) not in v.split('|'):return False
         return True
     def expand(s):
         for _ in range(5):s=re.sub(r'\$\{([^}]+)\}',lambda m:variables.get(m[1],m[0]),s)
@@ -89,15 +90,19 @@ def text(im,p,value,h,bg='222222'):
     im.alpha_composite(layer,(round(x),round(y)))
     return {'text':full,'display':value,'bounds':[round(x),round(y),bw,bh],'font_pixels':f.size}
 
-def render(h):
-    state,v=resolve();w=round(h*4/3)
+def render(h, scheme='default'):
+    state,v=resolve(scheme);w=round(h*4/3)
     assert state['text','game-description'].get('visible')=='false','Candidate must replace description'
-    im=Image.new('RGBA',(w,h),'#222222');d=ImageDraw.Draw(im);d.rectangle((0,0,w//2-1,h),fill='#111111')
+    bg=state['image','background']['color']
+    listbg=state['image','gamelist-background']['color']
+    im=Image.new('RGBA',(w,h),'#'+bg);d=ImageDraw.Draw(im)
+    p=state['image','gamelist-background'];x,y=xy(p,w,h);bw,bh=wh(p,w,h)
+    d.rectangle((round(x),round(y),round(x+bw)-1,round(y+bh)-1),fill='#'+listbg)
     p=state['image','logo'];a,b=pair(p['maxSize']);logo=asset(p['path'],(a*w,b*h),p['color']);x,y=xy(p,w,h);im.alpha_composite(logo,(round(x-logo.width/2),round(y-logo.height/2)))
     p=state['textlist','gamelist'];x,y=xy(p,w,h);bw,bh=wh(p,w,h);f=font(p,h)
     layer=Image.new('RGBA',(round(bw),round(bh)));ld=ImageDraw.Draw(layer)
     for i,name in enumerate(['Donkey Kong Country','F-Zero','Mega Man X','Super Metroid','Super Mario World','Super Castlevania IV','The Legend of Zelda']):
-        ld.text((0,(i+.5)*bh/int(p['lines'])),name,font=f,anchor='lm',fill=color(p['selectedColor' if i==3 else 'primaryColor'],'111111'))
+        ld.text((0,(i+.5)*bh/int(p['lines'])),name,font=f,anchor='lm',fill=color(p['selectedColor' if i==3 else 'primaryColor'],listbg))
     im.alpha_composite(layer,(round(x),round(y)))
     p=state['image','game-artwork'];a,b=pair(p['maxSize']);shot=asset('previews/super-metroid.png',(a*w,b*h));x,y=xy(p,w,h);im.alpha_composite(shot,(round(x-shot.width/2),round(y-shot.height/2)))
     records={}
@@ -109,9 +114,9 @@ def render(h):
             im.alpha_composite(icon,(round(x-icon.width*ox),round(y-icon.height*oy)))
             records[name]={'asset':p['path'],'bounds':[x-icon.width*ox,y-icon.height*oy,icon.width,icon.height]}
         elif name.startswith('md_lbl_'):
-            key=name.removeprefix('md_lbl_');records[name]=text(im,p,LABELS.get(key,key),h)
+            key=name.removeprefix('md_lbl_');records[name]=text(im,p,LABELS.get(key,key),h,bg)
         elif name.startswith('md_') and kind in ['text','datetime'] and name.removeprefix('md_') in VALUES:
-            key=name.removeprefix('md_');records[name]=text(im,p,VALUES[key],h)
+            key=name.removeprefix('md_');records[name]=text(im,p,VALUES[key],h,bg)
         elif name=='md_rating' and kind=='rating':
             bw,bh=wh(p,w,h)
             if not bw:bw=bh*5
@@ -121,19 +126,35 @@ def render(h):
             records[name]={'bounds':[x,y,bw,bh],'sample_rating':.8}
     for key in ['releasedate','rating','players','genre','gametime','playcount','lastplayed']:
         assert 'md_'+key in records,f'Missing rendered native field {key}'
-    top=round(h*(1-.114583333333333))
-    # Reuse the unchanged help strip rendered with the bundled SVG button icons.
-    previous=Image.open(ROOT/'previews'/f'after-{w}x{h}.png').convert('RGBA')
-    im.alpha_composite(previous.crop((0,top,w,h)),(0,top))
+    # Render a sample prompt row from current XML colors/assets, never a screenshot crop.
+    p=state['image','help-background'];x,y=xy(p,w,h);bw,bh=wh(p,w,h)
+    ox,oy=pair(p.get('origin','0 0'));helpbg=p['color']
+    d.rectangle((round(x-bw*ox),round(y-bh*oy),w,h),fill='#'+helpbg)
+    p=state['helpsystem','help'];f=font(p,h);icon_size=max(1,round(h*.035))
+    prompts=[('iconUpDown','CHOOSE'),('iconB','LAUNCH'),('iconA','BACK')]
+    gap=round(h*.022);inner=round(h*.01)
+    widths=[icon_size+inner+f.getlength(label) for _,label in prompts]
+    cx,cy=xy(p,w,h);x=cx-(sum(widths)+gap*(len(prompts)-1))/2
+    for (key,label),width in zip(prompts,widths):
+        icon=asset(p[key],(icon_size,icon_size),p['iconColor'])
+        im.alpha_composite(icon,(round(x),round(cy-icon.height/2)))
+        d.text((x+icon_size+inner,cy),label,font=f,anchor='lm',fill=color(p['textColor'],helpbg))
+        x+=width+gap
     return im.convert('RGB'),records
 
 if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scheme',default='default',choices=['default','light','steam-os','snes','famicom','oled','commodore-64'])
+    args=parser.parse_args()
+    if args.scheme!='default':OUT=ROOT/'previews'/args.scheme
+    OUT.mkdir(parents=True,exist_ok=True)
     manifest={}
     for h in [480,240]:
-        im,records=render(h);im.save(OUT/f'metadata-{h}.png');manifest[str(h)]=records
+        im,records=render(h,args.scheme);im.save(OUT/f'metadata-{h}.png');manifest[str(h)]=records
         big=im.resize((960,720),Image.Resampling.NEAREST);sheet=Image.new('RGB',(960,800),'#101820');sheet.paste(big,(0,80));d=ImageDraw.Draw(sheet)
         f=ImageFont.truetype(str(ROOT/'_inc/fonts/Roboto-Bold.ttf'),24)
-        d.text((18,12),f'ORIGINAL MEDIA SIZE + ICONS — {im.width}×{h} / candidate',font=f,fill='white')
+        d.text((18,12),f'{args.scheme} — {im.width}×{h} / static preview',font=f,fill='white')
         f=ImageFont.truetype(str(ROOT/'_inc/fonts/Roboto-Regular.ttf'),16)
         d.text((18,47),'Actual candidate geometry / sample values / static approximation, not native Batocera',font=f,fill='#b6c1cc')
         sheet.save(OUT/f'metadata-{h}-enlarged.png')

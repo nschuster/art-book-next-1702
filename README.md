@@ -6,13 +6,13 @@ Maintained as **[nschuster/art-book-next-1702](https://github.com/nschuster/art-
 
 The 4:3 layout keeps the original media geometry and replaces the description with icon-based metadata.
 
-Only `aspect-ratio-4-3.xml` changes at runtime. In Detailed view, manual 4:3 and Automatic when dispatched to 4:3 replace the description with **seven metadata fields**: release date, rating, players, genre, play time, play count and last played. Developer and publisher are omitted.
+The layout change is confined to `aspect-ratio-4-3.xml`; an optional **Commodore 64** palette is registered in `theme.xml` and defined in `colors.xml`. In Detailed view, manual 4:3 and Automatic when dispatched to 4:3 replace the description with **seven metadata fields**: release date, rating, players, genre, play time, play count and last played. Developer and publisher are omitted.
 
 - **Default**, **Release Date & Play Time**, and **Play Time & Play Count** all display the same complete panel, with help on or off. Existing option names remain for compatibility; they still select the original pairs at other ratios.
 - **Off** is unchanged (no description or metadata).
 - Original theme SVG metadata icons and rating stars accompany native typed values, rather than a label/value table. Both dates use full `YYYY-MM-DD`.
 
-Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, palette, system selection, Basic view and help footer remain. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
+Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, system selection, Basic view and help-footer geometry remain; original colors remain unless the optional palette is selected. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
 
 ## Install on Batocera
 
@@ -41,9 +41,17 @@ Use the **Detailed** game-list view (not Basic); the exact game-list view select
 
 For updates to a Git installation, run `git -C /userdata/themes/art-book-next-1702 pull --ff-only`, then restart EmulationStation. For ZIP installations, replace this fork's folder with a fresh download. To roll back visually, select your original Art Book Next theme. Existing customizations intentionally still use `/userdata/theme-customizations/art-book-next/` so they remain compatible with upstream.
 
+## Optional Commodore 64 palette
+
+After updating and restarting EmulationStation, select **User Interface Settings → Theme Configuration → Color Scheme → Commodore 64**. Choose **Default** to return to the original colors. All existing schemes and the default selection are unchanged.
+
+This is a C64 BASIC-inspired palette, not an exact hardware color emulation: blue `#40318d`, dark-blue list/help/menu surfaces `#302568`, and lifted light-blue `#b8b0ff` text/icons for contrast. Selected games are opaque white; metadata, rating stars and help icons/text are opaque light blue. It covers system, game-list, menu, help, indicator and splash variables at every aspect ratio without changing geometry, fonts, artwork, or the approved seven-field panel. Existing menu foreground styling is retained. Custom splash artwork can still obscure the splash background.
+
+Static previews: [320×240 enlarged](previews/commodore-64/metadata-240-enlarged.png) and [640×480 enlarged](previews/commodore-64/metadata-480-enlarged.png). These are XML/palette-aware compositions with sample game values and a sample help row, **not native Batocera screenshots**. The real game screenshot is not recolored. Generate with `python tools/render_metadata_panel.py --scheme commodore-64` (Pillow and CairoSVG required). Native font rasterization, dynamic help prompts, system/menu/splash rendering and physical CRT readability remain unverified.
+
 ## Verification and limitations
 
-Run `python -m unittest discover -s tests -v` from a Git checkout. Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
+Run `python -m unittest discover -s tests -v` from a Git checkout. Tests require the upstream baseline commit `9a50ef366e750aabfab29e6915a2867607212971` and approved pre-palette revision `d3109da` in local history (use a normal, non-shallow clone). See [QA notes](docs/QA.md) for the engine revision, test-first evidence and geometry.
 
 **Not hardware tested:** no Raspberry Pi 5, Commodore 1702 or running Batocera frontend was used for this candidate. Tests check conditions, native component types, bounds, original media geometry and unchanged layouts, not native rendering. Composite sharpness, overscan, native font scaling, long values and cropped-image marquee layering require on-device review. Metadata font size is deliberately fixed independently of the global font preset. Missing scraped dates and play-time records retain engine fallback behavior; a theme cannot recover missing data. Upstream screenshots below are not candidate screenshots. Current static approximations are under `previews/original-style/`; older preview directories show superseded designs.
 
@@ -71,7 +79,7 @@ The following options can be changed directly from the main menu under `User Int
 | Game Metadata | Sets if metadata (e.g. description, release date, etc...) should be displayed for a game | `On`, `Off` |
 | Fonts | Define the fonts used throughout the theme. | `Default`, `Custom` |
 | Font Size | Set the size for text elements throughout the theme. | `Default`, `Small`, `Large`, `Extra Large` |
-| Color Scheme | Sets the color scheme that is used for the theme.  There is a set of prebuilt color schemes that you can select and an option to supply your custom color scheme (selected by choosing `custom`). You can see details on customizations below under [Theme Customizations](#theme-customizations). | `Default`, `Light`, `Steam OS`, `SNES`, `Famicom`, `OLED`, `Custom` |
+| Color Scheme | Sets the color scheme that is used for the theme.  There is a set of prebuilt color schemes that you can select and an option to supply your custom color scheme (selected by choosing `custom`). You can see details on customizations below under [Theme Customizations](#theme-customizations). | `Default`, `Light`, `Steam OS`, `SNES`, `Famicom`, `OLED`, `Commodore 64`, `Custom` |
 | Splash Screen | Toggles an optional custom splash screen which will be displayed when EmulationStation is loading and/or scanning for ROMs. | `Default`, `Custom` |
 
 ### Additional UI Settings 
