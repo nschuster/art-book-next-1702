@@ -102,7 +102,7 @@ def test_new_collision_never_deletes_modified_owned_extra(rig):
 def test_all_ambiguous_prunes_owned_assets_but_keeps_changed_and_unowned(rig):
     assert rig.sync().returncode == 0
     assets = list((rig.config.parent / 'assets').glob('*.svg'))
-    assert len(assets) == 2
+    assert len(assets) == 3  # fill, track, exact native trophy outline
     assets[0].write_text('local asset edit')
     unrelated = assets[0].with_name('unrelated.svg'); unrelated.write_text('keep')
     gamelist(rig.root, [('Game.sfc', 1), ('Game.zip', None)])
@@ -110,7 +110,7 @@ def test_all_ambiguous_prunes_owned_assets_but_keeps_changed_and_unowned(rig):
     assert p.returncode == 0, p.stderr
     assert not rig.output.exists()
     assert assets[0].read_text() == 'local asset edit'
-    assert not assets[1].exists()
+    assert all(not asset.exists() for asset in assets[1:])
     assert unrelated.read_text() == 'keep'
     assert len(rig.requests) == 3  # No API request for ambiguous games.
 

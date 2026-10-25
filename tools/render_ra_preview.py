@@ -9,16 +9,22 @@ import render_metadata_panel as base
 ROOT=Path(__file__).resolve().parents[1]
 
 def render(h, scheme, fixture_root=None, unlocked=12):
+    if fixture_root is None:
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory(prefix='ra-preview-') as tmp:
+            return render(h, scheme, Path(tmp), unlocked)
     spec=importlib.util.spec_from_file_location('ra_sync',ROOT/'scripts/retroachievements/sync.py')
     helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
     sample={'ID':1,'NumAchievements':40,'NumAwardedToUser':max(18,unlocked),'NumAwardedToUserHardcore':unlocked}
     # Explicit fictional fixture. No network requests or credentials involved.
-    fixture_root=Path(fixture_root) if fixture_root else ROOT/'previews/retroachievements-bottom/fixture'
+    fixture_root=Path(fixture_root)
     cfg={'mode':'hardcore'}
     asset,content=helper.progress_asset(sample,cfg,fixture_root)
     helper.store_asset(fixture_root/'system/retroachievements',asset,content)
     track,content=helper.track_asset(fixture_root)
     helper.store_asset(fixture_root/'system/retroachievements',track,content)
+    trophy,content=helper.trophy_asset(fixture_root)
+    helper.store_asset(fixture_root/'system/retroachievements',trophy,content)
     xml_bytes=helper.render(sample,cfg,fixture_root)
     (fixture_root/'sample.xml').write_bytes(xml_bytes)
     xml=ET.fromstring(xml_bytes)
@@ -36,6 +42,9 @@ def render(h, scheme, fixture_root=None, unlocked=12):
             for key,value in dict(variables,themePath=str(ROOT)).items():
                 props={p:v.replace('${'+key+'}',value) for p,v in props.items()}
         if node.tag=='text':
+            font_resource=props.get('fontPath')
+            if font_resource==':/fontawesome-webfont.ttf':
+                props['fontPath']=str(ROOT/'tools/assets/batocera42-fontawesome-webfont.ttf')
             x,y=base.xy(props,image.width,h);w,z=base.wh(props,image.width,h)
             ox,oy=base.pair(props.get('origin','0 0'))
             if 'backgroundColor' in props:
@@ -45,6 +54,7 @@ def render(h, scheme, fixture_root=None, unlocked=12):
                 image.alpha_composite(badge,(round(x-w*ox),round(y-z*oy)))
             record=base.text(image,props,props['text'],h,None)
             record['color']=props['color']
+            record['font_resource']=font_resource
             record['glyph_height']=base.font(props,h).getbbox(props['text'])[3]-base.font(props,h).getbbox(props['text'])[1]
             if record['text']!=record['display']:raise ValueError('Sample RA value truncated')
             records[node.get('name')]=record
@@ -62,9 +72,10 @@ def render(h, scheme, fixture_root=None, unlocked=12):
         bar=ImageChops.multiply(bar,Image.new('RGBA',bar.size,rgba))
         image.alpha_composite(bar,(round(x),round(y)))
         records[node.get('name')]={'asset':props['path'],'bounds':[round(x),round(y),round(w),round(z)]}
-    for ra_name in ['ra_progress','ra_progress_bar','ra_progress_track']:
+    for ra_name in ['ra_progress','ra_progress_bar','ra_progress_track','ra_progress_trophy']:
         bounds=records[ra_name]['bounds']
         for name,record in records.items():
+            if name==ra_name:continue
             if name in ['ra_progress','ra_progress_bar','ra_progress_track']:continue  # Intentional layered bar.
             a,b,c,d=record['bounds'];x,y,w,z=bounds
             if min(a+c,x+w)>max(a,x) and min(b+d,y+z)>max(b,y):

@@ -49,7 +49,7 @@ class AllPaletteTests(unittest.TestCase):
             self.assertFalse(any('${' in v for p in state.values() for v in p.values()))
             image,records=preview.render(480,scheme)
             self.assertEqual(image.size,(640,480))
-            self.assertEqual(records['ra_progress_bar']['bounds'],[352,391,256,22])
+            self.assertEqual(records['ra_progress_bar']['bounds'],[377,391,231,22])
             self.assertEqual(records['ra_progress']['display'],'12/40')
             signatures.add(image.tobytes())
         # Shipped Custom template intentionally equals Default; seven distinct designs.

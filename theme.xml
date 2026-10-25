@@ -184,6 +184,7 @@ https://github.com/anthonycaccese/art-book-next-es
    </subset>
    <include>./colors.xml</include>
    <include ifSubset="color-scheme:custom">${themeCustomizationsPath}colors.xml</include>
+   <include>./progress-colors.xml</include>
 
    <!--
    ///
@@ -679,6 +680,7 @@ https://github.com/anthonycaccese/art-book-next-es
          <filledPath>./_inc/images/metadata-icon-star-filled.svg</filledPath>
          <unfilledPath>./_inc/images/metadata-icon-star-unfilled.svg</unfilledPath>
          <color>${gamelistListRatingColor}</color>
+         <unfilledColor ifSubset="color-scheme:oled">777777</unfilledColor>
       </rating>
       <image name="game-releasedate-icon" extra="true">
          <path>./_inc/images/metadata-icon-releasedate.svg</path>

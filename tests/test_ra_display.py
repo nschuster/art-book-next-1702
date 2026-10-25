@@ -29,7 +29,7 @@ class ProgressDisplayTests(unittest.TestCase):
         text=doc.find('./view/text')
         props={p.tag:p.text for p in text}
         self.assertEqual(props.get('origin'),'0.5 0.5')
-        self.assertEqual(props['pos'],'0.75 0.837916666666667')
+        self.assertEqual(props['pos'],'0.76953125 0.837916666666667')
         self.assertEqual(props['size'],'0.14 0.045833333333333')
         self.assertEqual(props['text'],'12/100')
         self.assertEqual(props['alignment'],'center')

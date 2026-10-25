@@ -1,0 +1,9 @@
+<theme>
+   <formatVersion>7</formatVersion>
+   <!-- Separate include: ES parses each file's variables before its includes.
+        Load after palette/custom includes so the default uses their final sidebar. -->
+   <variables>
+      <raProgressTrackColor>${gamelistListTextlistBackgroundColor}</raProgressTrackColor>
+      <raProgressTrackColor ifSubset="color-scheme:oled">303030</raProgressTrackColor>
+   </variables>
+</theme>

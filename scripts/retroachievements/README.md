@@ -16,7 +16,7 @@ Default output:
 ```
 
 Each document is `<theme><formatVersion>7</formatVersion><view name="detailed,video">`
-with `<text name="ra_progress" extra="true">`, position `0.75 0.837916666666667`,
+with `<text name="ra_progress" extra="true">`, position `0.76953125 0.837916666666667`,
 size `0.14 0.045833333333333`, font `${themePath}/${fontBold}`, fontSize
 `0.027777777777777` (16.67% smaller count only), origin `0.5 0.5`, multiLine false,
 center alignment, zIndex 101, visible true, color
@@ -27,13 +27,24 @@ system's directory**, not the shared extras root. Coordinate this with the theme
 configurable in `template`; width/font suitability still needs native CRT QA.
 
 The second extra is `<image name="ra_progress_bar" extra="true">`, position
-`0.55 0.815`, size `0.40 0.045833333333333`, origin `0 0`, white tint, and an absolute SVG
+`0.5890625 0.815`, size `0.3609375 0.045833333333333`, origin `0 0`, white tint, and an absolute SVG
 path. This transparent image contains only the exact unlocked/total vector fill;
 the smooth Commodore rainbow spans that filled portion (not the whole track).
 0/0 and zero unlocked produce an empty track. This uses native image properties
 verified in pinned ES `ThemeData.cpp`, not a preview-only drawing. A separate white
 `ra_progress_track` SVG at the same geometry (zIndex 99) is tinted with
 `${gamelistListTextlistBackgroundColor}`. Palette switches require no re-sync.
+The fourth extra, `ra_progress_trophy`, is an SVG of the exact native U+F091
+outline, extracted unchanged from ES's pinned FontAwesome resource—not a
+lookalike or emoji. Only this metadata extra becomes an image; game-list fonts
+and formatter stay untouched. Its 20×20/10×10 image at x=.548 matches metadata
+icon width. The enlarged ink moves slightly left to preserve the approved
+6px/3px optical gap; bar/count geometry remains unchanged. It uses
+`${gamelistListMetadataIconColor}` with no badge and is ownership-managed like
+the other assets. See `docs/qa/ra-trophy-size-match.md`. Reinstall the helper and regenerate existing extras;
+clear stale `template.pos` overrides (or use `template: {}`) to center the count in
+the shortened bar. Do not rerun configuration or remove credentials.
+
 Both SVGs use preserveAspectRatio="none". Sidebar alpha is retained: Famicom is
 still faint on the empty track, while C64 ivory is now clear. Both lose contrast
 over the full rainbow. No badge/shadow was added. See the final-text gallery and main guide.

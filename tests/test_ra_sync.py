@@ -55,7 +55,7 @@ class SyncTests(unittest.TestCase):
             self.payload['NumAwardedToUserHardcore']=count
             self.assertEqual(self.run_sync('--force').returncode,0)
             self.assertTrue(asset_path().exists())
-            self.assertEqual(len(list(first.parent.glob('*.svg'))),2)
+            self.assertEqual(len(list(first.parent.glob('*.svg'))),3)  # fill, track, trophy
             for path in ET.parse(self.output()).findall('./view/image/path'):
                 self.assertTrue(Path(path.text).exists())
         other=first.parent/'unrelated.svg';other.write_text('keep')
@@ -67,7 +67,7 @@ class SyncTests(unittest.TestCase):
         p = self.run_sync(); self.assertEqual(p.returncode, 0, p.stderr)
         node = ET.parse(self.output()).find("./view/text[@name='ra_progress']")
         self.assertEqual(node.get('extra'), 'true'); self.assertEqual(node.findtext('text'), '2/10')
-        self.assertEqual(node.findtext('pos'), '0.75 0.837916666666667'); self.assertEqual(node.findtext('size'), '0.14 0.045833333333333')
+        self.assertEqual(node.findtext('pos'), '0.76953125 0.837916666666667'); self.assertEqual(node.findtext('size'), '0.14 0.045833333333333')
         self.assertEqual(node.findtext('fontPath'),'${themePath}/${fontBold}')
         query = parse_qs(urlparse(self.requests[0]).query)
         self.assertEqual(query['g'], ['1']); self.assertEqual(query['u'], ['test-user']); self.assertEqual(query['y'], ['secret-test-key'])

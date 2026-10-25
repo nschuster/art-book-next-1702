@@ -233,6 +233,20 @@ def track_asset(root):
     return Path(root).absolute() / 'system/retroachievements/assets' / (digest + '.svg'), content
 
 
+def trophy_asset(root):
+    """Exact U+F091 outline, uniformly scaled without font-size quantization.
+
+    FontTools SVGPathPen extraction from pinned Batocera FontAwesome 4.3.0;
+    source SHA256 9e540a087924a6e64790149d735cac022640e4fa6bff6bd65f5e9f41529bf0b3.
+    Bounds (0,-128,1664,1408), centered in a square, not stretched/cropped.
+    Copyright Dave Gandy 2015, SIL OFL 1.1: tools/assets/OFL-1.1.txt.
+    No FontTools or font installation is needed on the device.
+    """
+    content = b'<svg xmlns="http://www.w3.org/2000/svg" width="1664" height="1664" viewBox="0 0 1664 1664"><!-- Exact U+F091: FontAwesome 4.3.0, Copyright Dave Gandy 2015, SIL OFL 1.1 https://openfontlicense.org/open-font-license-official-text/ . Source: Batocera ES 4adf26b43900d1a33887af6d8af3da2e99e398a5 resources/fontawesome-webfont.ttf --><path fill="#ffffff" transform="translate(0 1472) scale(1 -1)" d="M458 653Q384 815 384 1024H128V928Q128 850 222.5 766.0Q317 682 458 653ZM1536 928V1024H1280Q1280 815 1206 653Q1347 682 1441.5 766.0Q1536 850 1536 928ZM1664 1056V928Q1664 857 1622.5 785.0Q1581 713 1510.5 655.0Q1440 597 1337.5 557.5Q1235 518 1122 513Q1080 459 1027 418Q989 384 974.5 345.5Q960 307 960 256Q960 202 990.5 165.0Q1021 128 1088 128Q1163 128 1221.5 82.5Q1280 37 1280 -32V-96Q1280 -110 1271.0 -119.0Q1262 -128 1248 -128H416Q402 -128 393.0 -119.0Q384 -110 384 -96V-32Q384 37 442.5 82.5Q501 128 576 128Q643 128 673.5 165.0Q704 202 704 256Q704 307 689.5 345.5Q675 384 637 418Q584 459 542 513Q429 518 326.5 557.5Q224 597 153.5 655.0Q83 713 41.5 785.0Q0 857 0 928V1056Q0 1096 28.0 1124.0Q56 1152 96 1152H384V1248Q384 1314 431.0 1361.0Q478 1408 544 1408H1120Q1186 1408 1233.0 1361.0Q1280 1314 1280 1248V1152H1568Q1608 1152 1636.0 1124.0Q1664 1096 1664 1056Z"/></svg>'
+    digest = hashlib.sha256(content).hexdigest()
+    return Path(root).absolute() / 'system/retroachievements/assets' / (digest + '.svg'), content
+
+
 def store_asset(state, path, content):
     """Journal ownership before writing, so interrupted writes can be collected."""
     path = safe_path(path)
@@ -279,7 +293,7 @@ def render(data, cfg, root):
     view = ET.SubElement(theme, 'view', name='detailed,video')
     text = ET.SubElement(view, 'text', name='ra_progress', extra='true')
     key = 'NumAwardedToUserHardcore' if cfg.get('mode', 'hardcore') == 'hardcore' else 'NumAwardedToUser'
-    props = {'pos': '0.75 0.837916666666667', 'size': '0.14 0.045833333333333', 'fontPath': font,
+    props = {'pos': '0.76953125 0.837916666666667', 'size': '0.14 0.045833333333333', 'fontPath': font,
              'fontSize': '0.027777777777777', 'color': '${gamelistListTextlistUnselectedColor}', 'alignment': 'center',
              'origin': '0.5 0.5', 'multiLine': 'false',
              'verticalAlignment': 'center', 'zIndex': '101', 'visible': 'true'}
@@ -289,14 +303,22 @@ def render(data, cfg, root):
     ET.SubElement(text, 'text').text = f"{label + ' ' if label else ''}{data[key]}/{data['NumAchievements']}"
     image = ET.SubElement(view, 'image', name='ra_progress_bar', extra='true')
     asset, _ = progress_asset(data, cfg, root)
-    for name, value in {'pos': '0.55 0.815', 'size': '0.40 0.045833333333333', 'origin': '0 0',
+    for name, value in {'pos': '0.5890625 0.815', 'size': '0.3609375 0.045833333333333', 'origin': '0 0',
                         'path': str(asset), 'color': 'FFFFFFFF', 'zIndex': '100', 'visible': 'true'}.items():
         ET.SubElement(image, name).text = value
     track = ET.SubElement(view, 'image', name='ra_progress_track', extra='true')
-    for name, value in {'pos': '0.55 0.815', 'size': '0.40 0.045833333333333', 'origin': '0 0',
-                        'path': str(track_asset(root)[0]), 'color': '${gamelistListTextlistBackgroundColor}',
+    for name, value in {'pos': '0.5890625 0.815', 'size': '0.3609375 0.045833333333333', 'origin': '0 0',
+                        'path': str(track_asset(root)[0]), 'color': '${raProgressTrackColor}',
                         'zIndex': '99', 'visible': 'true'}.items():
         ET.SubElement(track, name).text = value
+    # Exact CHEEVOSICON outline, metadata only; native game-name font is untouched.
+    # Move the enlarged ink left, not the bar, retaining optical 6px/3px gaps.
+    trophy = ET.SubElement(view, 'image', name='ra_progress_trophy', extra='true')
+    for name, value in {'pos': '0.548 0.837916666666667', 'size': '0.03125 0.041666666666667',
+                        'origin': '0 0.5', 'path': str(trophy_asset(root)[0]),
+                        'color': '${gamelistListMetadataIconColor}',
+                        'zIndex': '101', 'visible': 'true'}.items():
+        ET.SubElement(trophy, name).text = value
     return ET.tostring(theme, encoding='utf-8', xml_declaration=True)
 
 def run(args):
@@ -382,6 +404,8 @@ def run(args):
                 store_asset(state, asset, asset_content)
                 track, track_content = track_asset(root)
                 store_asset(state, track, track_content)
+                trophy, trophy_content = trophy_asset(root)
+                store_asset(state, trophy, trophy_content)
                 content = render(fetched[gid], cfg, root)
                 atomic_write(target, content)
                 owned[relative] = {'identity': desired[relative], 'sha256': hashlib.sha256(content).hexdigest()}

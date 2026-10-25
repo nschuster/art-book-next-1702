@@ -152,7 +152,9 @@ def render(h, scheme='default'):
             if not bw:bw=bh*5
             x,y=xy(p,w,h);ox,oy=pair(p.get('origin','0 0'));x-=bw*ox;y-=bh*oy
             for i in range(5):
-                path=p['filledPath' if i<4 else 'unfilledPath'];star=asset(path,(bw/5,bh),p['color']);im.alpha_composite(star,(round(x+i*bw/5),round(y)))
+                path=p['filledPath' if i<4 else 'unfilledPath']
+                tint=p['color'] if i<4 else p.get('unfilledColor',p['color'])
+                star=asset(path,(bw/5,bh),tint);im.alpha_composite(star,(round(x+i*bw/5),round(y)))
             records[name]={'bounds':[x,y,bw,bh],'sample_rating':.8}
     for key in ['releasedate','rating','players','genre','gametime','playcount','lastplayed']:
         name='game-gametime-totalhours' if key=='gametime' else 'md_'+key

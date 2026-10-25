@@ -62,7 +62,10 @@ class C64Tests(unittest.TestCase):
                 self.assertEqual(len(overlay), 2)
                 for view in root.findall('view'):
                     if overlay in list(view): view.remove(overlay)
-            self.assertEqual(structure(root), structure(parse(original(path))), path)
+            expected = parse(original(path))
+            from test_oled import approved_oled_transform
+            approved_oled_transform(expected, path)
+            self.assertEqual(structure(root), structure(expected), path)
 
 
     def test_approved_layout_allows_only_requested_metadata_reorder(self):

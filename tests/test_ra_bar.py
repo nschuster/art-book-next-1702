@@ -19,8 +19,8 @@ class BarTests(unittest.TestCase):
                     image=doc.find('./view/image')
                     self.assertIsNotNone(image,'Native image progress extra is missing')
                     self.assertEqual(image.attrib,dict(name='ra_progress_bar',extra='true'))
-                    self.assertEqual(image.findtext('pos'),'0.55 0.815')
-                    self.assertEqual(image.findtext('size'),'0.40 0.045833333333333')
+                    self.assertEqual(image.findtext('pos'),'0.5890625 0.815')
+                    self.assertEqual(image.findtext('size'),'0.3609375 0.045833333333333')
                     asset,content=helper.progress_asset(data,{'mode':mode},root)
                     self.assertEqual(image.findtext('path'),str(asset));self.assertTrue(asset.is_absolute())
                     svg=ET.fromstring(content);ns={'s':'http://www.w3.org/2000/svg'}

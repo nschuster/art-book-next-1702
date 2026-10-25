@@ -2,6 +2,10 @@
 
 The preview-approved layout preserves original media geometry and uses icon-based metadata.
 
+Metadata RA trophy: [native trophy evidence](qa/ra-native-trophy.md) and [final icon sizing](qa/ra-trophy-size-match.md). Native SVG rasterization and static previews are verified; full device validation remains outstanding.
+
+OLED-only empty-star / empty-track contrast follow-up: [colors, native schema, previews and upgrade note](qa/oled-empty-contrast.md). Sidebar stays black; other palettes and approved trophy/layout are preserved.
+
 ## Layout contract
 
 The layout change is confined to `aspect-ratio-4-3.xml`. The optional Commodore palette additionally changes colors and supplies a palette-only textlist selector in `colors.xml` / `theme.xml`. Manual and dispatched automatic 4:3 Detailed mode, metadata `on|mixed|play-stats`, help on/off: replace description with seven fields. Developer/publisher and all text labels are hidden. Retain release date, rating, players, play count, play time, last played and genre.

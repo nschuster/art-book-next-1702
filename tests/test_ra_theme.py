@@ -38,6 +38,8 @@ class AchievementThemeTests(unittest.TestCase):
         self.assertEqual(include.attrib, {'ifSubset':'retroachievements-progress:on'})
         root.remove(include)
         baseline=parse(subprocess.check_output(['git','show','777618c:theme.xml'],cwd=ROOT))
+        from test_oled import approved_oled_transform
+        approved_oled_transform(baseline, 'theme.xml')
         self.assertEqual(structure(root), structure(baseline))
 
     def test_overlay_is_scoped_and_preserves_media(self):
