@@ -83,6 +83,10 @@ https://github.com/anthonycaccese/art-book-next-es
       <include name="off" displayName="Off" />
       <include name="on" displayName="On" />
    </subset>
+   <subset name="system-playtime" displayName="System Playtime">
+      <include name="off" displayName="Off" />
+      <include name="on" displayName="On" />
+   </subset>
 
    <!--
    ///
@@ -810,4 +814,11 @@ https://github.com/anthonycaccese/art-book-next-es
       <include name="on" displayName="On (sync helper required)" />
    </subset>
    <include ifSubset="retroachievements-progress:on">./retroachievements.xml</include>
+   <include ifSubset="system-playtime:on">./system-playtime.xml</include>
+   <subset name="menu-font-size" displayName="Menu Font Size">
+      <include name="default" displayName="Default" />
+      <include name="large" displayName="Large" />
+      <include name="xlarge" displayName="Extra Large" />
+   </subset>
+   <include>./menu-font-size.xml</include>
 </theme>

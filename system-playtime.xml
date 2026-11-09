@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+   <view name="system">
+      <text name="system-playtime" extra="true">
+         <origin>0.5 0.5</origin>
+         <pos>0.5 0.85</pos>
+         <size>0.9 0.05</size>
+         <alignment>center</alignment>
+         <fontSize>0.041666666666667</fontSize>
+         <fontSize ifSubset="font-size:small|default">0.041666666666667</fontSize>
+         <fontSize ifSubset="font-size:large">0.05</fontSize>
+         <fontSize ifSubset="font-size:xlarge">0.05833333</fontSize>
+         <fontPath>${fontBold}</fontPath>
+         <color>ffffff</color>
+         <emptyTextDefaults>false</emptyTextDefaults>
+         <!-- Keep spaces inside empty(): native Null becomes an empty argument. -->
+         <text>empty( {system:gameTime} ) ? "00:00" : {system:gameTime}</text>
+         <zIndex>3</zIndex>
+      </text>
+   </view>
+</theme>

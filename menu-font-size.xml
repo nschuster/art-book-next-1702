@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+   <view name="menu" ifSubset="menu-font-size:large">
+      <menuText name="menutitle"><fontSize>0.0375</fontSize></menuText>
+      <menuText name="menufooter"><fontSize>0.02916667</fontSize></menuText>
+      <menuText name="menutext"><fontSize>0.04166667</fontSize></menuText>
+      <menuTextSmall name="menutextsmall"><fontSize>0.03333334</fontSize></menuTextSmall>
+      <menuGroup name="menugroup"><fontSize>0.04166667</fontSize></menuGroup>
+   </view>
+   <view name="menu" ifSubset="menu-font-size:xlarge">
+      <menuText name="menutitle"><fontSize>0.04166667</fontSize></menuText>
+      <menuText name="menufooter"><fontSize>0.03333334</fontSize></menuText>
+      <menuText name="menutext"><fontSize>0.05</fontSize></menuText>
+      <menuTextSmall name="menutextsmall"><fontSize>0.04166667</fontSize></menuTextSmall>
+      <menuGroup name="menugroup"><fontSize>0.05</fontSize></menuGroup>
+   </view>
+</theme>

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Install only RA-owned files; never edit custom.sh or unrelated services."""
 import argparse
+import fcntl
 import hashlib
 import json
 from pathlib import Path
@@ -14,6 +15,16 @@ def digest(data):
 
 
 def install(root, uninstall=False):
+    state = safe_path(root / 'system/retroachievements')
+    state.mkdir(parents=True, exist_ok=True)
+    with safe_path(state / 'sync.lock').open('a') as lock:
+        try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise SyncError('stop active worker before install/uninstall') from None
+        install_files(root, uninstall)
+
+
+def install_files(root, uninstall=False):
     root = safe_path(root)
     state = safe_path(root / 'system/retroachievements')
     manifest = safe_path(state / 'install-manifest.json')
@@ -26,13 +37,13 @@ def install(root, uninstall=False):
         'system/scripts/ra-progress-sync.sh': (
             '#!/bin/sh\n# Managed by RA extras installer.\n'
             'case "$1" in\n  gameStop)\n'
-            f'    {command} --system "$2" --rom "$5" --force </dev/null >/dev/null 2>&1 &\n'
+            f'    {command} --watch --system "$2" --rom "$5" --force </dev/null &\n'
             '    ;;\nesac\n').encode(),
         'system/services/ra-progress-sync': (
-            '#!/bin/sh\n# Managed by RA extras installer; one-shot, not a daemon.\n'
+            '#!/bin/sh\n# Managed by RA extras installer; exits when durable queue drains.\n'
             'case "$1" in\n  start)\n'
-            f'    {command} </dev/null >/dev/null 2>&1 &\n'
-            '    ;;\n  stop) : ;;\nesac\n').encode(),
+            f'    {command} --watch </dev/null &\n'
+            f'    ;;\n  stop) {command} --stop ;;\nesac\n').encode(),
     }
     example = safe_path(state / 'config.example.json')
     mapping = safe_path(state / 'mapping.json')
@@ -89,7 +100,7 @@ def main():
         install(Path(args.data_root).absolute(), args.uninstall)
         return 0
     except (OSError, ValueError, SyncError):
-        print('Install refused: unsafe path or existing unmanaged/modified file. No unrelated service is modified.', file=sys.stderr)
+        print('Install refused: stop any active sync worker first; otherwise check unsafe paths or unmanaged/modified files. No unrelated service is modified.', file=sys.stderr)
         return 2
 
 if __name__ == '__main__':

@@ -121,7 +121,7 @@ def test_retries_and_redirects_are_bounded(rig):
     rig.status=503
     assert rig.sync().returncode == 1 and len(rig.requests) == 2
     rig.requests.clear(); rig.status=302
-    assert rig.sync().returncode == 1 and len(rig.requests) == 1
+    assert rig.sync('--force').returncode == 1 and len(rig.requests) == 1
 
 
 def test_disabled_preserves_modified_extras_with_explicit_error(rig):

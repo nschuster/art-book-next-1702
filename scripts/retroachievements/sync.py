@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Short-lived, stdlib-only RetroAchievements -> Batocera per-game extras sync."""
 import argparse
+from contextlib import contextmanager
+import uuid
 import fcntl
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -190,10 +193,22 @@ class TokenClient(Client):
             raise SyncError('invalid client API response')
         return payload
 
-    def fetch(self, gid):
+    def definitions(self, gid):
         def valid_id(value):
             return type(value) is int and 0 < value <= 0xffffffff
         if not valid_id(gid): raise SyncError('invalid game ID')
+        cache = safe_path(self.definition_dir / (str(gid) + '.json'))
+        ttl = max(0, min(604800, float(self.cfg.get('definition_ttl', 86400))))
+        if cache.exists() and 0 <= time.time() - cache.stat().st_mtime < ttl:
+            try:
+                data = json.loads(cache.read_text())
+                if (isinstance(data, dict) and type(data.get('ID')) is int and data['ID'] == gid
+                        and isinstance(data.get('core'), list) and all(valid_id(value) for value in data['core'])
+                        and len(set(data['core'])) == len(data['core'])):
+                    return set(data['core'])
+            except ValueError:
+                pass
+        # Expired/bad definitions must be fetched, never a stale-success fallback.
         patch = self.call('patch', gid).get('PatchData')
         if not isinstance(patch, dict) or not valid_id(patch.get('ID')) or patch['ID'] != gid or not isinstance(patch.get('Achievements'), list):
             raise SyncError('invalid patch')
@@ -202,6 +217,13 @@ class TokenClient(Client):
             if not isinstance(achievement, dict) or not valid_id(achievement.get('ID')) or type(achievement.get('Flags')) is not int or not 0 <= achievement['Flags'] <= 0xffffffff:
                 raise SyncError('invalid achievement')
             if achievement['Flags'] == 3: core.add(achievement['ID'])
+        atomic_write(cache, json.dumps({'ID': gid, 'core': sorted(core)}).encode())
+        return core
+
+    def fetch(self, gid):
+        def valid_id(value):
+            return type(value) is int and 0 < value <= 0xffffffff
+        core = self.definitions(gid)
         modes = []
         for mode in (0, 1):
             unlocked = self.call('unlocks', gid, h=mode).get('UserUnlocks')
@@ -321,10 +343,81 @@ def render(data, cfg, root):
         ET.SubElement(trophy, name).text = value
     return ET.tostring(theme, encoding='utf-8', xml_declaration=True)
 
+@contextmanager
+def pending_queue(state):
+    """Short transaction lock; never held across HTTP or retry sleeps."""
+    with safe_path(state / 'queue.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        path = safe_path(state / 'pending.json')
+        pending = json.loads(path.read_text()) if path.exists() else {}
+        if not isinstance(pending, dict): raise SyncError('invalid pending queue')
+        for gid, job in pending.items():
+            if (not gid.isdecimal() or int(gid) <= 0 or not isinstance(job, dict)
+                    or not isinstance(job.get('generation'), str)
+                    or type(job.get('force')) is not bool
+                    or type(job.get('attempts')) is not int or job['attempts'] < 0
+                    or type(job.get('due')) not in (float, int) or not math.isfinite(job['due'])
+                    or job['due'] < 0 or type(job.get('watch', False)) is not bool):
+                raise SyncError('invalid pending queue')
+        yield pending
+        atomic_write(path, json.dumps(pending).encode())
+
+
+def status_event(state, event, count=0):
+    """Fixed vocabulary and numeric counts only; no paths, identities or errors."""
+    if event not in ('queued', 'written', 'retry', 'complete', 'rejected', 'unmapped'):
+        raise SyncError('invalid status event')
+    with safe_path(state / 'status.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        path = safe_path(state / 'status.log')
+        # Do not read an arbitrarily large existing log into memory.
+        history = b''
+        if path.exists():
+            with path.open('rb') as stream:
+                stream.seek(max(0, path.stat().st_size - 12000))
+                history = stream.read(12000).split(b'\n', 1)[-1]
+        line = f'{int(time.time())} {event} {int(count)}\n'.encode()
+        atomic_write(path, history + line)
+
+
+def source_stamp(cfg_path, cfg, root):
+    paths = [cfg_path, root / 'system/batocera.conf']
+    paths.extend(root / 'roms' / system / 'gamelist.xml' for system in cfg.get('systems', []))
+    if cfg.get('mapping_file'):
+        path = Path(cfg['mapping_file'])
+        paths.append(path if path.is_absolute() else cfg_path.parent / path)
+    result = []
+    for path in paths:
+        try:
+            st = path.stat()
+            result.append((st.st_ino, st.st_mtime_ns, st.st_size))
+        except FileNotFoundError:
+            result.append(None)
+    return result
+
+
 def run(args):
+    if args.stop:
+        state = safe_path(Path(args.data_root).absolute() / 'system/retroachievements')
+        state.mkdir(parents=True, exist_ok=True)
+        marker = safe_path(state / 'stop.request')
+        atomic_write(marker, b'stop\n')
+        with safe_path(state / 'sync.lock').open('a') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            if marker.exists(): marker.unlink()
+        return 0
+    while True:
+        result = run_worker(args)
+        if result is not None: return result
+        # Source identity changed during work. Release the worker lock, reload
+        # settings and reconcile before any further publication.
+
+
+def run_worker(args):
     cfg_path = Path(args.config).absolute()
     cfg = load_config(cfg_path)
     root = Path(args.data_root).absolute()
+    stamp = source_stamp(cfg_path, cfg, root)
     native = cfg.get('backend') == 'batocera'
     if native: cfg.update(batocera_settings(root))
     inactive = native and (not cfg['enabled'] or not cfg['username'] or not cfg['token'])
@@ -341,13 +434,31 @@ def run(args):
             records = {key: gid for key, gid in records.items() if key[0] == args.system}
     state = safe_path(root / 'system/retroachievements')
     state.mkdir(parents=True, exist_ok=True)
-    targets = {key: safe_path(state / 'extras' / key[0] / (PurePosixPath(key[1]).stem + '.xml')) for key in records}
+    targets = {key: safe_path(state / 'extras' / key[0] / (PurePosixPath(key[1]).stem + '.xml')) for key in all_records}
+    # Validate transport before committing work; credentials never enter the queue.
+    client = (TokenClient if native else Client)(cfg, args.test_api_base)
+    if native: client.definition_dir = state / 'definitions'
+    with pending_queue(state) as pending:
+        if not args.drain:
+            for gid in dict.fromkeys(records.values()):
+                previous = pending.get(str(gid), {})
+                if previous and not args.force:
+                    if args.watch: previous['watch'] = True
+                    continue  # Startup must not erase force intent or retry backoff.
+                pending[str(gid)] = {'generation': uuid.uuid4().hex,
+                    'force': args.force or previous.get('force', False),
+                    'watch': args.watch or previous.get('watch', False), 'attempts': 0, 'due': 0}
+    status_event(state, 'queued', len(set(records.values())))
+    if args.rom and not records and not inactive:
+        print('No safe saved game ID for selected ROM; save Batocera gamelists or supply a verified mapping.', file=sys.stderr)
+        status_event(state, 'unmapped')
     lock_path = safe_path(state / 'sync.lock')
     with lock_path.open('a') as lock:
-        try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            print('Sync already running; skipped.'); return 0
-        client = (TokenClient if native else Client)(cfg, args.test_api_base)
+        # The worker's final empty-check/unlock uses this same transaction lock.
+        with pending_queue(state):
+            try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                print('Sync already running; request queued.'); return 0
         # SHA256 namespaces account caches, never hashes ROMs.
         account = hashlib.sha256(cfg['username'].encode()).hexdigest()[:24]
         manifest = safe_path(state / 'extras-manifest.json')
@@ -378,46 +489,86 @@ def run(args):
                 return 2
             print('Batocera RA is disabled; owned progress extras removed. Reload the game list to clear an already displayed panel.')
             return 0
-        failures = 0; fetched = {}; count = 0
-        for key, gid in records.items():
+        failures = 0; count = 0; attempted = set()
+        valid_ids = set(all_records.values())
+        max_attempts = max(1, min(5, int(cfg.get('queue_attempts', 3))))
+        retry_delay = max(30, min(300, float(cfg.get('queue_backoff', 30))))
+        if args.test_api_base: retry_delay = max(.05, float(cfg.get('queue_backoff', .2)))
+        while True:
+            if safe_path(state / 'stop.request').exists(): return 1
+            if source_stamp(cfg_path, cfg, root) != stamp: return None
+            with pending_queue(state) as pending:
+                for item in list(pending):
+                    if int(item) not in valid_ids: del pending[item]
+                watch = args.watch or any(job.get('watch', False) for job in pending.values())
+                eligible = [(item, job) for item, job in pending.items() if job['attempts'] < max_attempts]
+                ready = [(item, job) for item, job in eligible
+                         if job['due'] <= time.time() and (watch or job['generation'] not in attempted)]
+                ready.sort(key=lambda pair: not pair[1]['force'])
+                if not ready:
+                    if not eligible or not watch:
+                        collect_assets(state, owned)
+                        remaining = len(pending)
+                        # Enqueue cannot land between the final decision and unlock.
+                        fcntl.flock(lock, fcntl.LOCK_UN)
+                        break
+                    wait = min(1, max(.05, min(job['due'] for _, job in eligible) - time.time()))
+                    job = None
+                else:
+                    item, job = ready[0]
+                    job = dict(job)
+            if job is None:
+                time.sleep(wait)
+                continue
+            gid = int(item)
+            attempted.add(job['generation'])
+            failed = False
             cache = safe_path(state / 'cache' / ('batocera' if native else 'webapi') / account / (str(gid) + '.json'))
             try:
-                if gid in fetched and fetched[gid] is None:
-                    raise SyncError('game already failed this run')
-                if gid not in fetched:
-                    fetched[gid] = None
-                    data = None
-                    if not args.force and cache.exists() and time.time() - cache.stat().st_mtime < max(0, float(cfg.get('cache_ttl', 900))):
-                        try: data = progress(json.loads(cache.read_text()), gid)
-                        except (ValueError, SyncError): pass
-                    if data is None:
-                        data = client.fetch(gid)
-                        atomic_write(cache, json.dumps(data).encode())
-                    fetched[gid] = data
-                target = targets[key]
-                relative = str(target.relative_to(state / 'extras'))
-                if target.exists():
-                    previous = owned.get(relative)
-                    if not previous or hashlib.sha256(target.read_bytes()).hexdigest() != previous.get('sha256'):
-                        raise SyncError('refusing unmanaged or changed progress extra')
-                asset, asset_content = progress_asset(fetched[gid], cfg, root)
-                store_asset(state, asset, asset_content)
-                track, track_content = track_asset(root)
-                store_asset(state, track, track_content)
-                trophy, trophy_content = trophy_asset(root)
-                store_asset(state, trophy, trophy_content)
-                content = render(fetched[gid], cfg, root)
-                atomic_write(target, content)
-                owned[relative] = {'identity': desired[relative], 'sha256': hashlib.sha256(content).hexdigest()}
-                atomic_write(manifest, json.dumps(owned).encode())
-                count += 1
+                data = None
+                if not job['force'] and cache.exists() and time.time() - cache.stat().st_mtime < max(0, float(cfg.get('cache_ttl', 900))):
+                    try: data = progress(json.loads(cache.read_text()), gid)
+                    except (ValueError, SyncError): pass
+                if data is None:
+                    data = client.fetch(gid)
+                    if source_stamp(cfg_path, cfg, root) != stamp: return None
+                    atomic_write(cache, json.dumps(data).encode())
+                if source_stamp(cfg_path, cfg, root) != stamp: return None
+                for key in (key for key, value in all_records.items() if value == gid):
+                    target = targets[key]
+                    relative = str(target.relative_to(state / 'extras'))
+                    if target.exists():
+                        previous = owned.get(relative)
+                        if not previous or hashlib.sha256(target.read_bytes()).hexdigest() != previous.get('sha256'):
+                            raise SyncError('refusing unmanaged or changed progress extra')
+                    asset, asset_content = progress_asset(data, cfg, root)
+                    store_asset(state, asset, asset_content)
+                    track, track_content = track_asset(root)
+                    store_asset(state, track, track_content)
+                    trophy, trophy_content = trophy_asset(root)
+                    store_asset(state, trophy, trophy_content)
+                    content = render(data, cfg, root)
+                    atomic_write(target, content)
+                    owned[relative] = {'identity': desired[relative], 'sha256': hashlib.sha256(content).hexdigest()}
+                    atomic_write(manifest, json.dumps(owned).encode())
+                    count += 1
             except (SyncError, OSError):
+                failed = True
                 failures += 1
-                print('Game sync failed; existing files retained.', file=sys.stderr)
+                print('Game sync failed; existing files retained; retry pending.', file=sys.stderr)
                 if native: print(AUTH_HELP, file=sys.stderr)
-        collect_assets(state, owned)
-        print(f'Sync complete: {count} extras written, {failures} failures.')
-        return 1 if failures else 0
+            with pending_queue(state) as pending:
+                current = pending.get(item)
+                if current and current['generation'] == job['generation']:
+                    if failed:
+                        current['attempts'] = min(32, current['attempts'] + 1)
+                        current['due'] = time.time() + min(300, retry_delay * 2 ** min(4, current['attempts'] - 1))
+                    else:
+                        del pending[item]
+            status_event(state, 'retry' if failed else 'written', gid)
+        print(f'Sync complete: {count} extras written, {failures} failures, {remaining} pending.')
+        status_event(state, 'complete', remaining)
+        return 1 if remaining else 0
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -426,11 +577,20 @@ def main():
     parser.add_argument('--system', help='only this system')
     parser.add_argument('--rom', help='only this ROM (requires --system)')
     parser.add_argument('--force', action='store_true', help='refresh even if cache is fresh')
+    parser.add_argument('--drain', action='store_true', help='process pending work without adding a scan')
+    parser.add_argument('--watch', action='store_true', help='wait and retry pending failures until drained')
+    parser.add_argument('--stop', action='store_true', help='stop active worker after current job, retaining pending work')
     parser.add_argument('--test-api-base', help='TEST ONLY: loopback HTTP mock API; never a live-success claim')
     args = parser.parse_args()
     try: return run(args)
     except (SyncError, OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
         # Never print exception details: upstream URLs and JSON may contain secrets.
+        try:
+            state = safe_path(Path(args.data_root).absolute() / 'system/retroachievements')
+            state.mkdir(parents=True, exist_ok=True)
+            status_event(state, 'rejected')
+        except (SyncError, OSError):
+            pass  # stderr remains visible if storage itself is unsafe/unavailable.
         print('Sync rejected configuration, mapping, or filesystem; check private config, safe paths and permissions. If owned extras were modified, restore them or disable the theme RA display; modified files cannot be safely removed.', file=sys.stderr)
         return 2
 

@@ -40,6 +40,10 @@ class AchievementThemeTests(unittest.TestCase):
         baseline=parse(subprocess.check_output(['git','show','777618c:theme.xml'],cwd=ROOT))
         from test_oled import approved_oled_transform
         approved_oled_transform(baseline, 'theme.xml')
+        from test_system_playtime import approved_system_playtime_transform
+        approved_system_playtime_transform(baseline)
+        from test_menu_fonts import approved_menu_transform
+        approved_menu_transform(baseline)
         self.assertEqual(structure(root), structure(baseline))
 
     def test_overlay_is_scoped_and_preserves_media(self):

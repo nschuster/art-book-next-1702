@@ -17,6 +17,27 @@ For this playtime update, only `aspect-ratio-4-3.xml` needs replacing on an exis
 
 Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, system selection, Basic view and help-footer geometry remain; original colors remain unless the optional palette is selected. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
 
+## Optional system total playtime (native format)
+
+Enable **Theme Configuration → System Playtime → On**. **Off is the default**; **System Count** remains independent. The native selected-system total appears below the unchanged count, without moving original artwork or logos. No helper, RA setup or gamelist edits are required.
+
+The display preserves `mm:ss`, `hh:mm:ss`, or `dd:hh:mm:ss`, **including days** (which may exceed two digits). Empty/unplayed totals show `00:00`. This is a **sum over visible games**, so filters can change the total. It is separate from the individual-game hours/minutes formatter above.
+
+All ratios share the existing count geometry, so this option applies to all ratios. Primary review is 640×480, with a separate 320×240 check. The new line is centered at `.5 .85`, height `.05`, below the unchanged count at `.5 .78`, above the unchanged help footer. Font presets and the count's white text/Roboto Bold styling are retained. Extra Large text and physical CRT readability still need on-device review.
+
+Update the theme, including **`theme.xml`, `system-playtime.xml` and `menu-font-size.xml`**, restart EmulationStation, then enable the setting if desired. The native timecode format is optional and remains Off by default. Verified against Batocera 42 ES `4adf26b43900d1a33887af6d8af3da2e99e398a5`; parser/static checks are not a live device capture. See [native system-playtime QA](docs/qa/system-playtime-native.md).
+
+## Optional menu font size
+
+Select **Theme Configuration → Menu Font Size → Default / Large / Extra Large**. Start with **Large** at 640×480. This affects stock Batocera 42 menus, including the RetroAchievements account/game list and the selected game's achievement titles, descriptions, points, unlock dates and progress text. It needs **no helper, RA resync or custom frontend**.
+
+- **Default** preserves the previous menu appearance exactly, including its existing response to the general **Font Size** setting.
+- **Large** and **Extra Large** override menu typography independently of that general setting; game-list, metadata, system, artwork and help-prompt fonts are untouched. Menu font families/colors are retained.
+- These are global menu presets, not RA-only controls. At 640×480 with stock menu scaling, normal/small font raster sizes are approximately **26/20 px** (Large) and **31/26 px** (Extra Large); these are font sizes, not measured letter heights. RA game-name template scaling can differ.
+- Larger text means fewer visible rows. Native fixed-width progress areas, long game names/descriptions, translations and CRT overscan can still clip; this does not add wrapping or resize the native dialogs. It does not change emulator achievement popups or in-game RetroArch menus.
+
+These presets are source/semantic-tested, not device-tested. Update the complete theme (including both new XML includes), restart EmulationStation, then select the option and reopen the menus. Static previews also indicate possible summary/progress overlap at larger sizes; verify on the device. See [menu font QA and exact source evidence](docs/qa/menu-font-size.md).
+
 ## Install on Batocera
 
 Keep the original theme installed for easy comparison/rollback. Install this fork into its **own** folder; do not overwrite `art-book-next`.

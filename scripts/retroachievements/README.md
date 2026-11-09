@@ -1,5 +1,8 @@
 # RetroAchievements per-game extras helper (Batocera v42)
 
+Queue update, tested upgrade instructions and evidence limits:
+[reliable refresh queue](../../docs/qa/ra-reliable-queue.md).
+
 This is an optional, short-lived **Python 3 standard-library** synchronizer, not an
 emulator plugin or daemon. It never modifies a gamelist. By default it reuses the
 username and login token already stored by Batocera 42, without prompting for credentials.
@@ -131,12 +134,31 @@ batocera-services start ra-progress-sync
 ```
 
 The installed `/userdata/system/scripts/ra-progress-sync.sh` responds only to
-`gameStop`, refreshes the exited system/ROM with `--force`, and exits after spawning
-a short-lived worker. Startup refreshes the configured set using the cache TTL.
-Both use the same nonblocking advisory `flock` inside Python: overlapping work is
-skipped, not queued. Thus a game exit during a long startup scan can be skipped;
-a later manual forced sync can recover it. Hooks redirect output to `/dev/null`;
-run the manual command for a summary. No periodic daemon or unbounded log exists.
+`gameStop`, queues the exited system/ROM with `--force --watch`, and spawns a worker.
+Startup queues only mapped achievement IDs using the progress-cache TTL. No ROM
+hashing or API requests for unidentified games are performed. Gamelists are still
+read for IDs and filename-collision safety.
+
+Requests are persisted to `pending.json` before competing for the worker lock.
+Forced played-game requests take priority between jobs; they cannot interrupt an
+HTTP request already in flight. A newer event for the same game survives completion
+of the older request. Startup does not reset existing retry deadlines. One worker
+owns publication; queue locking covers its final empty-check and lock release.
+
+Installed hooks use `--watch`: failed jobs retry automatically with exponential
+delay (default 30 seconds, capped at 300). `queue_attempts` defaults to 3 and is
+bounded to 1–5 attempts per queued generation, including the first attempt; each
+attempt also obeys the HTTP retry limit. Exhausted jobs remain on disk, but the
+worker exits rather than retrying forever. A new game-exit event or manual
+`--force` renews their budget. Restarting preserves attempts and deadlines.
+`--drain --watch` resumes eligible pending work without adding the startup set.
+
+Hooks no longer discard stdout/stderr. `status.log` in the helper directory is
+bounded to approximately 12 KB and records timestamps, fixed event names and
+numeric IDs/counts only, never account names, tokens, URLs or ROM paths. `unmapped`
+means the selected game has no safe saved ID (missing metadata or a stem collision);
+`retry` retains the previous successful progress; `rejected` needs setup/filesystem
+attention. The existing Batocera login is reused unchanged.
 
 Rollback (cache/config remain for reinstall):
 
@@ -148,7 +170,8 @@ python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/install.py
 Uninstall removes only manifest-owned, unchanged helper/hook files. It does not
 remove private config, JSON cache, XML extras, or unrelated services. Disable the
 theme's RA option separately if desired. A currently running one-shot can finish;
-the service is not a supervised daemon and `stop` deliberately does not kill it.
+service stop waits for the current job and retains queued work. Installation and
+uninstallation refuse while a worker holds its lock; stop the service first.
 
 ## Game identity: no generic ROM MD5
 
@@ -189,6 +212,11 @@ Credentials are in the POST body, never the URL. Only unique official achievemen
 together; softcore includes hardcore unlocks. Responses must have boolean Success,
 the matching game ID and correctly typed/bounded IDs. Errors never become zero progress.
 Redirects are refused and the same request/retry limits below apply to every POST.
+Validated official achievement IDs are cached separately in `definitions/`, with
+`definition_ttl` defaulting to 86400 seconds (bounded to 0–604800). Forced progress
+refreshes reuse fresh definitions, reducing the usual request count from three to
+two. Expired definitions must refresh successfully; failures never become zero
+progress. Only definitions are shared across accounts, not unlock counts.
 
 When RA is disabled or credentials are missing, the next sync removes unchanged
 owned extras across all systems, including on a targeted sync. Modified owned files
@@ -207,7 +235,8 @@ Cache namespace is backend- and username-specific and stores only validated ID/c
 keys and full API responses are never persisted. XML/JSON writes use temporary
 files, fsync and atomic replacement. Valid existing XML remains unchanged when
 refresh fails, including forced/expired refreshes. Summary exit codes: 0 success or
-lock-held skip; 1 one or more games failed (old files retained); 2 rejected setup.
+durable enqueue behind an active worker; 1 work remains pending or worker stopped;
+2 rejected setup.
 Cached successful counts deduplicate same-ID requests across ROM aliases.
 
 TTL defaults to 900 seconds; `--force` bypasses it. At least one second between

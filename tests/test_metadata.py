@@ -19,11 +19,12 @@ def source(path, baseline=False):
     return (ROOT / path).read_bytes()
 
 
-def resolve(ratio='4-3', metadata='mixed', help=True, font='default', artwork='image', view='detailed', baseline=False, achievements='off'):
+def resolve(ratio='4-3', metadata='mixed', help=True, font='default', artwork='image', view='detailed', baseline=False, achievements='off', system_count='off', system_playtime='off', menu_font='default'):
     options = {'aspect-ratio': ratio, 'gamelist-view-metadata': metadata,
-               'font-size': font, 'gamelist-view-artwork': artwork,
+               'font-size': font, 'menu-font-size': menu_font, 'gamelist-view-artwork': artwork,
                'system-view-artwork': 'default', 'system-logos': 'default',
                'fonts': 'default', 'color-scheme': 'default', 'distribution': 'batocera',
+               'system-count': system_count, 'system-playtime': system_playtime,
                'retroachievements-progress': achievements}
     result = {}
 

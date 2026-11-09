@@ -65,6 +65,11 @@ class C64Tests(unittest.TestCase):
             expected = parse(original(path))
             from test_oled import approved_oled_transform
             approved_oled_transform(expected, path)
+            from test_system_playtime import approved_system_playtime_transform
+            if path == 'theme.xml':
+                approved_system_playtime_transform(expected)
+                from test_menu_fonts import approved_menu_transform
+                approved_menu_transform(expected)
             self.assertEqual(structure(root), structure(expected), path)
 
 
