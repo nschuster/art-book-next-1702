@@ -38,6 +38,14 @@ Select **Theme Configuration → Menu Font Size → Default / Large / Extra Larg
 
 These presets are source/semantic-tested, not device-tested. Update the complete theme (including both new XML includes), restart EmulationStation, then select the option and reopen the menus. Static previews also indicate possible summary/progress overlap at larger sizes; verify on the device. See [menu font QA and exact source evidence](docs/qa/menu-font-size.md).
 
+## Game launch screen
+
+Game launches now use a standalone **`gamesplash.xml`**: the current palette's game-list background, the launched game's **box art** centered without cropping, and its title underneath. There is no loading/progress bar and no new theme setting. Existing startup `splash.xml`, game-list/system layouts and artwork settings are unchanged.
+
+Copy `gamesplash.xml` into the installed fork's root (beside `theme.xml`, retaining `colors.xml` and `_inc/fonts/Roboto-Bold.ttf`), then restart EmulationStation. It follows **Color Scheme**, including Custom's existing `/userdata/theme-customizations/art-book-next/colors.xml`; launch colors use `gamelistListBackgroundColor` and `gamelistListDescriptionColor`. Missing box art leaves the title on the palette background—screenshots/marquees are not substituted. Long titles use native single-line truncation. This is an ES launch transition, not an emulator overlay or boot video; its duration is controlled by the frontend.
+
+Primary target: **640×480 physical 4:3**, secondary **320×240**. Source/schema/semantic tests passed against pinned Batocera 42, but native rendering and CRT readability remain unverified. See [game-launch QA](docs/qa/game-launch-screen.md) for source semantics, evidence and device checks.
+
 ## Install on Batocera
 
 Keep the original theme installed for easy comparison/rollback. Install this fork into its **own** folder; do not overwrite `art-book-next`.

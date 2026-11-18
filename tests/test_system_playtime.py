@@ -19,7 +19,9 @@ def approved_system_playtime_transform(root):
 class SystemPlaytimeTests(unittest.TestCase):
     def test_opt_in_and_preservation(self):
         actual = parse((ROOT/'theme.xml').read_bytes())
-        baseline = parse(subprocess.check_output(['git','show','HEAD:theme.xml'],cwd=ROOT))
+        # Pin the pre-feature baseline: HEAD already contains these additions
+        # after publication, so applying the transforms to HEAD duplicates them.
+        baseline = parse(subprocess.check_output(['git','show','596c30d:theme.xml'],cwd=ROOT))
         approved_system_playtime_transform(baseline)
         from test_menu_fonts import approved_menu_transform
         approved_menu_transform(baseline)

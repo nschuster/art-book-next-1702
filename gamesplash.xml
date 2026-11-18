@@ -1,0 +1,53 @@
+<theme>
+   <formatVersion>7</formatVersion>
+   <!-- Standalone native launch theme: Splash does not load theme.xml.
+        Local defaults also handle an unset saved subset; these add no menu option. -->
+   <subset name="color-scheme">
+      <include name="default" />
+   </subset>
+   <subset name="distribution">
+      <include name="batocera" />
+   </subset>
+   <variables>
+      <distributionPath ifSubset="distribution:retrobat">~/.emulationstation/</distributionPath>
+      <distributionPath ifSubset="distribution:batocera">/userdata/</distributionPath>
+      <themeCustomizationsPath>${distributionPath}theme-customizations/art-book-next/</themeCustomizationsPath>
+   </variables>
+   <include>./colors.xml</include>
+   <include ifSubset="color-scheme:custom">${themeCustomizationsPath}colors.xml</include>
+
+   <view name="splash">
+      <splash name="splash">
+         <backgroundColor>${gamelistListBackgroundColor}</backgroundColor>
+      </splash>
+      <!-- Override the built-in screenshot, not an extra layered on top.
+           A missing boxart intentionally leaves only the palette and title. -->
+      <image name="background">
+         <path>{game:thumbnail}</path>
+         <origin>0.5 0.5</origin>
+         <pos>0.5 0.42</pos>
+         <maxSize>0.70 0.60</maxSize>
+         <roundCorners>0</roundCorners>
+      </image>
+      <!-- Window supplies the launched game's getName() after construction. -->
+      <text name="label">
+         <origin>0.5 0</origin>
+         <pos>0.5 0.79</pos>
+         <size>0.84 0.09</size>
+         <fontPath>./_inc/fonts/Roboto-Bold.ttf</fontPath>
+         <fontSize>0.05</fontSize>
+         <color>${gamelistListDescriptionColor}</color>
+         <alignment>center</alignment>
+         <verticalAlignment>center</verticalAlignment>
+         <forceUppercase>false</forceUppercase>
+         <multiLine>false</multiLine>
+      </text>
+      <!-- Launch has no measured progress. Hide both native bars explicitly. -->
+      <image name="progressbar">
+         <visible>false</visible>
+      </image>
+      <image name="progressbar:active">
+         <visible>false</visible>
+      </image>
+   </view>
+</theme>
