@@ -19,8 +19,10 @@ class ProgressDisplayTests(unittest.TestCase):
                 self.assertAlmostEqual(ty+th/2,y+z/2,delta=1)
                 self.assertGreater(y,records['md_genre']['bounds'][1]+records['md_genre']['bounds'][3])
                 self.assertLess(y+z,h*(1-0.114583333333333))
-                self.assertEqual(image.getpixel((tx+2,ty+2)),image.getpixel((x+w-1,y+z//2)))
-                self.assertEqual(records['ra_progress']['display'],'12/40')
+                # Wider text box now starts over the rainbow. Probe its right
+                # inset, which remains on the empty track and outside the text.
+                self.assertEqual(image.getpixel((tx+tw-2,ty+2)),image.getpixel((x+w-1,y+z//2)))
+                self.assertEqual(records['ra_progress']['display'],'12 / 40 · 30%')
 
     def test_count_alignment_and_full_sample_width(self):
         spec=importlib.util.spec_from_file_location('ra_sync',ROOT/'scripts/retroachievements/sync.py')
@@ -30,8 +32,8 @@ class ProgressDisplayTests(unittest.TestCase):
         props={p.tag:p.text for p in text}
         self.assertEqual(props.get('origin'),'0.5 0.5')
         self.assertEqual(props['pos'],'0.76953125 0.837916666666667')
-        self.assertEqual(props['size'],'0.14 0.045833333333333')
-        self.assertEqual(props['text'],'12/100')
+        self.assertEqual(props['size'],'0.34 0.045833333333333')
+        self.assertEqual(props['text'],'12 / 100 · 12%')
         self.assertEqual(props['alignment'],'center')
         self.assertEqual(props['color'],'${gamelistListTextlistUnselectedColor}')
         self.assertNotIn('backgroundColor',props)

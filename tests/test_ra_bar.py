@@ -29,7 +29,8 @@ class BarTests(unittest.TestCase):
                     fill=svg.find("s:rect[@id='fill']",ns)
                     self.assertAlmostEqual(float(fill.get('width'))/1000,count/total if total else 0)
                     self.assertGreaterEqual(len(svg.findall('.//s:stop',ns)),5)
-                    self.assertIn(f'{count}/{total}',doc.findtext('./view/text/text'))
+                    percent = (200 * count + total) // (2 * total) if total else 0
+                    self.assertIn(f'{count} / {total} · {percent}%',doc.findtext('./view/text/text'))
 
     def test_owned_asset_collection_preserves_unrelated_and_changed(self):
         with tempfile.TemporaryDirectory() as tmp:

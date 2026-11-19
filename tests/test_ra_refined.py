@@ -15,7 +15,7 @@ class RefinedTests(unittest.TestCase):
                     for count in (0,12,40):
                         image,records=preview.render(h,scheme,Path(tmp),unlocked=count)
                         text=records['ra_progress']
-                        self.assertEqual(text['display'],f'{count}/40')
+                        self.assertEqual(text['display'],f'{count} / 40 · {(200 * count + 40) // 80}%')
                         self.assertEqual(text['color'],variables['gamelistListTextlistUnselectedColor'])
                         self.assertLessEqual(text['glyph_height'],records['ra_progress_track']['bounds'][3])
 
@@ -55,6 +55,6 @@ class RefinedTests(unittest.TestCase):
                     self.assertLess(count['font_pixels'],records['md_genre']['font_pixels'])
                     self.assertEqual(count['font_pixels'],9 if h==240 else 17)
                     self.assertEqual(count['bounds'][3],records['md_genre']['bounds'][3])
-                    self.assertEqual(count['display'],'12/40')
+                    self.assertEqual(count['display'],'12 / 40 · 30%')
                     self.assertLessEqual(count['glyph_height'],z)
                     self.assertAlmostEqual(count['bounds'][1]+count['bounds'][3]/2,y+z/2,delta=1)

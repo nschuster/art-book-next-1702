@@ -20,27 +20,53 @@
       <splash name="splash">
          <backgroundColor>${gamelistListBackgroundColor}</backgroundColor>
       </splash>
-      <!-- Override the built-in screenshot, not an extra layered on top.
-           A missing boxart intentionally leaves only the palette and title. -->
+      <!-- Override the built-in screenshot with the selected game's logo. -->
       <image name="background">
-         <path>{game:thumbnail}</path>
+         <path>{game:marquee}</path>
          <origin>0.5 0.5</origin>
-         <pos>0.5 0.42</pos>
-         <maxSize>0.70 0.60</maxSize>
+         <pos>0.5 0.37</pos>
+         <maxSize>0.78 0.40</maxSize>
          <roundCorners>0</roundCorners>
       </image>
-      <!-- Window supplies the launched game's getName() after construction. -->
+      <!-- Native exists handles empty AND stale paths. Window supplies getName().
+           An existing corrupt image is not detectable by theme expressions. -->
       <text name="label">
-         <origin>0.5 0</origin>
-         <pos>0.5 0.79</pos>
-         <size>0.84 0.09</size>
+         <visible>!exists( {game:marquee} )</visible>
+         <origin>0.5 0.5</origin>
+         <pos>0.5 0.37</pos>
+         <size>0.84 0.16</size>
          <fontPath>./_inc/fonts/Roboto-Bold.ttf</fontPath>
          <fontSize>0.05</fontSize>
          <color>${gamelistListDescriptionColor}</color>
          <alignment>center</alignment>
          <verticalAlignment>center</verticalAlignment>
          <forceUppercase>false</forceUppercase>
+         <multiLine>true</multiLine>
+      </text>
+      <!-- Source system, not the enclosing collection/group. Unlisted systems
+           intentionally have no hardware image. No generic/wrong-console fallback.
+           Subdued alpha is intrinsic to the SVG: Splash resets component opacity. -->
+      <image name="launchHardware" extra="true">
+         <path>"${themePath}/_inc/launch-hardware/" + {game:system:name} + ".svg"</path>
+         <origin>0.5 0.5</origin>
+         <pos>0.5 0.73</pos>
+         <maxSize>0.36 0.22</maxSize>
+         <color>${gamelistListDescriptionColor}</color>
+         <zIndex>6</zIndex>
+      </image>
+      <text name="launchStatus" extra="true">
+         <text>LOADING…</text>
+         <visible>true</visible>
+         <origin>0.5 0.5</origin>
+         <pos>0.5 0.89</pos>
+         <size>0.6 0.06</size>
+         <fontPath>./_inc/fonts/Roboto-Bold.ttf</fontPath>
+         <fontSize>0.033333333333333</fontSize>
+         <color>${gamelistListDescriptionColor}</color>
+         <alignment>center</alignment>
+         <verticalAlignment>center</verticalAlignment>
          <multiLine>false</multiLine>
+         <zIndex>10</zIndex>
       </text>
       <!-- Launch has no measured progress. Hide both native bars explicitly. -->
       <image name="progressbar">

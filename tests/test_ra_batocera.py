@@ -65,13 +65,13 @@ def test_default_setup_installed_cli_no_inputs(rig):
     assert rig.config.stat().st_mode & 0o777 == 0o600
     p = rig.cli(installed/'sync.py', '--config', str(rig.config), '--test-api-base', rig.url)
     assert p.returncode == 0, p.stderr
-    assert rig.label() == '1/2'
+    assert rig.label() == '1 / 2 · 50%'
 
 
 def test_post_contract_and_secret_free_persistence(rig):
     before = rig.conf.read_bytes()
     p = rig.sync(); assert p.returncode == 0, p.stderr
-    assert rig.label() == '1/2'
+    assert rig.label() == '1 / 2 · 50%'
     assert len(rig.requests) == 3
     for path, fields, content_type in rig.requests:
         assert path == '/dorequest.php'
@@ -89,7 +89,7 @@ def test_post_contract_and_secret_free_persistence(rig):
 def test_mode_and_account_and_token_are_read_each_run(rig):
     assert rig.sync().returncode == 0
     rig.credentials(hardcore='0'); assert rig.sync().returncode == 0
-    assert rig.label() == '2/2' and len(rig.requests) == 3
+    assert rig.label() == '2 / 2 · 100%' and len(rig.requests) == 3
     rig.credentials(user='other-user', token='new-token'); assert rig.sync().returncode == 0
     assert rig.requests[-1][1]['u'] == ['other-user'] and rig.requests[-1][1]['t'] == ['new-token']
     rig.credentials(user='third-user'); rig.status = 503

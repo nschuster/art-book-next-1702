@@ -29,7 +29,7 @@ Update the theme, including **`theme.xml`, `system-playtime.xml` and `menu-font-
 
 ## Optional menu font size
 
-Select **Theme Configuration → Menu Font Size → Default / Large / Extra Large**. Start with **Large** at 640×480. This affects stock Batocera 42 menus, including the RetroAchievements account/game list and the selected game's achievement titles, descriptions, points, unlock dates and progress text. It needs **no helper, RA resync or custom frontend**.
+Select **Theme Configuration → Menu Font Size → Default / Large / Extra Large**. Start with **Default** when using achievement review: device photos confirmed summary/progress overlap with larger fonts in the stock frontend. This affects stock Batocera 42 menus, including the RetroAchievements account/game list and the selected game's achievement titles, descriptions, points, unlock dates and progress text. It needs **no helper, RA resync or custom frontend**.
 
 - **Default** preserves the previous menu appearance exactly, including its existing response to the general **Font Size** setting.
 - **Large** and **Extra Large** override menu typography independently of that general setting; game-list, metadata, system, artwork and help-prompt fonts are untouched. Menu font families/colors are retained.
@@ -38,13 +38,28 @@ Select **Theme Configuration → Menu Font Size → Default / Large / Extra Larg
 
 These presets are source/semantic-tested, not device-tested. Update the complete theme (including both new XML includes), restart EmulationStation, then select the option and reopen the menus. Static previews also indicate possible summary/progress overlap at larger sizes; verify on the device. See [menu font QA and exact source evidence](docs/qa/menu-font-size.md).
 
+## Optional sync launcher with live progress
+
+The optional helper installer flag **`--ports-menu`** adds **Ports → Refresh
+RetroAchievements Progress**. It opens a separate controller-friendly screen
+showing the current console/game, work counts, a progress bar and retry/result
+status. Closing the screen returns to browsing while synchronization continues;
+reopening during a run attaches without restarting it. This is a stock-compatible
+Ports application, not a new native Main Menu item or ScreenScraper dialog.
+
+Existing login/configuration is reused. No custom frontend, pip packages, or ROM
+hashing is involved. It refreshes safely mapped achievement-enabled games; the
+work count refers to unique RA game IDs, not every ROM. See the
+[helper installation and controls](scripts/retroachievements/README.md#optional-controller-driven-full-library-sync)
+and [verification/device checklist](docs/qa/ra-ports-progress.md).
+
 ## Game launch screen
 
-Game launches now use a standalone **`gamesplash.xml`**: the current palette's game-list background, the launched game's **box art** centered without cropping, and its title underneath. There is no loading/progress bar and no new theme setting. Existing startup `splash.xml`, game-list/system layouts and artwork settings are unchanged.
+Game launches use a standalone **`gamesplash.xml`**: a large aspect-fit **selected-game logo (marquee)**, subdued **Eudora system line art** underneath (controllers, handhelds or computers, depending on the source asset), and the current palette's background. The game title replaces the logo **only when its path is empty or missing**. A static palette-coloured **LOADING…** label sits below the artwork; it is an activity message, not measured progress. No cover, console wordmark, loading/progress graphics or new theme setting. Existing startup `splash.xml`, game-list/system layouts and artwork settings are unchanged.
 
-Copy `gamesplash.xml` into the installed fork's root (beside `theme.xml`, retaining `colors.xml` and `_inc/fonts/Roboto-Bold.ttf`), then restart EmulationStation. It follows **Color Scheme**, including Custom's existing `/userdata/theme-customizations/art-book-next/colors.xml`; launch colors use `gamelistListBackgroundColor` and `gamelistListDescriptionColor`. Missing box art leaves the title on the palette background—screenshots/marquees are not substituted. Long titles use native single-line truncation. This is an ES launch transition, not an emulator overlay or boot video; its duration is controlled by the frontend.
+Install **both `gamesplash.xml` and `_inc/launch-hardware/`** in the installed fork (beside the existing `theme.xml`, retaining `colors.xml` and `_inc/fonts/Roboto-Bold.ttf`), then restart EmulationStation. It follows **Color Scheme**, including Custom's existing `/userdata/theme-customizations/art-book-next/colors.xml`. The local candidate replaces the authored drawings with source-preserving Eudora artwork from the supplied archive; unlisted systems show no hardware rather than an invented substitute. Attribution and the unresolved line-art redistribution license are recorded with the assets; inclusion in this repository does not establish redistribution permission. [Exact coverage and source verification](docs/qa/game-launch-screen.md). Existing but corrupt logo files cannot trigger the filesystem-based title fallback; repair/remove the bad scraped image. Long fallback titles wrap within a fixed box. This is an ES launch transition, not an emulator overlay or boot video; its duration is controlled by the frontend.
 
-Primary target: **640×480 physical 4:3**, secondary **320×240**. Source/schema/semantic tests passed against pinned Batocera 42, but native rendering and CRT readability remain unverified. See [game-launch QA](docs/qa/game-launch-screen.md) for source semantics, evidence and device checks.
+Primary target: **640×480 physical 4:3**, secondary **320×240**. This revised candidate has passed pinned Batocera 42 source/schema, expression-evaluator and native SVG rasterization checks; actual launch rendering and CRT readability still require device QA. No optional RA helper is needed.
 
 ## Install on Batocera
 

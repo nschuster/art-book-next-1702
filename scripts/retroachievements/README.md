@@ -20,10 +20,10 @@ Default output:
 
 Each document is `<theme><formatVersion>7</formatVersion><view name="detailed,video">`
 with `<text name="ra_progress" extra="true">`, position `0.76953125 0.837916666666667`,
-size `0.14 0.045833333333333`, font `${themePath}/${fontBold}`, fontSize
+size `0.34 0.045833333333333`, font `${themePath}/${fontBold}`, fontSize
 `0.027777777777777` (16.67% smaller count only), origin `0.5 0.5`, multiLine false,
 center alignment, zIndex 101, visible true, color
-`${gamelistListTextlistUnselectedColor}` (normal sidebar text) and text `earned/total`. The theme must point its
+`${gamelistListTextlistUnselectedColor}` (normal sidebar text) and text `earned / total · percentage%`, e.g. `12 / 40 · 30%`. Percentages round half-up to a whole number; zero total displays `0 / 0 · 0%`. Only the text box is wider; bar/trophy positions and sizes are unchanged. Existing installations need a helper upgrade and regeneration of their owned extras; remove a stale `template.size` override to use the wider default, without rerunning configuration or changing credentials. The theme must point its
 `<gameextras name="gameextras"><path>…</path></gameextras>` at the **selected
 system's directory**, not the shared extras root. Coordinate this with the theme's
 4:3 opt-in. There is no badge background or separate count row. Text properties plus `label` are
@@ -32,7 +32,7 @@ configurable in `template`; width/font suitability still needs native CRT QA.
 The second extra is `<image name="ra_progress_bar" extra="true">`, position
 `0.5890625 0.815`, size `0.3609375 0.045833333333333`, origin `0 0`, white tint, and an absolute SVG
 path. This transparent image contains only the exact unlocked/total vector fill;
-the smooth Commodore rainbow spans that filled portion (not the whole track).
+the smooth Commodore rainbow spans the entire track, with only the earned portion revealed from left to right. Colours stay fixed as progress grows.
 0/0 and zero unlocked produce an empty track. This uses native image properties
 verified in pinned ES `ThemeData.cpp`, not a preview-only drawing. A separate white
 `ra_progress_track` SVG at the same geometry (zIndex 99) is tinted with
@@ -81,6 +81,52 @@ collected. Unrelated or locally modified files are not deleted or overwritten;
 modified owned XML that needs pruning stops sync with an explicit error. Restore
 it or disable the theme's RA option. Do not repurpose this helper's output directory
 for unrelated extras. Reload/reselect the game to clear an already displayed panel.
+
+## Optional controller-driven full-library sync
+
+The optional **Ports → Refresh RetroAchievements Progress** entry opens a separate
+640×480 logical SDL2 screen, not Batocera's built-in scraper dialog or Main Menu.
+It shows the current console and game, successful/total unique game IDs, updated
+and cached counts, failures/pending work, and retry/completion states. Multiple
+ROMs mapped to one RA game ID share a request; the total is **not the ROM count**.
+Console/game labels come from local metadata, with system ID/ROM-stem fallbacks.
+The screen uses its own Commodore hardware-inspired palette; it does not modify
+or replace the theme's browsing layout.
+
+Install the option **from an updated copy of this repository**. For the existing
+installation folder used in this project (spelling intentional), with games closed
+and any startup sync service stopped:
+
+```sh
+python3 /userdata/themes/art-book-next-1702-retro-achivements/scripts/retroachievements/sync.py --config /userdata/system/retroachievements/config.json --data-root /userdata --stop && python3 /userdata/themes/art-book-next-1702-retro-achivements/scripts/retroachievements/install.py --data-root /userdata --ports-menu
+```
+
+This does not download the repository. Preserve the actual folder name if yours
+is different. Existing configuration/login and queued work are retained; **do not
+rerun configure**. The installer refuses modified/unmanaged owned files and does
+not edit the Ports gamelist or enable a service. An ordinary later helper upgrade
+retains the opted-in launcher. Uninstall removes unchanged owned launcher files
+along with the helper, but retains configuration, progress/cache and generated extras.
+
+Use Batocera's **Update Gamelists** or restart EmulationStation to discover the
+entry. Ports must be visible; a setup limited to previously scraped entries may
+need its normal visibility setting adjusted. Launch the entry with the controller.
+A new run refreshes progress across configured, safely mapped games, reusing the
+existing login and achievement-definition cache. If a worker is already running,
+the entry instead displays that worker without enqueuing another full refresh.
+After that worker finishes, exit/relaunch to request a new full refresh.
+
+**Return/back closes only the screen**, leaving the worker running. Reopen the
+entry to monitor it. This does not stop or clear queued work. Existing game-exit
+refreshes continue using the same queue. No live network requests start before
+the graphical screen has successfully initialized. Missing SDL/video support is
+an error, not a silent background sync.
+
+Runtime: Python 3 standard library plus Batocera's SDL2 shared library. No pip,
+pygame, Pillow, browser, custom EmulationStation binary, or display timing changes
+are required. Development screenshots/fixtures are not physical CRT validation.
+See [Ports progress-screen QA](../../docs/qa/ra-ports-progress.md) for tested paths,
+controller behavior and remaining device checks.
 
 ## Install and configure
 

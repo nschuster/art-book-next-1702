@@ -14,17 +14,26 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def install(root, uninstall=False):
+def install(root, uninstall=False, ports_menu=False):
     state = safe_path(root / 'system/retroachievements')
     state.mkdir(parents=True, exist_ok=True)
-    with safe_path(state / 'sync.lock').open('a') as lock:
-        try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            raise SyncError('stop active worker before install/uninstall') from None
-        install_files(root, uninstall)
+    with safe_path(state / 'launcher.lock').open('a') as launching:
+        fcntl.flock(launching, fcntl.LOCK_EX)
+        marker = safe_path(state / 'launcher-process.json')
+        if marker.exists():
+            from launcher import process_identity
+            previous = json.loads(marker.read_text())
+            identity = process_identity(previous.get('pid', 0))
+            if identity and identity == previous.get('start_ticks'):
+                raise SyncError('stop launched worker before install/uninstall')
+        with safe_path(state / 'sync.lock').open('a') as lock:
+            try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                raise SyncError('stop active worker before install/uninstall') from None
+            install_files(root, uninstall, ports_menu)
 
 
-def install_files(root, uninstall=False):
+def install_files(root, uninstall=False, ports_menu=False):
     root = safe_path(root)
     state = safe_path(root / 'system/retroachievements')
     manifest = safe_path(state / 'install-manifest.json')
@@ -52,6 +61,20 @@ def install_files(root, uninstall=False):
         if target.exists() and not target.is_file():
             raise SyncError('expected regular installed file')
     old = json.loads(manifest.read_text()) if manifest.exists() else {}
+    port = 'roms/ports/Refresh RetroAchievements Progress.sh'
+    # Keep opt-in on normal upgrades; do not touch an unrelated Ports gamelist.
+    if ports_menu or port in old:
+        for filename in ('launcher.py', 'progress_ui.py'):
+            files['system/retroachievements/' + filename] = (source / filename).read_bytes()
+        assets = source / 'ui-assets'
+        if assets.exists():
+            for asset in sorted(assets.iterdir()):
+                if asset.is_file():
+                    files['system/retroachievements/ui-assets/' + asset.name] = safe_path(asset).read_bytes()
+        files[port] = (
+            '#!/bin/sh\n# Managed RA progress screen; closing it leaves sync running.\n'
+            f'exec python3 {q(str(state / "launcher.py"))} --data-root {q(str(root))}\n'
+        ).encode()
     # Preflight every target before writing anything. Exact known allowlist only.
     for name in files:
         target = safe_path(root / name)
@@ -86,8 +109,13 @@ def install_files(root, uninstall=False):
         elif manifest.exists(): manifest.unlink()
         raise
     print('Installed RA helper and gameStop hook; startup service is NOT enabled.')
-    print('Run: python3', state / 'configure.py', '--data-root', root)
-    print('Then run:', command)
+    if port in files:
+        print('Installed Ports > Refresh RetroAchievements Progress. Update gamelists/restart ES to discover it.')
+    if not (state / 'config.json').exists():
+        print('First-time setup: python3', state / 'configure.py', '--data-root', root)
+    else:
+        print('Existing private configuration preserved; do not rerun configure.')
+    print('Manual sync:', command)
     print('No credential prompts: uses Batocera RA login. Optionally: batocera-services enable ra-progress-sync')
 
 
@@ -95,9 +123,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--data-root', default='/userdata')
     parser.add_argument('--uninstall', action='store_true')
+    parser.add_argument('--ports-menu', action='store_true', help='install optional controller-friendly sync launcher under Ports')
     args = parser.parse_args()
     try:
-        install(Path(args.data_root).absolute(), args.uninstall)
+        install(Path(args.data_root).absolute(), args.uninstall, args.ports_menu)
         return 0
     except (OSError, ValueError, SyncError):
         print('Install refused: stop any active sync worker first; otherwise check unsafe paths or unmanaged/modified files. No unrelated service is modified.', file=sys.stderr)

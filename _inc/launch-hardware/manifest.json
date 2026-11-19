@@ -1,0 +1,425 @@
+{
+  "license_status": "unresolved; redistribution not cleared",
+  "publication_status": "local unpublished candidate",
+  "provenance": "User-supplied Eudora artwork; see SOURCE-README.txt for AmadhiX, Carbon / Eric Hettervik and Simple / Nils Bonenberger credits. No definitive line-art license established. Theme original-art license is not assigned to these borrowed assets.",
+  "archive_name": "doc_a34c2139f583_recalbox-themes-master-themes-eudora.zip",
+  "archive_sha256": "060e46962fe14be700bb3f8aea44c2ca52d2e544c8fdfe5c63b92e96fe23dad5",
+  "source_prefix": "recalbox-themes-master-themes-eudora/themes/eudora/",
+  "transformation": "Only explicit fill/stroke paint hex colors normalized to #ffffff and root opacity=0.45 added. All geometry, dimensions, transforms, metadata and drawing order preserved. Native image tint multiplies white.",
+  "excluded_source_ids": [
+    "doom",
+    "favorites",
+    "fba",
+    "fbneo",
+    "imageviewer",
+    "kodi",
+    "mame",
+    "ports",
+    "scummvm",
+    "zmachine"
+  ],
+  "aliases": {
+    "genesis": "megadrive",
+    "sfc": "snes",
+    "jaguar": "atarijaguar",
+    "atarilynx": "lynx"
+  },
+  "systems": {
+    "3do": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/3do/controller.svg",
+      "source_sha256": "b34da544c22766669b902fe2859188981c444b5909469326a2abe5dd319862ae",
+      "asset_sha256": "95cde8adbb93f23fefcc74d09c47feb6ea4b706ab198eff62021761667970253",
+      "viewBox": "0 0 598.189 350.26",
+      "depiction": "Eudora 3do hardware/controller illustration; source geometry unchanged"
+    },
+    "amiga": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/amiga/controller.svg",
+      "source_sha256": "ea46fb28729be3795838c9e8bbcc48a2a40ccd0864f66dd3bc678c4e34172fc7",
+      "asset_sha256": "65a64b3a0995e6fcd279955cd0d1c7375ca6d3622fe5ce676a0b24d8ab673bea",
+      "viewBox": "0 0 232.22799 337.911",
+      "depiction": "Eudora amiga hardware/controller illustration; source geometry unchanged"
+    },
+    "amiga1200": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/amiga1200/controller.svg",
+      "source_sha256": "ea46fb28729be3795838c9e8bbcc48a2a40ccd0864f66dd3bc678c4e34172fc7",
+      "asset_sha256": "65a64b3a0995e6fcd279955cd0d1c7375ca6d3622fe5ce676a0b24d8ab673bea",
+      "viewBox": "0 0 232.22799 337.911",
+      "depiction": "Eudora amiga1200 hardware/controller illustration; source geometry unchanged"
+    },
+    "amiga600": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/amiga600/controller.svg",
+      "source_sha256": "ea46fb28729be3795838c9e8bbcc48a2a40ccd0864f66dd3bc678c4e34172fc7",
+      "asset_sha256": "65a64b3a0995e6fcd279955cd0d1c7375ca6d3622fe5ce676a0b24d8ab673bea",
+      "viewBox": "0 0 232.22799 337.911",
+      "depiction": "Eudora amiga600 hardware/controller illustration; source geometry unchanged"
+    },
+    "amstradcpc": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/amstradcpc/controller.svg",
+      "source_sha256": "b4adace61bf64a424f2a19ae10d3e412abdbcd79fd4409841651580dd1bd0bc8",
+      "asset_sha256": "4d274cfc9723d9523a52b96ed6172fe543511c6c160b38ba806ab6050c0fc0fb",
+      "viewBox": "0 0 578.36399 211.46499",
+      "depiction": "Eudora amstradcpc hardware/controller illustration; source geometry unchanged"
+    },
+    "apple2": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/apple2/controller.svg",
+      "source_sha256": "8c019958f6a5cd92442ff87fc01e9d79132ffc2b7d5c6ea674d3423073692b4a",
+      "asset_sha256": "8a5d40db8bafafa399e22ba253523ecb4bc8511903798bf7713bf940920e7297",
+      "viewBox": "0 0 552.34196 216.15099",
+      "depiction": "Eudora apple2 hardware/controller illustration; source geometry unchanged"
+    },
+    "atari2600": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atari2600/controller.svg",
+      "source_sha256": "525d47a8a8f40b079d295a342f0f21588a13a98169c75f9316ebd236e9df062b",
+      "asset_sha256": "2402471bb9e60a1cf1e20a943102693a77db248933477de80bef21ec1cf09eeb",
+      "viewBox": "0 0 285.368 315.489",
+      "depiction": "Eudora atari2600 hardware/controller illustration; source geometry unchanged"
+    },
+    "atari5200": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atari5200/controller.svg",
+      "source_sha256": "38f9864cfe4ed6727d0846618e7cd7bacbc07d270b050aa33fed4f2fff6041e4",
+      "asset_sha256": "69e3a5b47e8ab2367ac841ca21edfe59243a6b578fb5154e1f14007fdbaa1a5c",
+      "viewBox": "0 0 147.01058 330.376",
+      "depiction": "Eudora atari5200 hardware/controller illustration; source geometry unchanged"
+    },
+    "atari7800": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atari7800/controller.svg",
+      "source_sha256": "462e139bb54e9e84a99adaaa712af327986e34f43779b63169c1872c1768fab9",
+      "asset_sha256": "6e9eab92e9d735d9936d560c38c3ee05987152f0e7be670342b8facb74d0df88",
+      "viewBox": "0 0 596.24296 218.47",
+      "depiction": "Eudora atari7800 hardware/controller illustration; source geometry unchanged"
+    },
+    "atari800": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atari800/controller.svg",
+      "source_sha256": "50d1c9c320a86076078358184904b46062132ca977c140ce68d139271b744b81",
+      "asset_sha256": "b6a6071d29f67e2cd44766d24ded349cf386f17b3e2a4e04e7f69938fc7d6a71",
+      "viewBox": "0 0 593.81253 308",
+      "depiction": "Eudora atari800 hardware/controller illustration; source geometry unchanged"
+    },
+    "atarijaguar": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atarijaguar/controller.svg",
+      "source_sha256": "22c762919377adb32168977ffd0ad865ec4012c2dc1654097203115ef9beb609",
+      "asset_sha256": "b3f635d9f369b9c2d1303d19d842494d01215ef5e21a34eb38e9d7a0f6e43157",
+      "viewBox": "0 0 598.191 350.257",
+      "depiction": "Eudora atarijaguar hardware/controller illustration; source geometry unchanged"
+    },
+    "atarist": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atarist/controller.svg",
+      "source_sha256": "0ec208929649b73e63bc51d08dfcbb3fc1deb4ca4ce06b714a16525cb2bb9ec6",
+      "asset_sha256": "e25ea7b6e2350efea9ecad309670f9601cfe0f86703771419bda39212d025fb3",
+      "viewBox": "0 0 533.73783 268.79687",
+      "depiction": "Eudora atarist hardware/controller illustration; source geometry unchanged"
+    },
+    "c64": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/c64/controller.svg",
+      "source_sha256": "ec225e2f09a3eb93ea34b755e65382b0a1406e78c4326c77582ec086897bda5f",
+      "asset_sha256": "f562317199b556900a9f5720b2a898c5d33a3a0ee877108f2c26bfad627249f9",
+      "viewBox": "0 0 519.46299 255.45699",
+      "depiction": "Eudora c64 hardware/controller illustration; source geometry unchanged"
+    },
+    "coco": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/coco/controller.svg",
+      "source_sha256": "1fd81e1bea51d6e467a9e0fce66875c0eff1d9b74adf72c89fbca00476a83e72",
+      "asset_sha256": "c722d380438c82f248b1ca518efe5e58c8bb0e13c51dfd5c7f8d2770dca7afca",
+      "viewBox": "0 0 475.94599 314.389",
+      "depiction": "Eudora coco hardware/controller illustration; source geometry unchanged"
+    },
+    "dragon32": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/dragon32/controller.svg",
+      "source_sha256": "fa2739802a1ce92bf1fcf7f261a5b1df1530ac4d0bde867ea9f7e51189ba46df",
+      "asset_sha256": "89d90e24d5b722c1720ae382ce06552a5fa0c067e0a3124dd46ea3235645fea5",
+      "viewBox": "0 0 140.85 336.33965",
+      "depiction": "Eudora dragon32 hardware/controller illustration; source geometry unchanged"
+    },
+    "dreamcast": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/dreamcast/controller.svg",
+      "source_sha256": "ab4550fe985c26cdc435da10c3d5ae3ce64a878a2c07e9e2c3e2cf2839941e48",
+      "asset_sha256": "c26f40182517acfedfc91bc25acc68f1a75006a547799afa2769f11408a951e3",
+      "viewBox": "0 0 598.189 350.26",
+      "depiction": "Eudora dreamcast hardware/controller illustration; source geometry unchanged"
+    },
+    "fds": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/fds/controller.svg",
+      "source_sha256": "dbae8640dc6491d73d1021233c759378593c4bd8d64d49de72f1b6ae8d96395f",
+      "asset_sha256": "c5bdd6b19fa058f155aa5ebf0df16b53f9223393bcc816aa30c456f734c2843e",
+      "viewBox": "0 0 477.92497 200.86999",
+      "depiction": "Eudora fds hardware/controller illustration; source geometry unchanged"
+    },
+    "gamegear": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/gamegear/controller.svg",
+      "source_sha256": "be325f95415c015112d8f0382c2c838d991bee54f6d9616b1252c0600042e559",
+      "asset_sha256": "8981ec8e5f6482df397f148e7f47c657fa3e5910ba04a77f260aa64eef71076e",
+      "viewBox": "0 0 524.71244 275.16567",
+      "depiction": "Eudora gamegear hardware/controller illustration; source geometry unchanged"
+    },
+    "gb": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/gb/controller.svg",
+      "source_sha256": "723e802254b4302f6fe2ee7072a83d8656cb88139ca50cf03d41feac7c9c209e",
+      "asset_sha256": "0843caaef491d30236cf28dd3a79d9987851a25f56cb28001409ec09feb16315",
+      "viewBox": "0 0 184.796 305.52898",
+      "depiction": "Eudora gb hardware/controller illustration; source geometry unchanged"
+    },
+    "gba": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/gba/controller.svg",
+      "source_sha256": "52bfe34e50eadb4150cfb3cb71a0829fac56be3555b50859cc550cc80a37a00f",
+      "asset_sha256": "9f34e08fe13f6ede34b80864a936bbbf0b9f9512c4a233185c7059c33cec64f5",
+      "viewBox": "0 0 539.60252 302.803",
+      "depiction": "Eudora gba hardware/controller illustration; source geometry unchanged"
+    },
+    "gbc": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/gbc/controller.svg",
+      "source_sha256": "b292291e64408e9a5ac71e505dae4f66fb932b47e5ef566bd6ae6666e30740cf",
+      "asset_sha256": "0c9fcf8eaed7b4bc327c1fdbdb82b7bc8c00ca4338ec3cde9989209117c06132",
+      "viewBox": "0 0 192.73299 326.13262",
+      "depiction": "Eudora gbc hardware/controller illustration; source geometry unchanged"
+    },
+    "intellivision": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/intellivision/controller.svg",
+      "source_sha256": "dd9ae856667a931d99c1a3370ecec0e1db8c92243d5462e07c42b501585b1275",
+      "asset_sha256": "cdc91ecdce4752b90cbe8ecb9dd61c319c560e89270eb77bc8199ed72953c100",
+      "viewBox": "0 0 141.73599 320.38598",
+      "depiction": "Eudora intellivision hardware/controller illustration; source geometry unchanged"
+    },
+    "lynx": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/lynx/controller.svg",
+      "source_sha256": "c88575724cc419b8fe723697e6a93a35d2752f8f79675e65adfabd9d7cd855c4",
+      "asset_sha256": "cf309da4fa1e1b25810cfac96a6a193db30aad64ab8b1f062ea9362192954ea9",
+      "viewBox": "0 0 498.65598 236.25109",
+      "depiction": "Eudora lynx hardware/controller illustration; source geometry unchanged"
+    },
+    "macintosh": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/macintosh/controller.svg",
+      "source_sha256": "0e2058a630fa722a0187c2652dcb392aaaaa4877555ccbcc8bdd2be638e3938b",
+      "asset_sha256": "b6abf4695b2d4eb821428cec34b20582c4bac0462d63f87f0accc1b692703726",
+      "viewBox": "0 0 233.65799 320.14898",
+      "depiction": "Eudora macintosh hardware/controller illustration; source geometry unchanged"
+    },
+    "mastersystem": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/mastersystem/controller.svg",
+      "source_sha256": "126bb060f49e1527bfdd7749cd627b737759ce26bb145f2ae453e66ffd717dfc",
+      "asset_sha256": "4f1f4ab63ad433630b373b2f773c577a04de14cbfa443151aca154c5544e7c2a",
+      "viewBox": "0 0 535.93998 220.40699",
+      "depiction": "Eudora mastersystem hardware/controller illustration; source geometry unchanged"
+    },
+    "megadrive": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/megadrive/controller.svg",
+      "source_sha256": "f7ddf0a7713eeca1bb6c46389f31fb7d99595e7da5af600acfcd47b79bd9052d",
+      "asset_sha256": "37c901710bda75d222af608ec8901ae7829100179e9d8b64756a4a9c01df49f5",
+      "viewBox": "0 0 598.19015 350.26161",
+      "depiction": "Eudora megadrive hardware/controller illustration; source geometry unchanged"
+    },
+    "msx": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/msx/controller.svg",
+      "source_sha256": "b557262127db8a27fd4dad97f560020a3d2fdf95dd285695deb8aa853d165c59",
+      "asset_sha256": "7bf2a8f7c3bc9bdb7a3aca5f1e2e0fd864ae7110391c4d2b83ff3d7784e645ce",
+      "viewBox": "0 0 503.92698 309.255",
+      "depiction": "Eudora msx hardware/controller illustration; source geometry unchanged"
+    },
+    "msx1": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/msx1/controller.svg",
+      "source_sha256": "b557262127db8a27fd4dad97f560020a3d2fdf95dd285695deb8aa853d165c59",
+      "asset_sha256": "7bf2a8f7c3bc9bdb7a3aca5f1e2e0fd864ae7110391c4d2b83ff3d7784e645ce",
+      "viewBox": "0 0 503.92698 309.255",
+      "depiction": "Eudora msx1 hardware/controller illustration; source geometry unchanged"
+    },
+    "msx2": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/msx2/controller.svg",
+      "source_sha256": "b557262127db8a27fd4dad97f560020a3d2fdf95dd285695deb8aa853d165c59",
+      "asset_sha256": "7bf2a8f7c3bc9bdb7a3aca5f1e2e0fd864ae7110391c4d2b83ff3d7784e645ce",
+      "viewBox": "0 0 503.92698 309.255",
+      "depiction": "Eudora msx2 hardware/controller illustration; source geometry unchanged"
+    },
+    "n64": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/n64/controller.svg",
+      "source_sha256": "6aa2627b261f5888243b2d7865a75a87477f3b48511a6cadf2effec4c6d2fb49",
+      "asset_sha256": "0aa44a5f0caae8d23963716da67075f0a6cd8926e77f818d2c5718d15e2526d5",
+      "viewBox": "0 0 342.558 335.08401",
+      "depiction": "Eudora n64 hardware/controller illustration; source geometry unchanged"
+    },
+    "neogeo": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/neogeo/controller.svg",
+      "source_sha256": "5b53513688c98eb8ef7b0a2c1be870239b3280b02b16f6a5887aadb8ccdf5af9",
+      "asset_sha256": "82e5894df0b9bf756c2ec58657d4267580ee301bd6085787887a0cebe9c5a73b",
+      "viewBox": "0 0 493.79197 328.657",
+      "depiction": "Eudora neogeo hardware/controller illustration; source geometry unchanged"
+    },
+    "nes": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/nes/controller.svg",
+      "source_sha256": "4354990dec31b4d648a82cb3977f5f7e7a238f977aa7922d46d06c6b9c217667",
+      "asset_sha256": "8cbd5ec226a3f4bed55ba44807304d187e5bf88989f96309144b5ad7087bf6bb",
+      "viewBox": "0 0 574.77097 249.774",
+      "depiction": "Eudora nes hardware/controller illustration; source geometry unchanged"
+    },
+    "ngp": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/ngp/controller.svg",
+      "source_sha256": "e70d2f5e7935988774de259e4c3e7e9453eec096e401452281e3ba439281eee9",
+      "asset_sha256": "832b4f20b7c4cb353337b331f2980f999ba987b792fd1e5026941eed81d0050a",
+      "viewBox": "0 0 537.08195 322.00298",
+      "depiction": "Eudora ngp hardware/controller illustration; source geometry unchanged"
+    },
+    "ngpc": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/ngpc/controller.svg",
+      "source_sha256": "e70d2f5e7935988774de259e4c3e7e9453eec096e401452281e3ba439281eee9",
+      "asset_sha256": "832b4f20b7c4cb353337b331f2980f999ba987b792fd1e5026941eed81d0050a",
+      "viewBox": "0 0 537.08195 322.00298",
+      "depiction": "Eudora ngpc hardware/controller illustration; source geometry unchanged"
+    },
+    "odyssey2": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/odyssey2/controller.svg",
+      "source_sha256": "e276bed091d272119b57674790848264f39eb04d037323ba07153a856146d678",
+      "asset_sha256": "75f7d0e825a2e714e41ff491492732f08d38e5bb210c717cd83e0529c6150567",
+      "viewBox": "0 0 322.129 418.384",
+      "depiction": "Eudora odyssey2 hardware/controller illustration; source geometry unchanged"
+    },
+    "pc": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/pc/controller.svg",
+      "source_sha256": "c3eaa7e635f314834110066adc5d7767ec02e73ef1c749213232bc5a383204cd",
+      "asset_sha256": "ffbd5d2e342c04ff5b6dbbeaabd3ac7ed0d95866e681bc1a24123cfd259b4763",
+      "viewBox": "0 0 574.74595 254.45799",
+      "depiction": "Eudora pc hardware/controller illustration; source geometry unchanged"
+    },
+    "pcengine": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/pcengine/controller.svg",
+      "source_sha256": "8b646395e58fbcfe3ab5ac4600b45d3c6d52e6f32cbf399ff6bb87f73693837a",
+      "asset_sha256": "c2ac52ad8ec7ab7825c0f7a218063367835097f5b62a7c261d3629dd61036d16",
+      "viewBox": "0 0 580.79099 273.27398",
+      "depiction": "Eudora pcengine hardware/controller illustration; source geometry unchanged"
+    },
+    "pcenginecd": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/pcenginecd/controller.svg",
+      "source_sha256": "8b646395e58fbcfe3ab5ac4600b45d3c6d52e6f32cbf399ff6bb87f73693837a",
+      "asset_sha256": "c2ac52ad8ec7ab7825c0f7a218063367835097f5b62a7c261d3629dd61036d16",
+      "viewBox": "0 0 580.79099 273.27398",
+      "depiction": "Eudora pcenginecd hardware/controller illustration; source geometry unchanged"
+    },
+    "psx": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/psx/controller.svg",
+      "source_sha256": "3785b7b4a2391debe22748e2d18e4a118ed4b2a277b96bac692f8640ed2303f2",
+      "asset_sha256": "57eb2d095ae86fa8656f23c36bfb3a374589d3b2277713f0d91e1b0888c71f06",
+      "viewBox": "0 0 501.40397 327.27498",
+      "depiction": "Eudora psx hardware/controller illustration; source geometry unchanged"
+    },
+    "saturn": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/saturn/controller.svg",
+      "source_sha256": "b1512db8ee2e02bba481d2330717cb74aeaa8bfd59b5fe6b4b7a6050a7650e7a",
+      "asset_sha256": "003d3d9c9fea6edca06b1207d77d79217106da950c8a81c0484402be9f739cbd",
+      "viewBox": "0 0 598.189 350.26",
+      "depiction": "Eudora saturn hardware/controller illustration; source geometry unchanged"
+    },
+    "sega32x": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/sega32x/controller.svg",
+      "source_sha256": "5e9af79d14bdff13899214f28cb02c4a26280c1e5588655972fc45d70515ab4c",
+      "asset_sha256": "9669a85b2aa795088b7b33150c352a6853591a2d5869c74428d42ce6b0d6bc8d",
+      "viewBox": "0 0 583.36625 307.37917",
+      "depiction": "Eudora sega32x hardware/controller illustration; source geometry unchanged"
+    },
+    "segacd": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/segacd/controller.svg",
+      "source_sha256": "d1cb7764af44f6ab67f566d963e3cb53a47ff9afc8a27fc9126e5a6af60434a2",
+      "asset_sha256": "397f19da4c08d84fadb2470104c22ab6460f4b66a39779409a272c2c9ee263d0",
+      "viewBox": "0 0 270.989 336.63399",
+      "depiction": "Eudora segacd hardware/controller illustration; source geometry unchanged"
+    },
+    "sg1000": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/sg1000/controller.svg",
+      "source_sha256": "5fa3b46554cc4a0230c26f5d7e8dfca7e31f6bd2fb7dc9027e3dbce9f7f1d8df",
+      "asset_sha256": "c64e6cb8d69964a7f59914234a6183aa735ef04276c34d731aa7fb92c2854d2c",
+      "viewBox": "0 0 148.05799 336.937",
+      "depiction": "Eudora sg1000 hardware/controller illustration; source geometry unchanged"
+    },
+    "snes": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/snes/controller.svg",
+      "source_sha256": "7d001f7be1368e4b542cd23091f4bbccb0cde8742d51f3b91c35c28ee91f5646",
+      "asset_sha256": "2458fa45a3aeed2b659587da165f0805f1815f2dde0b3549253bf4bee099e787",
+      "viewBox": "0 0 584.991 252.24299",
+      "depiction": "SNES controller (not console)"
+    },
+    "supergrafx": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/supergrafx/controller.svg",
+      "source_sha256": "8b646395e58fbcfe3ab5ac4600b45d3c6d52e6f32cbf399ff6bb87f73693837a",
+      "asset_sha256": "c2ac52ad8ec7ab7825c0f7a218063367835097f5b62a7c261d3629dd61036d16",
+      "viewBox": "0 0 580.79099 273.27398",
+      "depiction": "Eudora supergrafx hardware/controller illustration; source geometry unchanged"
+    },
+    "vectrex": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/vectrex/controller.svg",
+      "source_sha256": "1354e1442df83d93d8c4ae4baedb9cee47ba6389bac7afb2a0904d9d2f1f20c8",
+      "asset_sha256": "7a9ca466da48e31a32bf1e54ecee358ed0bd972c2510d6287b1d30b615bb67cb",
+      "viewBox": "0 0 576.736 212.643",
+      "depiction": "Eudora vectrex hardware/controller illustration; source geometry unchanged"
+    },
+    "videopac": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/videopac/controller.svg",
+      "source_sha256": "d29d584bc0bebd93f030ca5a2a7ee88f9944f4963ef119b64a941ab623cac565",
+      "asset_sha256": "ec3d0e4bde2db7839ec007c109fa570296f551ed0881f7b8716a52676c174e5c",
+      "viewBox": "0 0 256.41799 333.03499",
+      "depiction": "Eudora videopac hardware/controller illustration; source geometry unchanged"
+    },
+    "virtualboy": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/virtualboy/controller.svg",
+      "source_sha256": "218138dcf8570ed3cfa1ab83cfdccb436318660563d0b99191546412ea8ea6c3",
+      "asset_sha256": "4b263e02b2f8b580575f2d45813d86945474dbce9d7cb73037ddb09956640ae8",
+      "viewBox": "0 0 598.189 350.26",
+      "depiction": "Eudora virtualboy hardware/controller illustration; source geometry unchanged"
+    },
+    "wonderswan": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/wonderswan/controller.svg",
+      "source_sha256": "0841ea1ffd8fe9497e358f8b546cb6f1a4b2703d682bdfede360dd0cad8d23ed",
+      "asset_sha256": "269ee6934c75205805ef79058b73c992173d54c79c6691166e77fe6a9348dad0",
+      "viewBox": "0 0 562.66599 320.66955",
+      "depiction": "Eudora wonderswan hardware/controller illustration; source geometry unchanged"
+    },
+    "wonderswancolor": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/wonderswancolor/controller.svg",
+      "source_sha256": "0841ea1ffd8fe9497e358f8b546cb6f1a4b2703d682bdfede360dd0cad8d23ed",
+      "asset_sha256": "269ee6934c75205805ef79058b73c992173d54c79c6691166e77fe6a9348dad0",
+      "viewBox": "0 0 562.66599 320.66955",
+      "depiction": "Eudora wonderswancolor hardware/controller illustration; source geometry unchanged"
+    },
+    "zx81": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/zx81/controller.svg",
+      "source_sha256": "5cf1db7743cc1fec52d20d2097359c9ae4b0006e635fccec8f2792b0926bcde0",
+      "asset_sha256": "aa38d7575a5fd478047ac567efa35c7c710bdfe895d0d46c5f4036b6c4a42354",
+      "viewBox": "0 0 546.55295 335.79342",
+      "depiction": "Eudora zx81 hardware/controller illustration; source geometry unchanged"
+    },
+    "zxspectrum": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/zxspectrum/controller.svg",
+      "source_sha256": "5cf1db7743cc1fec52d20d2097359c9ae4b0006e635fccec8f2792b0926bcde0",
+      "asset_sha256": "aa38d7575a5fd478047ac567efa35c7c710bdfe895d0d46c5f4036b6c4a42354",
+      "viewBox": "0 0 546.55295 335.79342",
+      "depiction": "Eudora zxspectrum hardware/controller illustration; source geometry unchanged"
+    },
+    "genesis": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/megadrive/controller.svg",
+      "source_sha256": "f7ddf0a7713eeca1bb6c46389f31fb7d99595e7da5af600acfcd47b79bd9052d",
+      "asset_sha256": "37c901710bda75d222af608ec8901ae7829100179e9d8b64756a4a9c01df49f5",
+      "viewBox": "0 0 598.19015 350.26161",
+      "depiction": "Eudora megadrive hardware/controller illustration; source geometry unchanged",
+      "alias_of": "megadrive"
+    },
+    "sfc": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/snes/controller.svg",
+      "source_sha256": "7d001f7be1368e4b542cd23091f4bbccb0cde8742d51f3b91c35c28ee91f5646",
+      "asset_sha256": "2458fa45a3aeed2b659587da165f0805f1815f2dde0b3549253bf4bee099e787",
+      "viewBox": "0 0 584.991 252.24299",
+      "depiction": "SNES controller (not console)",
+      "alias_of": "snes"
+    },
+    "jaguar": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/atarijaguar/controller.svg",
+      "source_sha256": "22c762919377adb32168977ffd0ad865ec4012c2dc1654097203115ef9beb609",
+      "asset_sha256": "b3f635d9f369b9c2d1303d19d842494d01215ef5e21a34eb38e9d7a0f6e43157",
+      "viewBox": "0 0 598.191 350.257",
+      "depiction": "Eudora atarijaguar hardware/controller illustration; source geometry unchanged",
+      "alias_of": "atarijaguar"
+    },
+    "atarilynx": {
+      "source_path": "recalbox-themes-master-themes-eudora/themes/eudora/lynx/controller.svg",
+      "source_sha256": "c88575724cc419b8fe723697e6a93a35d2752f8f79675e65adfabd9d7cd855c4",
+      "asset_sha256": "cf309da4fa1e1b25810cfac96a6a193db30aad64ab8b1f062ea9362192954ea9",
+      "viewBox": "0 0 498.65598 236.25109",
+      "depiction": "Eudora lynx hardware/controller illustration; source geometry unchanged",
+      "alias_of": "lynx"
+    }
+  }
+}

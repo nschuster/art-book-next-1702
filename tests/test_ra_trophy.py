@@ -34,7 +34,7 @@ def test_native_trophy_and_panel_geometry(mode, total, count):
     count_node = doc.find("./view/text[@name='ra_progress']")
     assert count_node.findtext('pos') == '0.76953125 0.837916666666667'
     assert count_node.findtext('fontSize') == '0.027777777777777'
-    assert count_node.findtext('size') == '0.14 0.045833333333333'
+    assert count_node.findtext('size') == '0.34 0.045833333333333'
     assert count_node.findtext('color') == '${gamelistListTextlistUnselectedColor}'
     assert len(doc.find('view')) == 4
 

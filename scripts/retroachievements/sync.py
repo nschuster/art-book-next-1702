@@ -17,6 +17,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import unicodedata
 import xml.etree.ElementTree as ET
 
 API = 'https://retroachievements.org/API/'
@@ -91,7 +92,7 @@ def rom_key(system, rom, root):
         raise SyncError('invalid ROM filename')
     return system, str(path)
 
-def mappings(cfg, root, config_dir):
+def mappings(cfg, root, config_dir, names=None):
     result = {}
     known_roms = set()
     for system in cfg.get('systems', []):
@@ -99,7 +100,9 @@ def mappings(cfg, root, config_dir):
         gamelist = root / 'roms' / system / 'gamelist.xml'
         if not gamelist.exists(): continue
         for game in ET.parse(gamelist).getroot().findall('game'):
-            known_roms.add(rom_key(system, game.findtext('path', ''), root))
+            key = rom_key(system, game.findtext('path', ''), root)
+            known_roms.add(key)
+            if names is not None: names[key] = game.findtext('name', '')
             gid = game.findtext('cheevosId', '')
             if gid.isdecimal() and int(gid) > 0:
                 result[rom_key(system, game.findtext('path', ''), root)] = int(gid)
@@ -154,6 +157,7 @@ class Client:
             self.base = test_base.rstrip('/') + '/'
             self.interval = max(0, self.interval if cfg.get('min_interval', 1) else 0)
             self.backoff = max(0, self.backoff if cfg.get('backoff', 2) else 0)
+        self.live = None
         self.last = 0
         self.opener = urllib.request.build_opener(NoRedirect)
     def fetch(self, gid):
@@ -164,7 +168,11 @@ class Client:
     def request(self, url, data=None):
         retries = max(0, min(4, int(self.cfg.get('retries', 2))))
         for attempt in range(retries + 1):
-            time.sleep(max(0, self.last + self.interval - time.monotonic()))
+            if self.live:
+                self.live.emit('syncing', request_attempt=attempt + 1)
+                self.live.wait(max(0, self.last + self.interval - time.monotonic()))
+            else:
+                time.sleep(max(0, self.last + self.interval - time.monotonic()))
             self.last = time.monotonic()
             try:
                 req = urllib.request.Request(url, data=data, headers={'User-Agent': 'Batocera-RA-Extras/1.0', 'Accept': 'application/json'})
@@ -178,7 +186,13 @@ class Client:
                 pass
             except (ValueError, SyncError):
                 break
-            if attempt < retries: time.sleep(min(30, self.backoff * 2 ** attempt))
+            if attempt < retries:
+                delay = min(30, self.backoff * 2 ** attempt)
+                if self.live:
+                    self.live.emit('retrying')
+                    self.live.wait(delay)
+                else:
+                    time.sleep(delay)
         raise SyncError('API unavailable or invalid response; existing cache retained')
 
 class TokenClient(Client):
@@ -235,14 +249,14 @@ class TokenClient(Client):
                          'NumAwardedToUserHardcore': len(modes[1])}, gid)
 
 def progress_asset(data, cfg, root):
-    """Exact vector fill; the complete smooth rainbow spans the unlocked fill."""
+    """Reveal a fixed full-track rainbow as the unlocked rectangle grows."""
     key = 'NumAwardedToUserHardcore' if cfg.get('mode', 'hardcore') == 'hardcore' else 'NumAwardedToUser'
     total = data['NumAchievements']
     width = 1000 * data[key] / total if total else 0
     stops = ''.join(f'<stop offset="{offset}%" stop-color="{color}"/>' for offset, color in
                     [(0, '#cf493e'), (25, '#df8c38'), (50, '#e4c653'), (75, '#6b9b62'), (100, '#527eb0')])
     content = (f'<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="85.9375" viewBox="0 0 1000 85.9375" preserveAspectRatio="none">'
-               f'<defs><linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">{stops}</linearGradient></defs>'
+               f'<defs><linearGradient id="rainbow" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="100%" y2="0%">{stops}</linearGradient></defs>'
                f'<rect id="fill" width="{width:.15g}" height="85.9375" fill="url(#rainbow)"/></svg>').encode()
     digest = hashlib.sha256(content).hexdigest()
     return Path(root).absolute() / 'system/retroachievements/assets' / (digest + '.svg'), content
@@ -315,14 +329,16 @@ def render(data, cfg, root):
     view = ET.SubElement(theme, 'view', name='detailed,video')
     text = ET.SubElement(view, 'text', name='ra_progress', extra='true')
     key = 'NumAwardedToUserHardcore' if cfg.get('mode', 'hardcore') == 'hardcore' else 'NumAwardedToUser'
-    props = {'pos': '0.76953125 0.837916666666667', 'size': '0.14 0.045833333333333', 'fontPath': font,
+    props = {'pos': '0.76953125 0.837916666666667', 'size': '0.34 0.045833333333333', 'fontPath': font,
              'fontSize': '0.027777777777777', 'color': '${gamelistListTextlistUnselectedColor}', 'alignment': 'center',
              'origin': '0.5 0.5', 'multiLine': 'false',
              'verticalAlignment': 'center', 'zIndex': '101', 'visible': 'true'}
     for keyname in props:
         ET.SubElement(text, keyname).text = str(template.get(keyname, props[keyname]))
     label = template.get('label', '')
-    ET.SubElement(text, 'text').text = f"{label + ' ' if label else ''}{data[key]}/{data['NumAchievements']}"
+    total = data['NumAchievements']
+    percent = (200 * data[key] + total) // (2 * total) if total else 0
+    ET.SubElement(text, 'text').text = f"{label + ' ' if label else ''}{data[key]} / {total} · {percent}%"
     image = ET.SubElement(view, 'image', name='ra_progress_bar', extra='true')
     asset, _ = progress_asset(data, cfg, root)
     for name, value in {'pos': '0.5890625 0.815', 'size': '0.3609375 0.045833333333333', 'origin': '0 0',
@@ -380,6 +396,111 @@ def status_event(state, event, count=0):
         atomic_write(path, history + line)
 
 
+class StopRequested(Exception):
+    """Cooperative stop; deliberately not a per-game SyncError."""
+
+
+class LiveProgress:
+    """Atomic UI snapshot. Activated only after acquiring sync.lock.
+
+    Counters are unique IDs, not ROMs, HTTP calls or retry attempts. A later
+    generation replaces that ID's outcome. failed counts unresolved IDs only
+    when this run terminates unsuccessfully; retrying is not a terminal failure.
+    """
+    def __init__(self, state, cfg, root):
+        self.path = state / 'progress.json'
+        self.state_dir = state
+        self.root = root
+        self.secrets = [str(cfg.get(k, '')) for k in ('username', 'api_key', 'token') if cfg.get(k)]
+        self.active = False
+        self.seen = set()
+        self.outcomes = {}
+        self.data = dict(schema=1, run_id=str(uuid.uuid4()), pid=os.getpid(),
+                         updated_at=0, state='starting', system='', game='', game_id=None,
+                         total=0, completed=0, updated=0, cached=0, failed=0,
+                         pending=0, attempt=0, request_attempt=0, reason='')
+
+    def __enter__(self):
+        return self
+
+    def label(self, value, fallback=''):
+        value = unicodedata.normalize('NFKC', str(value or fallback))
+        value = ''.join(c if c.isprintable() else (' ' if c.isspace() else '') for c in value)
+        for secret in self.secrets:
+            value = value.replace(unicodedata.normalize('NFKC', secret), '[redacted]')
+        value = ' '.join(value.split())[:160]
+        return value or (self.label(fallback) if fallback else '')
+
+    def start(self, names, records):
+        self.active = True
+        self.valid_ids = set(records.values())
+        with pending_queue(self.state_dir) as pending:
+            self.observe(pending)
+        self.emit('starting')
+        self.emit('scanning')
+        systems = {}
+        # User overrides win; label discovery is once per worker, never per HTTP.
+        for path in (Path('/usr/share/emulationstation/es_systems.cfg'),
+                     self.root / 'system/configs/emulationstation/es_systems.cfg'):
+            try:
+                for system in ET.parse(path).getroot().findall('system'):
+                    systems[system.findtext('name', '')] = system.findtext('fullname', '')
+            except (OSError, ET.ParseError):
+                pass  # Cosmetic metadata must not prevent safe syncing.
+        self.names = {}
+        for (system, rom), gid in records.items():
+            self.names.setdefault(gid, (self.label(systems.get(system), system),
+                                       self.label(names.get((system, rom)), PurePosixPath(rom).stem)))
+
+    def observe(self, pending):
+        ids = {int(item) for item in pending} & self.valid_ids
+        self.seen.update(ids)
+        self.data['pending'] = len(ids)
+        self.pending_ids = ids
+
+    def emit(self, state, **fields):
+        if not self.active: return
+        self.data.update(fields, state=state, updated_at=time.time(), total=len(self.seen))
+        self.data['updated'] = sum(value == 'updated' for value in self.outcomes.values())
+        self.data['cached'] = sum(value == 'cached' for value in self.outcomes.values())
+        self.data['completed'] = len(self.outcomes)
+        atomic_write(self.path, json.dumps(self.data, ensure_ascii=True).encode())
+
+    def current(self, gid, attempt):
+        system, game = self.names.get(gid, ('', ''))
+        self.outcomes.pop(gid, None)
+        self.emit('syncing', system=system, game=game, game_id=gid,
+                  attempt=attempt, request_attempt=0)
+
+    def wait(self, seconds):
+        deadline = time.monotonic() + seconds
+        while True:
+            if safe_path(self.state_dir / 'stop.request').exists(): raise StopRequested()
+            remaining = deadline - time.monotonic()
+            if remaining <= 0: return
+            time.sleep(min(.1, remaining))
+
+    def finish(self, state, reason=''):
+        self.data['failed'] = len(self.pending_ids - self.outcomes.keys()) if state == 'failed' else 0
+        self.emit(state, reason=reason)
+        self.active = False
+
+    def __exit__(self, kind, value, traceback):
+        if self.active:
+            try:
+                with pending_queue(self.state_dir) as pending:
+                    self.observe(pending)
+                if kind is StopRequested:
+                    self.finish('stopped', 'stop_requested')
+                elif kind is not None:
+                    self.finish('failed', 'worker_error')
+                else:
+                    self.finish('stopped', 'source_changed')
+            except Exception:
+                pass  # Best effort, before lock close; never leak exception details.
+        return False
+
+
 def source_stamp(cfg_path, cfg, root):
     paths = [cfg_path, root / 'system/batocera.conf']
     paths.extend(root / 'roms' / system / 'gamelist.xml' for system in cfg.get('systems', []))
@@ -407,7 +528,8 @@ def run(args):
             if marker.exists(): marker.unlink()
         return 0
     while True:
-        result = run_worker(args)
+        try: result = run_worker(args)
+        except StopRequested: return 1
         if result is not None: return result
         # Source identity changed during work. Release the worker lock, reload
         # settings and reconcile before any further publication.
@@ -421,7 +543,8 @@ def run_worker(args):
     native = cfg.get('backend') == 'batocera'
     if native: cfg.update(batocera_settings(root))
     inactive = native and (not cfg['enabled'] or not cfg['username'] or not cfg['token'])
-    records = mappings(cfg, root, cfg_path.parent)
+    names = {}
+    records = mappings(cfg, root, cfg_path.parent, names)
     if inactive: records = {}
     all_records = dict(records)
     if args.rom and not args.system:
@@ -453,12 +576,14 @@ def run_worker(args):
         print('No safe saved game ID for selected ROM; save Batocera gamelists or supply a verified mapping.', file=sys.stderr)
         status_event(state, 'unmapped')
     lock_path = safe_path(state / 'sync.lock')
-    with lock_path.open('a') as lock:
+    with lock_path.open('a') as lock, LiveProgress(state, cfg, root) as live:
         # The worker's final empty-check/unlock uses this same transaction lock.
         with pending_queue(state):
             try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except BlockingIOError:
                 print('Sync already running; request queued.'); return 0
+        live.start(names, all_records)
+        client.live = live
         # SHA256 namespaces account caches, never hashes ROMs.
         account = hashlib.sha256(cfg['username'].encode()).hexdigest()[:24]
         manifest = safe_path(state / 'extras-manifest.json')
@@ -486,8 +611,10 @@ def run_worker(args):
             collect_assets(state, owned)
             if cfg['enabled']:
                 print(AUTH_HELP, file=sys.stderr)
+                live.finish('failed', 'authentication_required')
                 return 2
             print('Batocera RA is disabled; owned progress extras removed. Reload the game list to clear an already displayed panel.')
+            live.finish('disabled')
             return 0
         failures = 0; count = 0; attempted = set()
         valid_ids = set(all_records.values())
@@ -495,11 +622,13 @@ def run_worker(args):
         retry_delay = max(30, min(300, float(cfg.get('queue_backoff', 30))))
         if args.test_api_base: retry_delay = max(.05, float(cfg.get('queue_backoff', .2)))
         while True:
-            if safe_path(state / 'stop.request').exists(): return 1
+            if safe_path(state / 'stop.request').exists(): raise StopRequested()
             if source_stamp(cfg_path, cfg, root) != stamp: return None
             with pending_queue(state) as pending:
+                live.observe(pending)
                 for item in list(pending):
                     if int(item) not in valid_ids: del pending[item]
+                live.observe(pending)
                 watch = args.watch or any(job.get('watch', False) for job in pending.values())
                 eligible = [(item, job) for item, job in pending.items() if job['attempts'] < max_attempts]
                 ready = [(item, job) for item, job in eligible
@@ -510,6 +639,7 @@ def run_worker(args):
                         collect_assets(state, owned)
                         remaining = len(pending)
                         # Enqueue cannot land between the final decision and unlock.
+                        live.finish('failed' if remaining else 'complete')
                         fcntl.flock(lock, fcntl.LOCK_UN)
                         break
                     wait = min(1, max(.05, min(job['due'] for _, job in eligible) - time.time()))
@@ -518,9 +648,11 @@ def run_worker(args):
                     item, job = ready[0]
                     job = dict(job)
             if job is None:
-                time.sleep(wait)
+                live.emit('retrying')
+                live.wait(wait)
                 continue
             gid = int(item)
+            live.current(gid, job['attempts'] + 1)
             attempted.add(job['generation'])
             failed = False
             cache = safe_path(state / 'cache' / ('batocera' if native else 'webapi') / account / (str(gid) + '.json'))
@@ -529,6 +661,7 @@ def run_worker(args):
                 if not job['force'] and cache.exists() and time.time() - cache.stat().st_mtime < max(0, float(cfg.get('cache_ttl', 900))):
                     try: data = progress(json.loads(cache.read_text()), gid)
                     except (ValueError, SyncError): pass
+                cached = data is not None
                 if data is None:
                     data = client.fetch(gid)
                     if source_stamp(cfg_path, cfg, root) != stamp: return None
@@ -552,6 +685,7 @@ def run_worker(args):
                     owned[relative] = {'identity': desired[relative], 'sha256': hashlib.sha256(content).hexdigest()}
                     atomic_write(manifest, json.dumps(owned).encode())
                     count += 1
+                live.outcomes[gid] = 'cached' if cached else 'updated'
             except (SyncError, OSError):
                 failed = True
                 failures += 1
@@ -565,6 +699,8 @@ def run_worker(args):
                         current['due'] = time.time() + min(300, retry_delay * 2 ** min(4, current['attempts'] - 1))
                     else:
                         del pending[item]
+                live.observe(pending)
+            live.emit('retrying' if failed else 'syncing')
             status_event(state, 'retry' if failed else 'written', gid)
         print(f'Sync complete: {count} extras written, {failures} failures, {remaining} pending.')
         status_event(state, 'complete', remaining)
@@ -583,7 +719,7 @@ def main():
     parser.add_argument('--test-api-base', help='TEST ONLY: loopback HTTP mock API; never a live-success claim')
     args = parser.parse_args()
     try: return run(args)
-    except (SyncError, OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
+    except Exception:
         # Never print exception details: upstream URLs and JSON may contain secrets.
         try:
             state = safe_path(Path(args.data_root).absolute() / 'system/retroachievements')

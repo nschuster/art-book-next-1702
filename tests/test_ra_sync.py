@@ -66,8 +66,8 @@ class SyncTests(unittest.TestCase):
     def test_cli_renders_hardcore_and_caches(self):
         p = self.run_sync(); self.assertEqual(p.returncode, 0, p.stderr)
         node = ET.parse(self.output()).find("./view/text[@name='ra_progress']")
-        self.assertEqual(node.get('extra'), 'true'); self.assertEqual(node.findtext('text'), '2/10')
-        self.assertEqual(node.findtext('pos'), '0.76953125 0.837916666666667'); self.assertEqual(node.findtext('size'), '0.14 0.045833333333333')
+        self.assertEqual(node.get('extra'), 'true'); self.assertEqual(node.findtext('text'), '2 / 10 · 20%')
+        self.assertEqual(node.findtext('pos'), '0.76953125 0.837916666666667'); self.assertEqual(node.findtext('size'), '0.34 0.045833333333333')
         self.assertEqual(node.findtext('fontPath'),'${themePath}/${fontBold}')
         query = parse_qs(urlparse(self.requests[0]).query)
         self.assertEqual(query['g'], ['1']); self.assertEqual(query['u'], ['test-user']); self.assertEqual(query['y'], ['secret-test-key'])
@@ -76,7 +76,7 @@ class SyncTests(unittest.TestCase):
     def test_softcore_and_xml_escaping(self):
         self.cfg.update(mode='softcore', template={'label': 'RA & <count>'}); self.save()
         self.assertEqual(self.run_sync().returncode, 0)
-        self.assertEqual(ET.parse(self.output()).findtext('./view/text/text'), 'RA & <count> 4/10')
+        self.assertEqual(ET.parse(self.output()).findtext('./view/text/text'), 'RA & <count> 4 / 10 · 40%')
     def test_offline_preserves_bytes_and_redacts_error(self):
         self.assertEqual(self.run_sync().returncode, 0)
         before = self.output().read_bytes(); self.status = 503

@@ -1,55 +1,56 @@
-# Game launch screen QA
+# Selected-game logo launch screen QA
 
-## Scope and contract
+## Current candidate: supplied Eudora hardware artwork
 
-Only `gamesplash.xml` is new runtime content. Existing `theme.xml`, startup `splash.xml`, palettes, fonts, game-list/system geometry and menu settings are untouched. No new user option or helper. The native launch screen uses the selected palette's `gamelistListBackgroundColor` and `gamelistListDescriptionColor`, a centered aspect-fit **boxart**, and a single-line game title. Both native progress images are explicitly hidden; no extra artwork/progress animation is fabricated.
+`gamesplash.xml` (not startup `splash.xml`) displays the selected game's marquee/logo above subdued **supplied hardware/controller artwork**, on the selected palette background. **SNES is a controller, not a console.** Other source drawings depict controllers, handhelds and computers. No cover, screenshot substitution, progress indicator or duplicate title. Native game title appears only when the marquee path is empty or nonexistent; corrupt existing images cannot be detected by the filesystem expression.
 
-`colors.xml` is loaded first, then Custom's existing distribution-specific `theme-customizations/art-book-next/colors.xml`. Missing custom files retain the default palette; custom contrast is the user's responsibility. Local default-only subset declarations prevent an unset saved Color Scheme from activating every palette. They belong to the standalone launch parser, not the main configuration menu. They do not register new options in `theme.xml`.
+This asset replacement does not change native launch XML, geometry, bindings, fonts or palette definitions. Browsing artwork/logos, RA, startup and all unrelated work are unchanged. Custom uses the existing distribution-specific colors file; contrast of user overrides is not guaranteed.
 
-## Pinned native source trace
+## Native source and binding verification
 
-Verified the existing clean `/tmp/ra-es-source` checkout at Batocera 42 ES **`4adf26b43900d1a33887af6d8af3da2e99e398a5`**. Tests read that exact object with `git show`, not whatever branch happens to be checked out. Source: [batocera-emulationstation at pin](https://github.com/batocera-linux/batocera-emulationstation/tree/4adf26b43900d1a33887af6d8af3da2e99e398a5).
+Batocera 42 ES pin **`4adf26b43900d1a33887af6d8af3da2e99e398a5`**, available at `/tmp/ra-es-source`. Tests inspect pinned Git objects, not an unverified current branch. [Pinned source](https://github.com/batocera-linux/batocera-emulationstation/tree/4adf26b43900d1a33887af6d8af3da2e99e398a5).
 
-- `es-app/src/FileData.cpp:748`: launch passes **`getImagePath()`**, `getName()` and the launched `FileData` into `setCustomSplashScreen`. The constructor's image is a scraped screenshot/image, **not necessarily box art**.
-- `es-core/src/Window.cpp:935–945`: builds `Splash(..., false, bindable)`, then `update(customText)`. This supplies the game title after construction; a static label `<text>` is unnecessary and would be overwritten.
-- `es-core/src/Splash.cpp:25–55`: chooses the theme root's **`gamesplash.xml`**, loads view **`splash`**, and initializes `imagePath` from that runtime image. A typed `<image name="background"><path>{game:thumbnail}</path>` overrides it because binding paths are explicitly accepted even before they exist. Merely adding a boxart extra would leave the unwanted built-in screenshot behind.
-- `Splash.cpp:113–127,193–204`: applies image properties with PATH excluded, but common `GuiComponent::applyTheme` still records `_binding` expressions. The built-in background is explicitly made bindable and then updated from the launched game. `ThemeData.cpp:1777–1782`, `GuiComponent.cpp:899–901`, `BindingManager.cpp:203+`, and `ImageComponent.cpp:1126–1127` trace path binding into `setImage`.
-- Use `{game:thumbnail}`, matching this theme's existing Boxart preset (`theme.xml:609`). Native FileData resolves it with `getThumbnailPath(false)` (thumbnail metadata/local thumb without image fallback). `{game:boxart}` is the separate **Alt BoxArt** field and would not reliably match the user's existing covers. Missing/broken thumbnail leaves the title without a screenshot fallback.
-- `Splash.h:24` defaults percent to **-1**; `Splash.cpp:281` draws progress only for nonnegative values. Both progress image elements are also hidden explicitly.
-- `ThemeData.cpp:1329–1378`: saved subsets are consulted, then local first entries. Without either, `ifSubset` accepts the node; local defaults avoid last-palette-wins on a fresh configuration. Launch lookup uses the `splash` system key, so use the global Color Scheme; per-console overrides are not promised.
-- `ThemeData.cpp`'s actual `sElementMap` supports every emitted property. `maxSize` aspect-fits rather than crops; `roundCorners=0` removes the constructor's default rounded cover corners. `TextComponent.cpp` honors `multiLine=false` for native single-line truncation. `Font::getFromTheme` starts from `min(screen dimensions) × .05`; renderer scaling/rasterization still applies.
+- `FileData.cpp` launches with the game's image/name/Bindable; `Window.cpp` constructs Splash then updates the title.
+- `Splash.cpp` loads root `gamesplash.xml`, view `splash`, and permits bound background paths. Overriding built-in `background` with `{game:marquee}` removes the initial screenshot, including absent marquee.
+- Label `!exists( {game:marquee} )` uses real native MathExpr, not an invented condition. BindingManager quotes Path strings, including empty paths; Null substitutes no characters. Whitespace is intentional. Window's later title update does not undo bound visibility. Do not bind title text: Window overwrites it.
+- Hardware expression remains `"${themePath}/_inc/launch-hardware/" + {game:system:name} + ".svg"`. Nested Bindables resolve the source game's system, not the collection/group. Unknown IDs have nonexistent paths and no image, with no misleading fallback. Collection behavior still needs device QA.
+- Both native progress images remain explicitly invisible; normal launch percent defaults to -1.
+- Splash overwrites component opacity each frame. Intrinsic SVG root `opacity="0.45"` survives this, multiplied by `${gamelistListDescriptionColor}`.
 
-## Geometry (source-derived, not screenshots)
+Actual compiled pinned MathExpr execution in `/tmp/launch-expression-probe/launch-probe` verifies existing-path visibility 0, nonexistent/empty/Null visibility 1, and exact hardware concatenation for snes/c64/unknown-system/ports. Supporting string methods are harness implementations; exists uses POSIX stat rather than native FileCache. This executes the evaluator, not the entire native frontend.
 
-All normalized image/text coordinates use the screen, with no container/extras. The maximum cover envelope is x=.15–.85, y=.12–.72; actual artwork shrinks within it while preserving aspect ratio. The title is x=.08–.92, y=.79–.88. Essential content stays inside a nominal 5% margin; actual CRT overscan may differ.
+## Exact inventory, attribution and unresolved rights
 
-| Framebuffer | Max cover | Title x/y, width/height | Nominal font before native scaling |
-| --- | --- | --- | --- |
-| 640×480 | 448×288 | 51.2/379.2, 537.6×43.2 | 24 px |
-| 320×240 | 224×144 | 25.6/189.6, 268.8×21.6 | 12 px |
+**52 hardware-system source `controller.svg` files plus four aliases (56 runtime IDs)** replace all earlier invented drawings. No geometry was redrawn, cropped, rotated or normalized to the former 200×100 canvas. `_inc/launch-hardware/manifest.json` records exact supplied ZIP SHA256, archive-member paths, source/output SHA256, original viewBoxes, exclusions and alias mappings.
 
-The file applies to all launch screens, with 4:3 as its review target. It does not change video timings, correct non-square pixels, force a minimum launch duration, or control emulator/boot screens. Long names truncate instead of wrapping/scrolling. Low-resolution readability and actual title glyph bounds need native/device inspection.
+Aliases: `genesis → megadrive`, `sfc → snes`, `jaguar → atarijaguar`, `atarilynx → lynx`. Excluded software/application/collection and arcade-emulator sets: doom, favorites, fba, fbneo, imageviewer, kodi, mame, ports, scummvm, zmachine. All remaining hardware-system `controller.svg` files are included. Unsupported invented drawings are removed, including 3DS, DS, Switch, Wii U, Vita, GC, Wii, PS2 and PSP. Source directories without this artwork are not covered.
 
-## Executed evidence
+Eudora credits **AmadhiX** for all XML, sounds and some images; **Carbon by Eric Hettervik**, based on **Simple by Nils Bonenberger**, supplied most logos/line art. The entire source readme is preserved unchanged in `_inc/launch-hardware/SOURCE-README.txt`. Its separately stated background-texture/font licenses do not establish line-art rights. **Redistribution permission remains unresolved.** Repository inclusion is not a license grant. Do not assign the enclosing theme's original-art CC license to these borrowed assets.
 
-```sh
-PYTHONDONTWRITEBYTECODE=1 BATOCERA_ES_SOURCE=/tmp/ra-es-source \
-  python -m pytest tests/test_gamesplash.py -q -p no:cacheprovider
-```
+## Unchanged geometry and paint normalization
 
-- **RED before runtime implementation:** `7 failed, 1 passed` because `gamesplash.xml` did not exist (including an explicit missing-entry assertion).
-- **Second RED:** `1 failed, 8 passed` when local unset-subset defaults were absent; then added the local defaults and resolver fallback coverage.
-- **GREEN:** `9 passed`, including all palettes, alpha-composited text contrast, custom include order and both distribution paths, missing-art binding behavior, portrait/landscape/square/very-wide aspect-fit geometry at both resolutions, typed native built-ins, every emitted property's native schema support, pinned launch bindings, and byte preservation of all pre-existing runtime XML against `2a93d44`.
-- The schema test reads the actual upstream C++ map; the semantic resolver is Python. Neither executes the native XML parser or renderer. Without a checkout the source-contract test explicitly skips; set `BATOCERA_ES_SOURCE` to a Git checkout containing the pin to enable it.
-- Initial full-suite run: `147 passed, 1 failed, 104 subtests passed`. The unrelated existing `test_system_playtime.py::test_opt_in_and_preservation` reapplied transforms to an already-updated `HEAD` baseline. The parent independently repaired that baseline test; this worker did not modify it. **Final full-suite rerun on the shared tree: `149 passed, 104 subtests passed`**, with pinned source checks enabled. `git diff --check` passed.
+Logo origin `.5 .5`, center `.5 .37`, maxSize `.78 .40`. Fallback title center `.5 .37`, origin `.5 .5`, size `.84 .16`, Roboto-Bold `.05`, centered multiline. Hardware center `.5 .73`, origin `.5 .5`, maxSize `.36 .22`, zIndex 6.
 
-## Device acceptance still required
+Hardware aspect-fits source-specific proportions inside 230.4×105.6 at 640×480 and 115.2×52.8 at 320×240. Centers remain (320,350.4)/(160,175.2). Native fractional rounding may differ from static previews. No video mode, pixel-aspect or transition-duration changes.
 
-No native frontend, emulator launch or Commodore 1702 capture was run for this feature. On Batocera 42, install the standalone file beside `theme.xml`, restart ES, then:
+Only explicit source pale-gray fill/stroke paint is normalized to white for multiplicative palette tint, with root opacity `.45` added. All geometry, dimensions, viewBoxes, transforms, drawing order and metadata remain intact. Most line work consists of **filled outline paths**, not new uniform strokes. NanoSVG inherits opacity per shape; overlapping shapes can composite above .45, unlike browser group-opacity flattening. Thin source detail is intentionally preserved and can be faint at 240p. No stroke thickening or invented console substitutions.
 
-1. At 640×480, launch games whose screenshot differs from box art. Confirm **only the cover**, correct title and palette; repeat in Default, Commodore 64, OLED, Light and Custom.
-2. Try portrait, landscape, square and wide artwork; confirm no cropping/stretching/rounded clipping. Try no boxart and a broken path; title-only is expected, with no prior game's image.
-3. Try long/localized names and 320×240. Inspect native ellipsis, title vertical clipping, composite readability and real overscan. Font/menu presets should not change the fixed launch typography.
-4. Verify no progress bar, normal emulator handoff/return, and unchanged startup splash/game-list/system layouts. Very fast launches may make the transition barely visible; this theme adds no delay.
+## Executed replacement evidence
 
-Rollback: remove only `gamesplash.xml` to restore the frontend's built-in launch theme. Do not delete the existing startup `splash.xml` or unrelated previews.
+- RED: `PYTHONDONTWRITEBYTECODE=1 python -m pytest tests/test_gamesplash.py -q -p no:cacheprovider` → **2 failed, 10 passed, 1 skipped**: missing new provenance/license contracts; `/tmp/eudora-red.txt`.
+- GREEN with `BATOCERA_LAUNCH_EXPR_PROBE=/tmp/launch-expression-probe/launch-probe` → **13 passed**. Archive-backed checks verify exact hashes, complete hardware inventory, all node geometry/transforms/text, paint-only style changes, output hashes, alias identity and omitted unsupported IDs. Existing native schema/bindings and XML preservation checks pass.
+- Extracted unchanged NanoSVG headers from the pin above; compiled `/tmp/eudora-native/raster` from `/tmp/eudora-raster.cpp`. **112 nonempty rasterizations** cover all 56 IDs at 230×106 and 115×53 aspect-fit envelopes. Evidence: `/tmp/eudora-native/results.json`, individual PNGs and visually inspected `/tmp/eudora-native/contact.png`. SNES clearly remains the supplied controller; no gross renderer failure observed. Source margins are preserved, not newly certified as unclipped.
+- Maximum alpha per raster ranges 45–157 (0–255): antialiased thin details and source overlaps affect compositing. Intrinsic .45 works; not every pixel has uniform .45 alpha.
+- Parent owns all-palette launch previews and full integration-suite evidence. Static compositions are illustrations, not ES screenshots. Without the archive/native probe, optional source-fidelity/expression checks explicitly skip. Python palette resolution is not the complete native theme loader.
+
+## Local testing and remaining device checks
+
+Borrowed-art redistribution rights remain unresolved; retain the source attribution and rights notice. For local testing, install both `gamesplash.xml` and `_inc/launch-hardware/` beside existing theme content, retain `colors.xml` and bundled fonts, and restart ES. Replace the old hardware directory rather than overlay-copying, to avoid leaving unsupported invented assets behind.
+
+1. On stock Batocera 42 at 640×480, launch a game with marquee: confirm logo only, supplied controller/hardware art and selected palette.
+2. Empty/stale marquee should show title instead; corrupt existing files require repair/removal. Unknown systems should show no hardware.
+3. Launch from Favorites/all-games/groups to verify source routing; compare SNES controller, C64, handheld and unknown systems without inferring regional model detection.
+4. Repeat palettes including Custom and independently check 320×240. Inspect faint details, title wrapping, wide/tall/padded marquees, overscan and physical 1702 readability.
+5. Confirm no progress graphics, normal handoff/return, and unchanged startup/browsing screens. **Native frontend launch and physical CRT validation remain outstanding.**
+
+Rollback: remove only candidate `gamesplash.xml` to restore built-in launch theme; the unused hardware directory can then be removed. Preserve startup `splash.xml` and unrelated files.

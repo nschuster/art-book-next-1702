@@ -20,7 +20,7 @@ def resolve_launch(scheme='default', distribution='batocera', custom=None):
     Runtime {game:...} bindings deliberately survive this theme-variable pass.
     """
     options = {'color-scheme': scheme, 'distribution': distribution}
-    variables, elements, includes = {}, {}, []
+    variables, elements, includes = {'themePath': str(ROOT)}, {}, []
 
     def active(node):
         for clause in node.get('ifSubset', '').split(','):
@@ -105,21 +105,19 @@ class GameSplashTests(unittest.TestCase):
         self.assertEqual(resolve_launch('custom')[1], resolve_launch('default')[1])
         self.assertEqual(resolve_launch('oled', custom=fixture)[2], ['./colors.xml'])
 
-    def test_boxart_replaces_runtime_scraped_image_and_missing_art_stays_blank(self):
+    def test_logo_replaces_runtime_scraped_image_and_missing_art_stays_blank(self):
         _, elements, _ = resolve_launch()
         image = elements['image', 'background']
-        self.assertEqual(image['path'], '{game:thumbnail}')
+        self.assertEqual(image['path'], '{game:marquee}')
         self.assertNotIn('default', image)  # no screenshot substitution
         self.assertNotIn('minSize', image)
         self.assertNotIn('size', image)
         self.assertEqual(image['roundCorners'], '0')
-        # Model Splash's path selection BEFORE file-existence loading. A binding
-        # overrides its initial screenshot even if boxart is empty/nonexistent.
-        for boxart in ['/media/cover.png', '', '/missing/cover.png']:
+        for logo in ['/media/logo.png', '', '/missing/logo.png']:
             initial_image = '/media/screenshot.png'
             selected = image.get('path', initial_image)
-            bound = selected.replace('{game:thumbnail}', boxart)
-            self.assertEqual(bound, boxart)
+            bound = selected.replace('{game:marquee}', logo)
+            self.assertEqual(bound, logo)
             self.assertNotEqual(bound, initial_image)
 
     def test_4_3_bounds_and_aspect_fit(self):
@@ -127,10 +125,12 @@ class GameSplashTests(unittest.TestCase):
         image, label = elements['image', 'background'], elements['text', 'label']
         pair = lambda p: tuple(map(float, p.split()))
         self.assertEqual(pair(image['origin']), (.5, .5))
-        self.assertEqual(pair(image['pos']), (.5, .42))
-        self.assertEqual(pair(image['maxSize']), (.70, .60))
-        self.assertEqual(pair(label['origin']), (.5, 0))
-        self.assertEqual(label['multiLine'], 'false')
+        self.assertEqual(pair(image['pos']), (.5, .37))
+        self.assertEqual(pair(image['maxSize']), (.78, .40))
+        self.assertEqual(pair(label['origin']), (.5, .5))
+        self.assertEqual(pair(label['pos']), (.5, .37))
+        self.assertEqual(pair(label['size']), (.84, .16))
+        self.assertEqual(label['multiLine'], 'true')
         self.assertEqual(label['alignment'], 'center')
         self.assertEqual(label['forceUppercase'], 'false')
         self.assertNotIn('text', label)  # Window supplies getName() after construction
@@ -142,25 +142,126 @@ class GameSplashTests(unittest.TestCase):
                 aw, ah = iw*scale, ih*scale
                 self.assertAlmostEqual(aw/ah, iw/ih)
                 self.assertGreaterEqual(.5*w-aw/2, .05*w)
-                self.assertGreaterEqual(.42*h-ah/2, .05*h)
-                self.assertLessEqual(.42*h+ah/2, .72*h + 1e-6)
-            x, y = pair(label['pos'])
-            lw, lh = pair(label['size'])
-            self.assertGreaterEqual(x-lw/2, .05)
-            self.assertLessEqual(x+lw/2, .95)
-            self.assertGreater(y, .72)
-            self.assertLessEqual(y+lh, .95)
+                self.assertGreaterEqual(.37*h-ah/2, .05*h)
+                self.assertLessEqual(.37*h+ah/2, .57*h + 1e-6)
             self.assertGreaterEqual(int(h*float(label['fontSize'])), 12)
 
-    def test_only_native_builtins_no_fake_progress_or_extras(self):
+    def test_missing_logo_title_uses_native_exists_not_empty_only(self):
+        _, elements, _ = resolve_launch()
+        self.assertEqual(elements['text', 'label'].get('visible'), '!exists( {game:marquee} )')
+
+    def test_hardware_uses_source_system_not_collection_or_wordmark(self):
+        _, elements, _ = resolve_launch()
+        self.assertIn(('image', 'launchHardware'), elements)
+        hardware = elements['image', 'launchHardware']
+        self.assertEqual(hardware['path'], '"'+str(ROOT)+'/_inc/launch-hardware/" + {game:system:name} + ".svg"')
+        self.assertEqual(hardware['maxSize'], '0.36 0.22')
+        self.assertEqual(hardware['pos'], '0.5 0.73')
+        self.assertNotIn('default', hardware)
+        self.assertNotIn('opacity', hardware)  # Splash overwrites this every frame
+        import json
+        manifest = ROOT / '_inc/launch-hardware/manifest.json'
+        self.assertTrue(manifest.is_file())
+        data = json.loads(manifest.read_text())
+        self.assertEqual(data['license_status'], 'unresolved; redistribution not cleared')
+        self.assertEqual(data['publication_status'], 'local unpublished candidate')
+        mapping = data['systems']
+        self.assertGreaterEqual(len(mapping), 20)
+        self.assertNotIn('ports', mapping)
+        self.assertNotIn('auto-allgames', mapping)
+        self.assertFalse((manifest.parent / '_default.svg').exists())
+        import hashlib
+        self.assertEqual(set(p.stem for p in manifest.parent.glob('*.svg')), set(mapping))
+        for unsupported in ['3ds', 'n3ds', 'nds', 'switch', 'wiiu', 'psvita', 'ps2', 'psp', 'gc', 'wii', 'mame', 'fbneo']:
+            self.assertNotIn(unsupported, mapping)
+        self.assertIn('controller', mapping['snes']['depiction'].lower())
+        for system, entry in mapping.items():
+            asset = manifest.parent / (system+'.svg')
+            self.assertEqual(hashlib.sha256(asset.read_bytes()).hexdigest(), entry['asset_sha256'])
+            self.assertRegex(entry['source_sha256'], r'^[0-9a-f]{64}$')
+            self.assertTrue(entry['source_path'].endswith('/controller.svg'))
+            svg = ET.parse(asset).getroot()
+            self.assertEqual(svg.get('viewBox'), entry['viewBox'])
+            self.assertEqual(svg.get('opacity'), '0.45')
+            self.assertFalse(svg.findall('.//{*}image'))
+            for node in svg.iter():
+                for color in re.findall(r'(?:fill|stroke):([^;]+)', node.get('style', '')):
+                    self.assertIn(color, ['#ffffff', 'none'])
+        for alias, target in data['aliases'].items():
+            self.assertEqual((manifest.parent/(alias+'.svg')).read_bytes(), (manifest.parent/(target+'.svg')).read_bytes())
+
+    def test_eudora_archive_geometry_and_source_checksums_when_available(self):
+        import hashlib
+        import json
+        import zipfile
+        archive = Path(os.environ.get('EUDORA_ARCHIVE', '/root/.hermes/cache/documents/doc_a34c2139f583_recalbox-themes-master-themes-eudora.zip'))
+        if not archive.exists():
+            self.skipTest('Set EUDORA_ARCHIVE to supplied source archive for source fidelity check')
+        folder = ROOT / '_inc/launch-hardware'
+        data = json.loads((folder/'manifest.json').read_text())
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), data['archive_sha256'])
+        with zipfile.ZipFile(archive) as source:
+            expected = {p.split('/')[-2] for p in source.namelist() if p.endswith('/controller.svg')} - set(data['excluded_source_ids'])
+            self.assertEqual(set(data['systems']) - set(data['aliases']), expected)
+            for system, entry in data['systems'].items():
+                raw = source.read(entry['source_path'])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), entry['source_sha256'])
+                original = ET.fromstring(raw)
+                actual = ET.parse(folder/(system+'.svg')).getroot()
+                # Every node, geometry attribute, transform and text survives;
+                # only fill/stroke colors and root opacity may differ.
+                def geometry(root):
+                    return [(n.tag, {k:v for k,v in n.attrib.items() if k not in ('fill','stroke','style','opacity')}, n.text) for n in root.iter()]
+                self.assertEqual(geometry(actual), geometry(original), system)
+                for old, new in zip(original.iter(), actual.iter()):
+                    old_style = re.sub(r'((?:fill|stroke):)#[0-9a-fA-F]+', r'\1#ffffff', old.get('style', ''))
+                    self.assertEqual(new.get('style', ''), old_style, system)
+
+    def test_native_expression_execution_when_probe_is_available(self):
+        probe = os.environ.get('BATOCERA_LAUNCH_EXPR_PROBE')
+        if not probe:
+            self.skipTest('Set BATOCERA_LAUNCH_EXPR_PROBE to pinned MathExpr harness')
+        _, elements, _ = resolve_launch()
+        expression = elements['text', 'label']['visible']
+        # BindingManager quotes Path values, including empty strings; Null is bare.
+        for binding, expected in [('"'+str(ROOT/'_inc/launch-hardware/snes.svg')+'"', '0'),
+                                  ('"/missing/launch/logo.png"', '1'), ('""', '1'), ('', '1')]:
+            actual = subprocess.check_output([probe, expression.replace('{game:marquee}', binding)], text=True).strip()
+            self.assertEqual(actual, expected, binding)
+        hardware = elements['image', 'launchHardware']['path']
+        for system in ['snes', 'c64', 'unknown-system', 'ports']:
+            actual = subprocess.check_output([probe, hardware.replace('{game:system:name}', '"'+system+'"')], text=True).strip()
+            self.assertEqual(actual, str(ROOT/'_inc/launch-hardware'/(system+'.svg')))
+
+    def test_only_native_builtins_and_hardware_no_fake_progress(self):
         root = ET.parse(ROOT / 'gamesplash.xml').getroot()
         self.assertEqual(root.findtext('formatVersion'), '7')
         self.assertEqual([v.get('name') for v in root.findall('view')], ['splash'])
         _, elements, _ = resolve_launch()
-        self.assertEqual(set(elements), {('splash','splash'), ('image','background'), ('text','label'), ('image','progressbar'), ('image','progressbar:active')})
+        self.assertEqual(set(elements), {('splash','splash'), ('image','background'), ('text','label'), ('image','progressbar'), ('image','progressbar:active'), ('image','launchHardware'), ('text','launchStatus')})
         for name in ['progressbar', 'progressbar:active']:
             self.assertEqual(elements['image', name]['visible'], 'false')
-        self.assertFalse(root.findall('.//*[@extra]'))
+        self.assertEqual([n.get('name') for n in root.findall('.//*[@extra]')], ['launchHardware', 'launchStatus'])
+
+    def test_static_loading_status(self):
+        from PIL import ImageFont
+        for palette in PALETTES:
+            variables, elements, _ = resolve_launch(palette)
+            status = elements['text', 'launchStatus']
+            self.assertEqual(status['text'], 'LOADING…')
+            self.assertEqual(status['color'], variables['gamelistListDescriptionColor'])
+            self.assertEqual(status['pos'], '0.5 0.89')
+            self.assertEqual(status['origin'], '0.5 0.5')
+            self.assertEqual(status['size'], '0.6 0.06')
+            self.assertEqual(status['alignment'], 'center')
+            self.assertEqual(status['visible'], 'true')
+            for w, h in [(640,480), (320,240)]:
+                font = ImageFont.truetype(str(ROOT/status['fontPath']), int(int(h*float(status['fontSize']))*1.31))
+                box = font.getbbox(status['text'])
+                self.assertLess(box[2]-box[0], .6*w)
+                self.assertLessEqual(box[3]-box[1], .06*h)
+                self.assertGreater(.89-.06/2, .73+.22/2)
+                self.assertLess(.89+.06/2, .95)
 
     def test_existing_runtime_xml_unchanged(self):
         paths = subprocess.check_output(['git','ls-tree','-r','--name-only','2a93d44'], cwd=ROOT, text=True).splitlines()
@@ -186,6 +287,8 @@ class GameSplashTests(unittest.TestCase):
             native = dict(re.findall(r'\{ "(\w+)", (\w+) \}', block[1]))
             for prop in elem:
                 self.assertIn(prop.tag, native, (elem.tag, prop.tag))
+                if '{game:' in (prop.text or ''):
+                    continue  # binding expressions checked separately
                 if native[prop.tag] == 'NORMALIZED_PAIR':
                     self.assertEqual(len(list(map(float, prop.text.split()))), 2)
                 elif native[prop.tag] == 'BOOLEAN':
@@ -197,6 +300,19 @@ class GameSplashTests(unittest.TestCase):
             self.assertIn(token, splash)
         self.assertIn('float percent = -1', read('es-core/src/Splash.h'))
         filedata = read('es-app/src/FileData.cpp')
+        self.assertIn('file->getMarqueePath()', filedata)
+        self.assertIn('auto sys = getSourceFileData()->getSystem();', filedata)
+        self.assertIn('return BindableProperty(sys);', filedata)
+        self.assertIn('sys->getName()', read('es-app/src/SystemData.cpp'))
+        binding = read('es-core/src/BindingManager.cpp')
+        self.assertIn('root = value.bindable;', binding)
+        self.assertIn('Utils::MathExpr::evaluate(evaluableExpression.c_str())', binding)
+        self.assertIn('value = (ret.number != 0);', binding)
+        self.assertIn('setVisible(value.b);', read('es-core/src/GuiComponent.cpp'))
+        self.assertIn('"exists", 1', read('es-core/src/utils/MathExpr.cpp'))
+        self.assertIn('mText.setText(text);', splash)
+        self.assertIn('BindingManager::updateBindings(&mText, bindable);', splash)
+        self.assertIn('BindingManager::updateBindings(extra, bindable);', splash)
         self.assertIn('setCustomSplashScreen(gameToUpdate->getImagePath(), gameToUpdate->getName(), gameToUpdate)', filedata)
         self.assertIn('std::string finalValue = md.get(name);', filedata)
         self.assertIn('return BindableProperty(finalValue, BindablePropertyType::Path);', filedata)

@@ -18,6 +18,7 @@ class NativeSvgTests(unittest.TestCase):
             _, content = helper.progress_asset(data, {}, Path('/userdata'))
             gradient = ET.fromstring(content).find('{*}defs/{*}linearGradient')
             assert gradient is not None
+            self.assertEqual(gradient.get('gradientUnits'), 'userSpaceOnUse')
             self.assertEqual(gradient.get('x1'), '0%')
             self.assertEqual(gradient.get('x2'), '100%')
             self.assertEqual(gradient.get('y1'), '0%')
