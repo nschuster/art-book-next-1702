@@ -97,7 +97,7 @@ Run these blocks in an **SSH terminal connected to Batocera**, not on your PC. F
 )
 ```
 
-**2. Install/update the achievement helper and sync.** New installations automatically use Batocera's saved login and Hardcore setting. Existing helper configuration is preserved. Startup syncing is enabled only after a successful sync; the installer also adds the game-exit hook.
+**2. Install/update the achievement helper and sync.** New installations automatically use Batocera's saved login and Hardcore setting. Existing helper configuration is preserved. The installer adds the independent game-exit hook but does not enable startup syncing or change Batocera configuration. The optional startup service queues mapped achievement IDs using the progress-cache TTL; it is not needed for game-exit updates or the exit pipe-lifetime fix.
 
 ```sh
 (
@@ -108,9 +108,16 @@ Run these blocks in an **SSH terminal connected to Batocera**, not on your PC. F
   fi
   python3 /userdata/system/retroachievements/sync.py \
     --config /userdata/system/retroachievements/config.json
-  batocera-services enable ra-progress-sync
 )
 ```
+
+Optional, only if you want startup refresh after a successful manual sync:
+
+```sh
+batocera-services enable ra_progress_sync
+```
+
+The valid service name uses underscores. Re-running the updated installer migrates the old `system/services/ra-progress-sync` only when its checksum matches the install manifest. Modified/unmanaged conflicts are refused without replacing them; restore the managed version or move your local file aside after review, then retry. The independent gameStop hook keeps its filename `ra-progress-sync.sh`. No Batocera service settings are automatically rewritten.
 
 If sync reports missing/expired credentials, reauthenticate in Batocera's RetroAchievements settings and rerun block 2. If it reports **zero extras**, game IDs may need mapping; see the [helper guide](scripts/retroachievements/README.md). An existing manual Web API configuration stays unchanged; see that guide for migration rather than deleting it.
 

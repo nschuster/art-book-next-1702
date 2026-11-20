@@ -18,7 +18,7 @@ def test_hooks_retry_and_stop(tmp_path):
         return subprocess.run([sys.executable,str(INSTALL),'--data-root',str(tmp_path),*args],capture_output=True,text=True)
     assert install().returncode == 0
     hook=(tmp_path/'system/scripts/ra-progress-sync.sh').read_text()
-    service=(tmp_path/'system/services/ra-progress-sync').read_text()
+    service=(tmp_path/'system/services/ra_progress_sync').read_text()
     assert '--watch' in hook and '--watch' in service
     assert '--stop' in service
     assert install().returncode == 0
@@ -29,7 +29,7 @@ def test_hooks_retry_and_stop(tmp_path):
 @pytest.mark.parametrize('hook,args', [
     ('system/scripts/ra-progress-sync.sh',
      ['gameStop', 'snes', 'libretro', 'snes9x', './Game with spaces.sfc']),
-    ('system/services/ra-progress-sync', ['start']),
+    ('system/services/ra_progress_sync', ['start']),
 ])
 def test_installed_background_hook_releases_capture_pipes(tmp_path, hook, args):
     # Install the real shell scripts, substituting only the worker. No RA calls.

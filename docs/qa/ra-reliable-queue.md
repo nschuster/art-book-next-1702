@@ -43,7 +43,7 @@ Keep the existing config/login; do not rerun configure. Start a refresh:
 python3 /userdata/system/retroachievements/sync.py --config /userdata/system/retroachievements/config.json --data-root /userdata --watch --force
 ```
 
-For normal startup refresh, retain the existing enabled `ra-progress-sync` service.
+For optional startup refresh, use `ra_progress_sync` (the earlier hyphenated service name is invalid in Batocera). Startup queues mapped IDs using the progress-cache TTL. The gameStop hook is independent; the service is not needed for game-exit refreshing or the exit pipe-lifetime fix.
 The installer does not enable it automatically. Game-exit hooks are installed.
 Default failure budget is three queue attempts, each with bounded HTTP retries.
 Exhausted jobs remain pending until a new forced event/manual refresh renews them.

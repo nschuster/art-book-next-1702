@@ -50,7 +50,7 @@ def install_files(root, uninstall=False, ports_menu=False):
             'case "$1" in\n  gameStop)\n'
             f'    {command} --watch --system "$2" --rom "$5" --force </dev/null >/dev/null 2>&1 &\n'
             '    ;;\nesac\n').encode(),
-        'system/services/ra-progress-sync': (
+        'system/services/ra_progress_sync': (
             '#!/bin/sh\n# Managed by RA extras installer; exits when durable queue drains.\n'
             'case "$1" in\n  start)\n'
             f'    {command} --watch </dev/null >/dev/null 2>&1 &\n'
@@ -62,7 +62,8 @@ def install_files(root, uninstall=False, ports_menu=False):
     for target in (example, mapping, manifest):
         if target.exists() and not target.is_file():
             raise SyncError('expected regular installed file')
-    old = json.loads(manifest.read_text()) if manifest.exists() else {}
+    manifest_before = manifest.read_bytes() if manifest.exists() else None
+    old = json.loads(manifest_before) if manifest_before is not None else {}
     port = 'roms/ports/Refresh RetroAchievements Progress.sh'
     # Keep opt-in on normal upgrades; do not touch an unrelated Ports gamelist.
     if ports_menu or port in old:
@@ -78,23 +79,28 @@ def install_files(root, uninstall=False, ports_menu=False):
             f'exec python3 {q(str(state / "launcher.py"))} --data-root {q(str(root))}\n'
         ).encode()
     # Preflight every target before writing anything. Exact known allowlist only.
-    for name in files:
+    legacy = 'system/services/ra-progress-sync'
+    targets = [*files, legacy]
+    for name in targets:
         target = safe_path(root / name)
+        if target.exists() and not target.is_file():
+            raise SyncError('expected regular installed file')
         if target.exists() and (name not in old or digest(target.read_bytes()) != old[name]):
             raise SyncError('refusing unmanaged or locally changed installed file')
     if uninstall:
-        for name in files:
+        for name in targets:
             target = root / name
             if name in old and target.exists(): target.unlink()
         if manifest.exists(): manifest.unlink()
         print('Removed owned helper/hooks; config, examples, cache and extras retained.')
         return
-    before = {name: ((root / name).read_bytes(), (root / name).stat().st_mode & 0o777) if (root / name).exists() else None for name in files}
+    before = {name: ((root / name).read_bytes(), (root / name).stat().st_mode & 0o777) if (root / name).exists() else None for name in targets}
     new_examples = [path for path in (example, mapping) if not path.exists()]
     try:
         for name, data in files.items():
             target = root / name
             atomic_write(target, data); target.chmod(0o755)
+        if (root / legacy).exists(): (root / legacy).unlink()
         atomic_write(manifest, json.dumps({name: digest(data) for name, data in files.items()}, indent=2).encode())
         if not example.exists(): atomic_write(example, example_content)
         if not mapping.exists(): atomic_write(mapping, b'[]\n')
@@ -107,7 +113,7 @@ def install_files(root, uninstall=False, ports_menu=False):
                 if target.exists(): target.unlink()
             else:
                 atomic_write(target, data[0]); target.chmod(data[1])
-        if old: atomic_write(manifest, json.dumps(old).encode())
+        if manifest_before is not None: atomic_write(manifest, manifest_before)
         elif manifest.exists(): manifest.unlink()
         raise
     print('Installed RA helper and gameStop hook; startup service is NOT enabled.')
@@ -118,7 +124,8 @@ def install_files(root, uninstall=False, ports_menu=False):
     else:
         print('Existing private configuration preserved; do not rerun configure.')
     print('Manual sync:', command)
-    print('No credential prompts: uses Batocera RA login. Optionally: batocera-services enable ra-progress-sync')
+    print('Optional startup service queues mapped IDs with cache TTL; gameStop is independent and does not require it for the exit fix.')
+    print('No credential prompts: uses Batocera RA login. Optionally: batocera-services enable ra_progress_sync')
 
 
 def main():

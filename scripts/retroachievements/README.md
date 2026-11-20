@@ -175,12 +175,14 @@ private config. Errors never print response bodies, exception URLs, or API keys.
 Optional startup enablement, after the manual sync works:
 
 ```sh
-batocera-services enable ra-progress-sync
-batocera-services start ra-progress-sync
+batocera-services enable ra_progress_sync
+batocera-services start ra_progress_sync
 ```
 
 The installed `/userdata/system/scripts/ra-progress-sync.sh` responds only to
 `gameStop`, queues the exited system/ROM with `--force --watch`, and spawns a worker.
+It is independent of the optional `ra_progress_sync` startup service: enabling
+that service is not required for game-exit updates or the exit pipe-lifetime fix.
 Startup queues only mapped achievement IDs using the progress-cache TTL. No ROM
 hashing or API requests for unidentified games are performed. Gamelists are still
 read for IDs and filename-collision safety.
@@ -218,11 +220,21 @@ attention. The existing Batocera login is reused unchanged.
 Rollback (cache/config remain for reinstall):
 
 ```sh
-batocera-services disable ra-progress-sync
+batocera-services disable ra_progress_sync
 python3 /userdata/themes/art-book-next-1702/scripts/retroachievements/install.py --data-root /userdata --uninstall
 ```
 
 Uninstall removes only manifest-owned, unchanged helper/hook files. It does not
+require upgrading first: both legacy and current service filenames are recognized.
+Upgrade removes the invalid legacy `system/services/ra-progress-sync` only when
+its checksum matches the install manifest, then records `system/services/ra_progress_sync`.
+Both paths are preflighted; modified or unmanaged conflicts cause refusal before
+helper changes. Restore the managed file or move your local file aside after
+review before retrying; do not delete the ownership manifest. A failed upgrade
+restores the old service bytes/mode and manifest, including after legacy removal.
+The installer never edits Batocera configuration or enables/disables services.
+The hyphenated gameStop hook filename is unchanged (it is not a service).
+Uninstall does not
 remove private config, JSON cache, XML extras, or unrelated services. Disable the
 theme's RA option separately if desired. A currently running one-shot can finish;
 service stop waits for the current job and retains queued work. Installation and

@@ -150,7 +150,7 @@ class InstallTests(unittest.TestCase):
             p = run(); self.assertEqual(p.returncode, 0, p.stderr)
             self.assertEqual(run().returncode, 0)
             self.assertTrue((root / 'system/scripts/ra-progress-sync.sh').exists())
-            self.assertTrue((root / 'system/services/ra-progress-sync').exists())
+            self.assertTrue((root / 'system/services/ra_progress_sync').exists())
             self.assertEqual(run('--uninstall').returncode, 0)
             self.assertFalse((root / 'system/scripts/ra-progress-sync.sh').exists())
             self.assertEqual(other.read_text(), 'keep')
@@ -162,6 +162,6 @@ class InstallTests(unittest.TestCase):
             p = subprocess.run([sys.executable, str(SCRIPT.with_name('install.py')), '--data-root', str(root)], capture_output=True)
             self.assertEqual(p.returncode, 2)
             self.assertEqual(hook.read_text(), 'user content')
-            self.assertFalse((root / 'system/services/ra-progress-sync').exists())
+            self.assertFalse((root / 'system/services/ra_progress_sync').exists())
 
 if __name__ == '__main__': unittest.main()
