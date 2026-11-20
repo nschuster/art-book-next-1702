@@ -40,18 +40,20 @@ def install_files(root, uninstall=False, ports_menu=False):
     source = Path(__file__).resolve().parent
     q = shlex.quote
     command = f"python3 {q(str(state / 'sync.py'))} --config {q(str(state / 'config.json'))} --data-root {q(str(root))}"
+    # Background workers must not retain the launch caller's capture pipes.
+    # sync.py writes bounded, sanitized status.log diagnostics independently.
     files = {
         'system/retroachievements/sync.py': (source / 'sync.py').read_bytes(),
         'system/retroachievements/configure.py': (source / 'configure.py').read_bytes(),
         'system/scripts/ra-progress-sync.sh': (
             '#!/bin/sh\n# Managed by RA extras installer.\n'
             'case "$1" in\n  gameStop)\n'
-            f'    {command} --watch --system "$2" --rom "$5" --force </dev/null &\n'
+            f'    {command} --watch --system "$2" --rom "$5" --force </dev/null >/dev/null 2>&1 &\n'
             '    ;;\nesac\n').encode(),
         'system/services/ra-progress-sync': (
             '#!/bin/sh\n# Managed by RA extras installer; exits when durable queue drains.\n'
             'case "$1" in\n  start)\n'
-            f'    {command} --watch </dev/null &\n'
+            f'    {command} --watch </dev/null >/dev/null 2>&1 &\n'
             f'    ;;\n  stop) {command} --stop ;;\nesac\n').encode(),
     }
     example = safe_path(state / 'config.example.json')

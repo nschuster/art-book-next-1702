@@ -199,8 +199,17 @@ worker exits rather than retrying forever. A new game-exit event or manual
 `--force` renews their budget. Restarting preserves attempts and deadlines.
 `--drain --watch` resumes eligible pending work without adding the startup set.
 
-Hooks no longer discard stdout/stderr. `status.log` in the helper directory is
-bounded to approximately 12 KB and records timestamps, fixed event names and
+The game-exit hook and service `start` detach the worker's stdin, stdout and
+stderr to `/dev/null`. Backgrounding with `&` alone leaves output pipes open:
+callers capturing launch output can otherwise wait for the entire retry worker
+before returning to EmulationStation. This fixes the reproduced pipe-lifetime
+bug, not a device-verified diagnosis of every stuck loading screen. Reinstall
+from the updated repository to replace existing managed hooks (stop active sync
+first); configuration and queued work are preserved. Service `stop` and manual
+foreground sync still report to the terminal. No unbounded shell log is added.
+
+Persistent worker diagnostics remain in `status.log` in the helper directory,
+bounded to approximately 12 KB; it records timestamps, fixed event names and
 numeric IDs/counts only, never account names, tokens, URLs or ROM paths. `unmapped`
 means the selected game has no safe saved ID (missing metadata or a stem collision);
 `retry` retains the previous successful progress; `rejected` needs setup/filesystem
