@@ -6,9 +6,19 @@ import xml.etree.ElementTree as ET
 from test_metadata import ROOT, resolve
 from test_c64 import parse, structure
 
-EXPRESSION = 'empty( {system:gameTime} ) ? "00:00" : {system:gameTime}'
+EXPRESSION = 'Playtime unavailable'  # Generated include replaces only text, not geometry.
 REGISTRATION = '<subset name="system-playtime" displayName="System Playtime"><include name="off" displayName="Off" /><include name="on" displayName="On" /></subset>'
 INCLUDE = '<include ifSubset="system-playtime:on">./system-playtime.xml</include>'
+
+def approved_hours_snapshot_transform(root):
+    """Only replace the native timecode text and add the generated text include."""
+    target = root.find("view/text[@name='system-playtime']")
+    target.find('text').text = 'Playtime unavailable'
+    for child in target:
+        if child.tag is ET.Comment:
+            child.text = ' Saved full-gamelist total; unavailable until independent helper refresh. '
+    root.append(ET.fromstring('<include>/userdata/system/configs/art-book-next-system-playtime/${system.name}.xml</include>'))
+
 
 def approved_system_playtime_transform(root):
     """Add exactly the approved two nodes to older preservation baselines."""
@@ -25,6 +35,10 @@ class SystemPlaytimeTests(unittest.TestCase):
         approved_system_playtime_transform(baseline)
         from test_menu_fonts import approved_menu_transform
         approved_menu_transform(baseline)
+        from test_controller_status import approved_controller_transform
+        approved_controller_transform(baseline)
+        from test_canvas_carousel import approved_canvas_transform
+        approved_canvas_transform(baseline)
         self.assertEqual(structure(actual), structure(baseline))
 
     def test_independent_count_full_include_graph(self):

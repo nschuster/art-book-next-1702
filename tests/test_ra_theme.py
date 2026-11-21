@@ -44,6 +44,10 @@ class AchievementThemeTests(unittest.TestCase):
         approved_system_playtime_transform(baseline)
         from test_menu_fonts import approved_menu_transform
         approved_menu_transform(baseline)
+        from test_controller_status import approved_controller_transform
+        approved_controller_transform(baseline)
+        from test_canvas_carousel import approved_canvas_transform
+        approved_canvas_transform(baseline)
         self.assertEqual(structure(root), structure(baseline))
 
     def test_overlay_is_scoped_and_preserves_media(self):

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasHardware>${themePath}/_inc/images/space.png</canvasHardware>
+      <canvasManufacturer>Unknown</canvasManufacturer>
+      <canvasYear>Unknown</canvasYear>
+      <canvasType>Unknown</canvasType>
+      <canvasMissing>Artwork unavailable</canvasMissing>
+      <canvasHasHardware>false</canvasHasHardware>
+   </variables>
+</theme>

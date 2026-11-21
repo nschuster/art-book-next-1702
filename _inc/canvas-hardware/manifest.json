@@ -1,0 +1,546 @@
+{
+  "repository": "https://github.com/Siddy212/canvas-es",
+  "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+  "rights": "Conflict: root LICENSE states CC0 1.0; README states CC-BY-NC-SA 2.0 and credits third-party artwork. Per-asset authorship/clearance is not established. Do not infer CC0 rights for these images; resolve rights before redistribution.",
+  "credit": "Canvas by Siddy212; README credits fagnerpc and PangolinWrestler among others. Individual icon attribution is not mapped.",
+  "transform": "Decode WebP to RGBA PNG, crop only alpha bounding box; preserve all retained RGBA pixels. No recolor, no logo imports.",
+  "aliases": {
+    "genesis": "megadrive",
+    "gamecube": "gc",
+    "ps1": "psx",
+    "n3ds": "3ds",
+    "amiga500": "amiga",
+    "amiga1200": "amiga",
+    "snes-msu1": "snes"
+  },
+  "systems": {
+    "nes": {
+      "source": "_inc/systems/carousel-icons-icons/nes.webp",
+      "source_sha256": "9d5ac04a1fba1ca46c11b2551951298c054b92fc30fd8ef6d527983f22fb22f4",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/nes.webp",
+      "asset": "_inc/canvas-hardware/nes.png",
+      "sha256": "2017039c742ec2e842d43727316e8662cd4f641f573ed49753ef1eb14bad499a",
+      "crop": [
+        174,
+        216,
+        634,
+        424
+      ],
+      "metadata_source": "_inc/systems/metadata/nes.xml",
+      "metadata_source_sha256": "8fccaad334e5a9bbc2c539ab6e77ad0eb9b95c888dcda6ffa1a609408c818eff",
+      "metadata": {
+        "systemName": "Nintendo",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "1985",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "snes": {
+      "source": "_inc/systems/carousel-icons-icons/snes.webp",
+      "source_sha256": "39e8c5e6e01f3aa5c60e6b0051a255f0f6d819c967a3f6d3a50f7b483e0416bb",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/snes.webp",
+      "asset": "_inc/canvas-hardware/snes.png",
+      "sha256": "a27552b99df27a589f436c8fad34a230cb195d34c4799f16e8dc96c6362b63a7",
+      "crop": [
+        100,
+        180,
+        700,
+        461
+      ],
+      "metadata_source": "_inc/systems/metadata/snes.xml",
+      "metadata_source_sha256": "35f0b3ec6234923ea452d1c890cbdf58c6585046596296e9e4dd1392a191e6f6",
+      "metadata": {
+        "systemName": "Super Nintendo",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "1992",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "gb": {
+      "source": "_inc/systems/carousel-icons-icons/gb.webp",
+      "source_sha256": "e613dce9ff76fbd4020f395a6b1fe43666a90c4678d64b9c17a343ccd25dba5d",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/gb.webp",
+      "asset": "_inc/canvas-hardware/gb.png",
+      "sha256": "b30ec4c00b00c74af5faf612ee71956ea8a069ce16166613949cfd2f2fa8ceb3",
+      "crop": [
+        283,
+        128,
+        528,
+        513
+      ],
+      "metadata_source": "_inc/systems/metadata/gb.xml",
+      "metadata_source_sha256": "c38a7127ead4b00d43dbdc7f442a7822c79d3b0a7ea50f264f3e5fe48dad41d3",
+      "metadata": {
+        "systemName": "Game Boy",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "1989",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "gba": {
+      "source": "_inc/systems/carousel-icons-icons/gba.webp",
+      "source_sha256": "02248da1e271ac22a36d8696dc1bcb508ef976555b425d08d392865b9743ec4e",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/gba.webp",
+      "asset": "_inc/canvas-hardware/gba.png",
+      "sha256": "3fc3a886bb2621ab33657e46711c5590a12d7220af24be43c0f27c55c14b7599",
+      "crop": [
+        160,
+        179,
+        641,
+        461
+      ],
+      "metadata_source": "_inc/systems/metadata/gba.xml",
+      "metadata_source_sha256": "2cf6656a52e2c3a9a0b125097269483bc69e75235e985dd4f8021545fa6005eb",
+      "metadata": {
+        "systemName": "Game Boy Advance",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "2001",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "gbc": {
+      "source": "_inc/systems/carousel-icons-icons/gbc.webp",
+      "source_sha256": "90ee6118a464816247856ae4f4e5885791d77225ee23f8ea2cc199f3a7d58e8c",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/gbc.webp",
+      "asset": "_inc/canvas-hardware/gbc.png",
+      "sha256": "5e461664983ab2850a6902915b8a253803668d1c88f3059327a6a8fc66b69cc8",
+      "crop": [
+        293,
+        133,
+        518,
+        508
+      ],
+      "metadata_source": "_inc/systems/metadata/gbc.xml",
+      "metadata_source_sha256": "f858543d0cbd7713f0dc82cc97ebd982a09d1bfdac6ab5e00597857cfc06d199",
+      "metadata": {
+        "systemName": "Game Boy Color",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "1998",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "c64": {
+      "source": "_inc/systems/carousel-icons-icons/c64.webp",
+      "source_sha256": "a7bd1ef1d642dbe33523f2e03dc8940716bbbe256da06700ead5580fb45a8cf0",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/c64.webp",
+      "asset": "_inc/canvas-hardware/c64.png",
+      "sha256": "974c173f9d4f80c7b333275bdbbdd5dd355c995747bcd82f7bd56e8ab7303f95",
+      "crop": [
+        137,
+        174,
+        665,
+        463
+      ],
+      "metadata_source": "_inc/systems/metadata/c64.xml",
+      "metadata_source_sha256": "9d1a350ede8abda64561618a09fb61c41cf234b5df1b827134689da09c4d7b78",
+      "metadata": {
+        "systemName": "Commodore 64",
+        "systemManufacturer": "Commodore",
+        "systemReleaseYear": "1982",
+        "systemHardwareType": "Computer"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "megadrive": {
+      "source": "_inc/systems/carousel-icons-icons/megadrive.webp",
+      "source_sha256": "99b3b3dfabe3d42a1c5173511a169cfd334a666366708510f33f09d058b3c64c",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/megadrive.webp",
+      "asset": "_inc/canvas-hardware/megadrive.png",
+      "sha256": "c212ccf500bcc9a2be41cc1e17e2535923775738f4da5cd4b1e67168859f9bd5",
+      "crop": [
+        100,
+        144,
+        700,
+        496
+      ],
+      "metadata_source": "_inc/systems/metadata/megadrive.xml",
+      "metadata_source_sha256": "109f343ca6f8e4c8826388bf537d3b296e2780a8180a6016d5d8d747e5796846",
+      "metadata": {
+        "systemName": "Mega Drive",
+        "systemManufacturer": "Sega",
+        "systemReleaseYear": "1990",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "mastersystem": {
+      "source": "_inc/systems/carousel-icons-icons/mastersystem.webp",
+      "source_sha256": "b2e3bb3090c8b6a793c5696f9255f11b355c387e4a28bea13a5e69e72a2ca4bd",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/mastersystem.webp",
+      "asset": "_inc/canvas-hardware/mastersystem.png",
+      "sha256": "9bf752cb1cca7f3e79a5ffec5a58dfe36bfdd48e352314997c13b9cdc1b900d5",
+      "crop": [
+        133,
+        191,
+        683,
+        450
+      ],
+      "metadata_source": "_inc/systems/metadata/mastersystem.xml",
+      "metadata_source_sha256": "61861f414f2b5cefaa71fa701047533aa19a17c3e3fdcd0c9e316ea1f07f6e0e",
+      "metadata": {
+        "systemName": "Master System",
+        "systemManufacturer": "Sega",
+        "systemReleaseYear": "1986",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "gamegear": {
+      "source": "_inc/systems/carousel-icons-icons/gamegear.webp",
+      "source_sha256": "0d92db7d63a2e4e08e2fb3dbbd9e161c85000cae8abfcaac7b6fcaa390db5ce2",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/gamegear.webp",
+      "asset": "_inc/canvas-hardware/gamegear.png",
+      "sha256": "5a40de446f707456ed543c4f1bdbbe696a0893fe29f65eb3438cf8133063bc75",
+      "crop": [
+        100,
+        160,
+        700,
+        480
+      ],
+      "metadata_source": "_inc/systems/metadata/gamegear.xml",
+      "metadata_source_sha256": "2f307a3c543ce1e05c906b1f6cf8dade32e5b0c75edae281ed7f7c2bf7c6f341",
+      "metadata": {
+        "systemName": "Game Gear",
+        "systemManufacturer": "Sega",
+        "systemReleaseYear": "1990",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "psx": {
+      "source": "_inc/systems/carousel-icons-icons/psx.webp",
+      "source_sha256": "9d74c351620137ba89b758a45cc5b2326f287c2fc3c733f188c4147d84c2b57c",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/psx.webp",
+      "asset": "_inc/canvas-hardware/psx.png",
+      "sha256": "1cdd3d869a83a5b0f9529a22f83583a57ecc2ba8c505de8326219f2a6419d4fe",
+      "crop": [
+        130,
+        142,
+        670,
+        499
+      ],
+      "metadata_source": "_inc/systems/metadata/psx.xml",
+      "metadata_source_sha256": "0185ef5ba7aba29d36ad8832f7210080d059780b706c6bcaf75dfd2dc19c0291",
+      "metadata": {
+        "systemName": "PlayStation",
+        "systemManufacturer": "Sony",
+        "systemReleaseYear": "1994",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "ps2": {
+      "source": "_inc/systems/carousel-icons-icons/ps2.webp",
+      "source_sha256": "2e1e8f34b4183e11575de4561331ba329ffd2f1d11065b69b1346e6bea832b80",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/ps2.webp",
+      "asset": "_inc/canvas-hardware/ps2.png",
+      "sha256": "783d18164c723412c0383d75899c8c2de687ff608268f7c737672f4151195f7b",
+      "crop": [
+        100,
+        142,
+        700,
+        499
+      ],
+      "metadata_source": "_inc/systems/metadata/ps2.xml",
+      "metadata_source_sha256": "1d825d55a822c8d2b23fba809ffa8a6ab98164d0bc94d88696884a04689f2355",
+      "metadata": {
+        "systemName": "PlayStation 2",
+        "systemManufacturer": "Sony",
+        "systemReleaseYear": "2000",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "psp": {
+      "source": "_inc/systems/carousel-icons-icons/psp.webp",
+      "source_sha256": "bffbc00f875898180270b95781d9d3f1460cc836b9bbd638eec7cd7b5374b257",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/psp.webp",
+      "asset": "_inc/canvas-hardware/psp.png",
+      "sha256": "9b10b6dc5a85f3f03d8e30d414254550e0ec5dcdcd62d1bb3ff9d834114688e6",
+      "crop": [
+        100,
+        195,
+        700,
+        445
+      ],
+      "metadata_source": "_inc/systems/metadata/psp.xml",
+      "metadata_source_sha256": "0853cef2761c347f866fd378559e05949cd5cfbbe74b3b0122460e19f0aed634",
+      "metadata": {
+        "systemName": "PlayStation Portable",
+        "systemManufacturer": "Sony",
+        "systemReleaseYear": "2004",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "n64": {
+      "source": "_inc/systems/carousel-icons-icons/n64.webp",
+      "source_sha256": "2fbb88842ece46a5cf11a50340a87905ec7739dd75f121f2e55efd25660152d8",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/n64.webp",
+      "asset": "_inc/canvas-hardware/n64.png",
+      "sha256": "d9bb9f1de81cf464d6161cb2289daa78f64c875babf81eda0a0bde5ee6f8d66a",
+      "crop": [
+        212,
+        146,
+        588,
+        495
+      ],
+      "metadata_source": "_inc/systems/metadata/n64.xml",
+      "metadata_source_sha256": "3ca3b7797687773241b02a62768258197a0207795f4b8a02770115a7b29430ea",
+      "metadata": {
+        "systemName": "Nintendo 64",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "1996",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "gc": {
+      "source": "_inc/systems/carousel-icons-icons/gc.webp",
+      "source_sha256": "acb01859d5c14e8b09b059e0990198dcde8433174e3ea19108e8865d2854566b",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/gc.webp",
+      "asset": "_inc/canvas-hardware/gc.png",
+      "sha256": "aaf84f0c32e11e204abd9d4c8620872b446b0d3e878807128f33559abfd7ae41",
+      "crop": [
+        104,
+        87,
+        658,
+        536
+      ],
+      "metadata_source": "_inc/systems/metadata/gc.xml",
+      "metadata_source_sha256": "cbb1ebd6fb13dba82edbd0da247fdd2eec9396cd24608f44edaab8e52fa36a73",
+      "metadata": {
+        "systemName": "GameCube",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "2001",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "wii": {
+      "source": "_inc/systems/carousel-icons-icons/wii.webp",
+      "source_sha256": "8d0c18df6e457a8aaf161948dd6889000b112141b2a16db0b3a8406dd9ec2efa",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/wii.webp",
+      "asset": "_inc/canvas-hardware/wii.png",
+      "sha256": "c07d92fed0b7106b821178cc6f80f754a7c8a103987aedc75da432dbe408dcc6",
+      "crop": [
+        281,
+        120,
+        520,
+        520
+      ],
+      "metadata_source": "_inc/systems/metadata/wii.xml",
+      "metadata_source_sha256": "6a5b331f93a0d0fc3432f0dfb2bab8cdd235a87174936545bb1bf2b0c9e7046f",
+      "metadata": {
+        "systemName": "Wii",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "2006",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "dreamcast": {
+      "source": "_inc/systems/carousel-icons-icons/dreamcast.webp",
+      "source_sha256": "e1db7426eaae5067e6558e7063368a725e5f58cfe6c1a825f7663a5fad3fbcd2",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/dreamcast.webp",
+      "asset": "_inc/canvas-hardware/dreamcast.png",
+      "sha256": "03b00643a8657fe8d33cc5f22212987f455804e71ad0bc2930d8174d3ce13f54",
+      "crop": [
+        214,
+        126,
+        592,
+        511
+      ],
+      "metadata_source": "_inc/systems/metadata/dreamcast.xml",
+      "metadata_source_sha256": "09f865fa95e40c8f985be94e03df6d4d23ae8a89610c21a5aff7fad4299d752c",
+      "metadata": {
+        "systemName": "Dreamcast",
+        "systemManufacturer": "Sega",
+        "systemReleaseYear": "1998",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "saturn": {
+      "source": "_inc/systems/carousel-icons-icons/saturn.webp",
+      "source_sha256": "402eb878249d3798af5af33a37b9b40267ff7cfd4abc9eebb97b14f84e848b18",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/saturn.webp",
+      "asset": "_inc/canvas-hardware/saturn.png",
+      "sha256": "22d5760c93b93be723a55a5cccd3cc561864965f5a7472ed51bf913014d2258a",
+      "crop": [
+        144,
+        110,
+        652,
+        484
+      ],
+      "metadata_source": "_inc/systems/metadata/saturn.xml",
+      "metadata_source_sha256": "00ab1e33a96cda16c4b73a6497a898d101c1e1275db3590f19b43f853932e321",
+      "metadata": {
+        "systemName": "Sega Saturn",
+        "systemManufacturer": "Sega",
+        "systemReleaseYear": "1995",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "atari2600": {
+      "source": "_inc/systems/carousel-icons-icons/atari2600.webp",
+      "source_sha256": "0f92f5c34f017aab8dca2862f37171f6d78a8a694f65c6473ed34dca54875034",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/atari2600.webp",
+      "asset": "_inc/canvas-hardware/atari2600.png",
+      "sha256": "e804c6e10dd2a206aebdd7b2d8986001a888790e04a1c95b4c6a75ef8f29b4e2",
+      "crop": [
+        261,
+        161,
+        552,
+        480
+      ],
+      "metadata_source": "_inc/systems/metadata/atari2600.xml",
+      "metadata_source_sha256": "cfa1d962d14e147fc8fc909557072394c252b8a44c90217bf21af1f9ca9d027c",
+      "metadata": {
+        "systemName": "Atari 2600",
+        "systemManufacturer": "Atari",
+        "systemReleaseYear": "1977",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    },
+    "amiga": {
+      "source": "_inc/systems/carousel-icons-icons/amiga.webp",
+      "source_sha256": "de0a7672aa2f2f2a8b3e4d07e47d922a5ac459da90ba23225a0191d50d4acbdc",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/amiga.webp",
+      "asset": "_inc/canvas-hardware/amiga.png",
+      "sha256": "0db184a69b9f1e3faf22386e5768f364d8e07cf230b45fc9bcbff92c0fb5d207",
+      "crop": [
+        115,
+        139,
+        675,
+        505
+      ],
+      "metadata_source": "_inc/systems/metadata/amiga.xml",
+      "metadata_source_sha256": "4fab91409941bf695b29f1ae2903307b264ad1df94250076259a826bc8e52b29",
+      "metadata": {
+        "systemName": "Amiga",
+        "systemManufacturer": "Commodore",
+        "systemReleaseYear": "1985",
+        "systemHardwareType": "Computer"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "amstradcpc": {
+      "source": "_inc/systems/carousel-icons-icons/amstradcpc.webp",
+      "source_sha256": "1afc6062be974fe7150acb232b977cdcfec21d67640131d96311a24bd4da157f",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/amstradcpc.webp",
+      "asset": "_inc/canvas-hardware/amstradcpc.png",
+      "sha256": "07523be40a1cec9f5f4b8c6a8b875911da0e8ff2741ec97460878659d04cd9f9",
+      "crop": [
+        157,
+        214,
+        654,
+        426
+      ],
+      "metadata_source": "_inc/systems/metadata/amstradcpc.xml",
+      "metadata_source_sha256": "8698a3e53bac70b0e0fe5941b4d0fc78ea4db53eea20a8ec766b7e8bc440ae85",
+      "metadata": {
+        "systemName": "Amstrad CPC",
+        "systemManufacturer": "Amstrad",
+        "systemReleaseYear": "1984",
+        "systemHardwareType": "Computer"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "zxspectrum": {
+      "source": "_inc/systems/carousel-icons-icons/zxspectrum.webp",
+      "source_sha256": "7870f1ddbec9176b203004816c94ad2b5be4e2dfac2dc1e8d09750d214c37e03",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/zxspectrum.webp",
+      "asset": "_inc/canvas-hardware/zxspectrum.png",
+      "sha256": "36069720498cb13eb7f321eab19d1ea13369f7d06c7f486fcc7dbe0518f90627",
+      "crop": [
+        183,
+        174,
+        626,
+        467
+      ],
+      "metadata_source": "_inc/systems/metadata/zxspectrum.xml",
+      "metadata_source_sha256": "eb33599e3dae6fead06f4dfd6867a99ce85c5e1af4f85b726de641e88007f628",
+      "metadata": {
+        "systemName": "ZX Spectrum",
+        "systemManufacturer": "Sinclair",
+        "systemReleaseYear": "1982",
+        "systemHardwareType": "Computer"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "nds": {
+      "source": "_inc/systems/carousel-icons-icons/nds.webp",
+      "source_sha256": "d24588231c00c83f671b38199d6c9f83c1e0b76088713c4dc207cbfb6bce943b",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/nds.webp",
+      "asset": "_inc/canvas-hardware/nds.png",
+      "sha256": "7e2bf3a35eac9fdf983947b0c68657fcbca209004fb1333fde498cdcfbf4e42d",
+      "crop": [
+        218,
+        128,
+        592,
+        512
+      ],
+      "metadata_source": "_inc/systems/metadata/nds.xml",
+      "metadata_source_sha256": "c019e7ff828539bf45bb14fe1a9eead9a7763c9fa7665c3979aaffe11163946d",
+      "metadata": {
+        "systemName": "Nintendo DS",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "2004",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "3ds": {
+      "source": "_inc/systems/carousel-icons-icons/3ds.webp",
+      "source_sha256": "1d455cef0106cde6812a70858e5b5b8aa9e10032e1ceadba040eda4e7f8d57d5",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/3ds.webp",
+      "asset": "_inc/canvas-hardware/3ds.png",
+      "sha256": "6c1c3411151261ff3f6d2c1a94574921793be8b3ba3e6833c7a58ba8cb971ada",
+      "crop": [
+        214,
+        120,
+        586,
+        520
+      ],
+      "metadata_source": "_inc/systems/metadata/3ds.xml",
+      "metadata_source_sha256": "1a9027c9026dfd8f5e5cf294257c768b0ced499862b711da79e8878327f3542f",
+      "metadata": {
+        "systemName": "Nintendo 3DS",
+        "systemManufacturer": "Nintendo",
+        "systemReleaseYear": "2011",
+        "systemHardwareType": "Portable"
+      },
+      "depiction": "complete handheld/computer"
+    },
+    "pcengine": {
+      "source": "_inc/systems/carousel-icons-icons/pcengine.webp",
+      "source_sha256": "3757e115d38096ee6b7d387d526b507df78197531cebc4f3202497efbde1bb19",
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/carousel-icons-icons/pcengine.webp",
+      "asset": "_inc/canvas-hardware/pcengine.png",
+      "sha256": "f97872b9f9b444d9f349d8e8204f49be5cf80f40f20f9bf81617071bd131e036",
+      "crop": [
+        171,
+        203,
+        641,
+        438
+      ],
+      "metadata_source": "_inc/systems/metadata/pcengine.xml",
+      "metadata_source_sha256": "a86de4ad80327c05700531f7eb68e9ac9feef2d58ca807dc8a362c4ee626ee45",
+      "metadata": {
+        "systemName": "PC Engine",
+        "systemManufacturer": "NEC",
+        "systemReleaseYear": "1987",
+        "systemHardwareType": "Console"
+      },
+      "depiction": "controller (not console chassis)"
+    }
+  }
+}

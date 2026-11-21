@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasArchitecture>8-bit</canvasArchitecture>
+      <canvasCPU>MOS 6510 · ~1 MHz</canvasCPU>
+      <canvasRAM>64 KB</canvasRAM>
+      <canvasPrice>US $595</canvasPrice>
+   </variables>
+</theme>

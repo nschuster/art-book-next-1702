@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasArchitecture>16-bit</canvasArchitecture>
+      <canvasCPU>Ricoh 5A22</canvasCPU>
+      <canvasRAM>128 KB</canvasRAM>
+      <canvasPrice>Unknown</canvasPrice>
+   </variables>
+</theme>

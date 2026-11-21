@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasHardware>${themePath}/_inc/canvas-hardware/saturn.png</canvasHardware>
+      <canvasManufacturer>Sega</canvasManufacturer>
+      <canvasYear>1995</canvasYear>
+      <canvasType>Console</canvasType>
+      <canvasMissing />
+      <canvasHasHardware>true</canvasHasHardware>
+   </variables>
+</theme>

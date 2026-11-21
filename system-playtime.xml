@@ -13,9 +13,10 @@
          <fontPath>${fontBold}</fontPath>
          <color>ffffff</color>
          <emptyTextDefaults>false</emptyTextDefaults>
-         <!-- Keep spaces inside empty(): native Null becomes an empty argument. -->
-         <text>empty( {system:gameTime} ) ? "00:00" : {system:gameTime}</text>
+         <!-- Saved full-gamelist total; unavailable until independent helper refresh. -->
+         <text>Playtime unavailable</text>
          <zIndex>3</zIndex>
       </text>
    </view>
+   <include>/userdata/system/configs/art-book-next-system-playtime/${system.name}.xml</include>
 </theme>

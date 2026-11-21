@@ -268,7 +268,22 @@ class GameSplashTests(unittest.TestCase):
         for path in paths:
             if path.endswith('.xml') and not path.startswith(('previews/', 'tests/')):
                 old = subprocess.check_output(['git','show', '2a93d44:'+path], cwd=ROOT)
-                self.assertEqual((ROOT/path).read_bytes(), old, path)
+                if path == 'theme.xml':
+                    from test_c64 import parse, structure
+                    from test_controller_status import approved_controller_transform
+                    expected = parse(old)
+                    approved_controller_transform(expected)
+                    from test_canvas_carousel import approved_canvas_transform
+                    approved_canvas_transform(expected)
+                    self.assertEqual(structure(parse((ROOT/path).read_bytes())), structure(expected), path)
+                elif path == 'system-playtime.xml':
+                    from test_c64 import parse, structure
+                    from test_system_playtime import approved_hours_snapshot_transform
+                    expected = parse(old)
+                    approved_hours_snapshot_transform(expected)
+                    self.assertEqual(structure(parse((ROOT/path).read_bytes())), structure(expected), path)
+                else:
+                    self.assertEqual((ROOT/path).read_bytes(), old, path)
 
     def test_pinned_native_schema_and_launch_binding_contract(self):
         source = Path(os.environ.get('BATOCERA_ES_SOURCE', '/tmp/ra-es-source'))

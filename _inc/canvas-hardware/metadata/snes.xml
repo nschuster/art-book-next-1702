@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasHardware>${themePath}/_inc/canvas-hardware/snes.png</canvasHardware>
+      <canvasManufacturer>Nintendo</canvasManufacturer>
+      <canvasYear>1992</canvasYear>
+      <canvasType>Console</canvasType>
+      <canvasMissing />
+      <canvasHasHardware>true</canvasHasHardware>
+   </variables>
+</theme>

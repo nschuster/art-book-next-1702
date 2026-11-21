@@ -1,0 +1,845 @@
+{
+  "schema": 1,
+  "policy": "Additive sourced facts; original Canvas metadata and manifest are unchanged. Unknown means unsupported by reviewed evidence, not historically unknowable. No currency conversion or inflation adjustment. Bit labels describe source classifications, not every bus or subsystem.",
+  "sources": {
+    "chm-c64-price": {
+      "url": "https://www.computerhistory.org/timeline/1982/",
+      "scope": "Museum retrospective corroborates original US $595 introduction price."
+    },
+    "vgcl-psx-price": {
+      "url": "https://www.videogameconsolelibrary.com/pg90-playstation.htm",
+      "scope": "Specialist retrospective explicitly gives Japan December 3, 1994 launch price of \u00a539,800; corrects unsupported inherited Canvas value."
+    },
+    "canvas-nes": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/nes.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "8fccaad334e5a9bbc2c539ab6e77ad0eb9b95c888dcda6ffa1a609408c818eff",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-snes": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/snes.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "35f0b3ec6234923ea452d1c890cbdf58c6585046596296e9e4dd1392a191e6f6",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-gb": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/gb.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "c38a7127ead4b00d43dbdc7f442a7822c79d3b0a7ea50f264f3e5fe48dad41d3",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-gba": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/gba.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "2cf6656a52e2c3a9a0b125097269483bc69e75235e985dd4f8021545fa6005eb",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-gbc": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/gbc.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "f858543d0cbd7713f0dc82cc97ebd982a09d1bfdac6ab5e00597857cfc06d199",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-c64": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/c64.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "9d1a350ede8abda64561618a09fb61c41cf234b5df1b827134689da09c4d7b78",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-megadrive": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/megadrive.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "109f343ca6f8e4c8826388bf537d3b296e2780a8180a6016d5d8d747e5796846",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-mastersystem": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/mastersystem.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "61861f414f2b5cefaa71fa701047533aa19a17c3e3fdcd0c9e316ea1f07f6e0e",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-gamegear": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/gamegear.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "2f307a3c543ce1e05c906b1f6cf8dade32e5b0c75edae281ed7f7c2bf7c6f341",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-psx": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/psx.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "0185ef5ba7aba29d36ad8832f7210080d059780b706c6bcaf75dfd2dc19c0291",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-ps2": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/ps2.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "1d825d55a822c8d2b23fba809ffa8a6ab98164d0bc94d88696884a04689f2355",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-psp": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/psp.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "0853cef2761c347f866fd378559e05949cd5cfbbe74b3b0122460e19f0aed634",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-n64": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/n64.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "3ca3b7797687773241b02a62768258197a0207795f4b8a02770115a7b29430ea",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-gc": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/gc.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "cbb1ebd6fb13dba82edbd0da247fdd2eec9396cd24608f44edaab8e52fa36a73",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-wii": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/wii.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "6a5b331f93a0d0fc3432f0dfb2bab8cdd235a87174936545bb1bf2b0c9e7046f",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-dreamcast": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/dreamcast.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "09f865fa95e40c8f985be94e03df6d4d23ae8a89610c21a5aff7fad4299d752c",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-saturn": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/saturn.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "00ab1e33a96cda16c4b73a6497a898d101c1e1275db3590f19b43f853932e321",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-atari2600": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/atari2600.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "cfa1d962d14e147fc8fc909557072394c252b8a44c90217bf21af1f9ca9d027c",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-amiga": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/amiga.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "4fab91409941bf695b29f1ae2903307b264ad1df94250076259a826bc8e52b29",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-amstradcpc": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/amstradcpc.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "8698a3e53bac70b0e0fe5941b4d0fc78ea4db53eea20a8ec766b7e8bc440ae85",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-zxspectrum": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/zxspectrum.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "eb33599e3dae6fead06f4dfd6867a99ce85c5e1af4f85b726de641e88007f628",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-nds": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/nds.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "c019e7ff828539bf45bb14fe1a9eead9a7763c9fa7665c3979aaffe11163946d",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-3ds": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/3ds.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "1a9027c9026dfd8f5e5cf294257c768b0ced499862b711da79e8878327f3542f",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "canvas-pcengine": {
+      "url": "https://raw.githubusercontent.com/Siddy212/canvas-es/bf010295778b2756310edfc3a61fe5e20d31e5b9/_inc/systems/metadata/pcengine.xml",
+      "revision": "bf010295778b2756310edfc3a61fe5e20d31e5b9",
+      "sha256": "a86de4ad80327c05700531f7eb68e9ac9feef2d58ca807dc8a362c4ee626ee45",
+      "scope": "systemDescription; inherited secondary source, not independently certified"
+    },
+    "technical-snes": {
+      "url": "https://www.copetti.org/writings/consoles/super-nintendo/",
+      "retrieved": "2026-11-21",
+      "extracted_text_sha256": "768f4ac1b9209cff60c73f2144a454299e609b352e7a107bb1da74b7da6edcd9",
+      "scope": "Reviewed technical analysis; digest of locally extracted page text, not upstream HTML."
+    },
+    "technical-psx": {
+      "url": "https://www.copetti.org/writings/consoles/playstation/",
+      "retrieved": "2026-11-21",
+      "extracted_text_sha256": "093c1cb8d6341754e8d92c6cceb8fbb089720db92a86d57e1290bbd58b8e8973",
+      "scope": "Reviewed technical analysis; digest of locally extracted page text, not upstream HTML."
+    },
+    "technical-gb": {
+      "url": "https://www.copetti.org/writings/consoles/game-boy/",
+      "retrieved": "2026-11-21",
+      "extracted_text_sha256": "84754194f58054bb4b6fe1701b7999e36d19bfd4f4e0983b99e58a0bf4ebb921",
+      "scope": "Reviewed technical analysis; digest of locally extracted page text, not upstream HTML."
+    },
+    "technical-c64": {
+      "url": "https://www.c64-wiki.com/wiki/C64",
+      "retrieved": "2026-11-21",
+      "extracted_text_sha256": "b968e54c5157533638400d15f39ad8a26431019136e5389a93b9e996f7cd99cb",
+      "scope": "Reviewed technical analysis; digest of locally extracted page text, not upstream HTML."
+    }
+  },
+  "systems": {
+    "nes": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-nes"
+          ],
+          "evidence": "The Nintendo Entertainment System is an 8-bit video game console that was released by Nintendo in North America during 1985, in Europe during 1986 and Australia in 1987. In most of Asia, including Japan (where it was first launched in 1983), China, Vietnam, Singapore, the Middle East and Hong Kong, it was released as the Family Computer, commonly shortened as either the romanized contraction Famicom, or abbreviated to FC. In South Korea, it was known as the Hyundai Comboy, and was distributed by Hynix which then was known as Hyundai Electronics."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "snes": {
+      "variant": "Base SNES/Super Famicom, 128 KB work RAM excludes video/audio RAM. CPU clock varies by bus and region; no fixed clock claimed. Imported 1992 year is retained (European/Australasian release), not Japan's 1990 debut. Launch price remains unverified.",
+      "fields": {
+        "Architecture": {
+          "value": "16-bit",
+          "sources": [
+            "canvas-snes"
+          ],
+          "evidence": "The Super Nintendo Entertainment System (also known as the Super NES, SNES or Super Nintendo) is a 16-bit home video game console developed by Nintendo that was released in 1990 in Japan, 1991 in North America, 1992 in Europe and Australasia (Oceania), and 1993 in South America. In Japan, the system is called the Super Famicom, officially adopting the abbreviated name of its predecessor, the Family Computer, or SFC for short. In South Korea, it is known as the Super Comboy and was distributed by Hyundai Electronics. Although each version is essentially the same, several forms of regional lockout prevent the different versions from being compatible with one another."
+        },
+        "CPU": {
+          "value": "Ricoh 5A22",
+          "sources": [
+            "technical-snes"
+          ],
+          "evidence": "ame the Ricoh 5A22 and was exclusively supplied to Nintendo. The new CPU As you\u2019ve seen before, the main processor of this console is the Ricoh 5A22 , a superset of the 65C816. The Ricoh 5A22 chip, labelled \u2018S-CPU\u2019 by Nintendo. Unlike the Apple IIGS, which enjoyed backward compatibility with Apple II software, the Super Nintendo is not compatible with NES games . To be fair, based on the choice of processor, there\u2019s a slight possibility that the SNES was originally planned to be compatible with NES games, who knows. Moving on, the CPU employs a"
+        },
+        "RAM": {
+          "value": "128 KB",
+          "sources": [
+            "technical-snes"
+          ],
+          "evidence": "ascinating to realise how much content the NES managed to display with only 2 KB of RAM . Well, the Super Nintendo now features 128 KB of RAM (still referred to as \u2018Work RAM\u2019 or WRAM) - a staggering 6400% increase in general-purpose memory compared to its predecessor. Be that as it may, while the NES enjoyed the fast Static RAM (SRAM) type, Nintendo opted to use Dynamic RAM (DRAM) for the Super Nintendo\u2019s WRAM. Dynamic , in this case, means memory needs to be refreshed periodically . The 5A22 performs this automatically, but during each refresh"
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "gb": {
+      "variant": "Original DMG Game Boy, not Pocket or Color. 8 KB work RAM excludes video RAM and high RAM. Launch price remains unverified.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-gb"
+          ],
+          "evidence": "The Game Boy is an 8-bit handheld video game console developed and manufactured by Nintendo. It was released in Japan on April 21, 1989, in North America in August 1989, and in Europe in 1990. In Southern Asia, it is known as the \"Tata Game Boy\" It is the first handheld console in the Game Boy line. It was created by Gunpei Yokoi and Nintendo's Research and Development \u2014 the same staff who had designed the Game & Watch series as well as several popular games for the NES. The Game Boy was Nintendo's second handheld system following the Game & Watch series introduced in 1980, and it combined features from both the Nintendo Entertainment System and Game and Watch. It was also the first handheld game to use video game cartridges since Milton Bradley's Microvision handheld console. It was originally bundled with the puzzle game Tetris. Despite many other, technologically superior handheld consoles introduced during its lifetime, the Game Boy was a tremendous success. The Game Boy and Game Boy Color combined have sold 118.69 million units worldwide. Upon its release in the United States, it sold its entire shipment of one million units within weeks."
+        },
+        "CPU": {
+          "value": "Sharp SM83 \u00b7 4.19 MHz",
+          "sources": [
+            "technical-gb"
+          ],
+          "evidence": " a close relationship with Nintendo. The CPU core Inside the DMG-CPU, we find the main processor: a Sharp SM83 [2] . This is just a mix of the popular Zilog Z80 (found in the Sega Master System ) and the Intel 8080. It runs at ~4.19 MHz , which is faster than the average 1-MHz CPU , but remember clock speeds can be deceiving . The DMG-CPU chip on my Game Boy\u2019s motherboard. Now, back when I conducted the analysis of the Master System , I explained the Zilog Z80 is essentially a superset of the Intel 8080. So, what does the SM83 actually retain a"
+        },
+        "RAM": {
+          "value": "8 KB",
+          "sources": [
+            "technical-gb"
+          ],
+          "evidence": " architecture of the DMG (original Game Boy). As you can notice, the PPU arbitrates access to VRAM. Nintendo fitted 8 KB of RAM onto the motherboard, this is for general purpose use (hence the name Work RAM or \u2018WRAM\u2019) [8] . I\u2019m obliged to point out that this is four times the amount included in the NES . There\u2019s an additional 127 B of RAM housed in the SoC. This is called High RAM (HRAM) and provides a small space for data that can be retrieved faster (via the aforementioned LDH instruction). The idea is very similar to the MOS 6502\u2019s \u2018Zero Pag"
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "gba": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "32-bit",
+          "sources": [
+            "canvas-gba"
+          ],
+          "evidence": "The Game Boy Advance (abbreviated as GBA) is a 32-bit handheld video game console developed, manufactured and marketed by Nintendo as the successor to the Game Boy Color. It was released in Japan on March 21, 2001, in North America on June 11, 2001, in Australia and Europe on June 22, 2001, and in mainland China on June 8, 2004 (iQue Player). Nintendo's competitors in the handheld market at the time were the Neo Geo Pocket Color, WonderSwan, GP32, Tapwave Zodiac, and the N-Gage. Despite the competitors' best efforts, Nintendo maintained a majority market share with the Game Boy Advance. As of June 30, 2010, the Game Boy Advance series has sold 81.51 million units worldwide. Its successor, the Nintendo DS, was released in November 2004 and is also compatible with Game Boy Advance software."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "gbc": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-gbc"
+          ],
+          "evidence": "The Game Boy Color, (abbreviated as GBC) is a handheld game console manufactured by Nintendo, which was released on October 21, 1998 in Japan and was released in November of the same year in international markets. It is the successor of the Game Boy. The Game Boy Color, as suggested by the name, features a color screen, but no backlight. It is slightly thicker and taller than the Game Boy Pocket, which is a redesigned Game Boy released in 1996. As with the original Game Boy, it has a custom 8-bit processor somewhat related to a Zilog Z80 central processing unit (CPU). The original name - with its American English spelling of \"color\" - remained unchanged even in markets where \"colour\" was the accepted English spelling. The Game Boy Color's primary competitors were the much more advanced Neo Geo Pocket by SNK and the WonderSwan by Bandai (both released in Japan only), though the Game Boy Color outsold these by a wide margin. The Game Boy and Game Boy Color combined have sold 118.69 million units worldwide. It was discontinued in 2003, shortly after the release of the Game Boy Advance SP."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "c64": {
+      "variant": "Original C64 MOS 6510; PAL ~0.985 MHz, NTSC ~1.023 MHz. US $595 marketing price in August 1982; January was introduction, not retail availability. Later C64C may use 8500.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-c64"
+          ],
+          "evidence": "The Commodore 64 is an 8-bit home computer introduced in January 1982 by Commodore International. It is listed in the Guinness World Records as the highest-selling single computer model of all time, with independent estimates placing the number sold between 10 and 17 million units. Volume production started in early 1982, marketing in August for US$595 (equivalent to $1,461 in 2015). Preceded by the Commodore VIC-20 and Commodore PET, the C64 took its name from its 64 kilobytes (65,536 bytes) of RAM. It had superior sound and graphical specifications compared to other earlier systems such as the Apple II and Atari 800, with multi-color sprites and a more advanced sound processor."
+        },
+        "CPU": {
+          "value": "MOS 6510 \u00b7 ~1 MHz",
+          "sources": [
+            "technical-c64"
+          ],
+          "evidence": " ] For the all technicals details see also the article Hardware Assembly of the C64 . CPU        \u00a0: 6510 @ 0.9852486MHz  (PAL)\n                           1.0227273MHz  (NTSC)\n      RAM        \u00a0: 64 Kb DRAM\n                    .5 Kb SRAM (colour RAM $d800-dbff)\n      ROM        \u00a0: 20kB ROM together, in 3 ROMs\u00a0:\n                      - 8k BASIC V2      ($a000-bfff)\n                      - 8k Kernal        ($e000-ffff)\n                      - 4k Character ROM ($d000-dfff)\n                    (In new versions BASIC and Kernal are together in a 16 K"
+        },
+        "RAM": {
+          "value": "64 KB",
+          "sources": [
+            "canvas-c64"
+          ],
+          "evidence": "The Commodore 64 is an 8-bit home computer introduced in January 1982 by Commodore International. It is listed in the Guinness World Records as the highest-selling single computer model of all time, with independent estimates placing the number sold between 10 and 17 million units. Volume production started in early 1982, marketing in August for US$595 (equivalent to $1,461 in 2015). Preceded by the Commodore VIC-20 and Commodore PET, the C64 took its name from its 64 kilobytes (65,536 bytes) of RAM. It had superior sound and graphical specifications compared to other earlier systems such as the Apple II and Atari 800, with multi-color sprites and a more advanced sound processor."
+        },
+        "Price": {
+          "value": "US $595",
+          "sources": [
+            "canvas-c64",
+            "chm-c64-price"
+          ],
+          "evidence": "The Commodore 64 is an 8-bit home computer introduced in January 1982 by Commodore International. It is listed in the Guinness World Records as the highest-selling single computer model of all time, with independent estimates placing the number sold between 10 and 17 million units. Volume production started in early 1982, marketing in August for US$595 (equivalent to $1,461 in 2015). Preceded by the Commodore VIC-20 and Commodore PET, the C64 took its name from its 64 kilobytes (65,536 bytes) of RAM. It had superior sound and graphical specifications compared to other earlier systems such as the Apple II and Atari 800, with multi-color sprites and a more advanced sound processor."
+        }
+      }
+    },
+    "megadrive": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "16-bit",
+          "sources": [
+            "canvas-megadrive"
+          ],
+          "evidence": "The Mega Drive is a 16-bit fourth-generation home video game console developed and sold by Sega. It's Sega's third console and the successor to the Master System. The Mega Drive was adapted from Sega's System 16 arcade board."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "mastersystem": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-mastersystem"
+          ],
+          "evidence": "The Sega Master System is a third-generation 8-bit home video game console manufactured by Sega. It was originally a remodeled export version of the Sega Mark III, the third iteration of the SG-1000 series of consoles, which was released in Japan in 1985 and featured enhanced graphical capabilities over its predecessors. The Master System launched in North America in 1986, followed by Europe in 1987, and Brazil in 1989. A Japanese version of the Master System was also launched in 1987, which features a few enhancements over the export models (and by proxy the original Mark III): a built-in FM audio chip, a rapid-fire switch, and a dedicated port for the 3D glasses. The Master System II, a cheaper model, was released in 1990 in North America and Europe.\n\nThe original Master System models use both cartridges and a credit card-sized format known as Sega Cards. Accessories for the consoles include a light gun and 3D glasses that work with a range of specially designed games. The later Master System II redesign removed the card slot, turning it into a strictly cartridge-only system and is incompatible with the 3D glasses."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "gamegear": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-gamegear"
+          ],
+          "evidence": "The Game Gear is an 8-bit fourth generation handheld game console released by Sega on October 6, 1990 in Japan, in April 1991 throughout North America and Europe, and during 1992 in Australia. The Game Gear primarily competed with Nintendo's Game Boy, the Atari Lynx, and NEC's TurboExpress. It shares much of its hardware with the Master System, and can play Master System games by the use of an adapter. Sega positioned the Game Gear, which had a full-color backlit screen with a landscape format, as a technologically superior handheld to the Game Boy.\n\nThough the Game Gear was rushed to market, its unique game library and price point gave it an edge over the Atari Lynx and TurboExpress. However, due to its short battery life, lack of original games, and weak support from Sega, the Game Gear was unable to surpass the Game Boy, selling 10.62 million units by March 1996. The Game Gear was discontinued on April 30, 1997. It was re-released as a budget system by Majesco Entertainment in 2000, under license from Sega."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "psx": {
+      "variant": "Original PlayStation, Japan December 1994 launch price. Not US launch MSRP or later PS one; imported artwork may depict a later controller.",
+      "fields": {
+        "Architecture": {
+          "value": "32-bit / MIPS I",
+          "sources": [
+            "technical-psx"
+          ],
+          "evidence": ": The MIPS I ISA: The first version of the MIPS instruction set architecture. Among many things, it uses 32-bit words and includes multiplication and division instructions. 32 general-purpose registers and 2 multiplication/division registers : These are 32-bit as well. One general-purpose register ( R0 ) is hardwired to zero, a common trait in RISC designs. 32-bit data bus : In the PS1, this bus branches into two: Main Bus (32-bit): Connects the MDEC and GPU. Sub Bus (16/8-bit): Connects the remaining components and I/O. This bus is bridged by "
+        },
+        "CPU": {
+          "value": "MIPS R3000A \u00b7 33.87 MHz",
+          "sources": [
+            "technical-psx"
+          ],
+          "evidence": "s motherboard. \u00ab Previous Next \u00bb The offering The SoC chip on my PlayStation motherboard, where the MIPS R3000A-based core resides. The resulting CPU core runs at 33.87 MHz and features: The MIPS I ISA: The first version of the MIPS instruction set architecture. Among many things, it uses 32-bit words and includes multiplication and division instructions. 32 general-purpose registers and 2 multiplication/division registers : These are 32-bit as well. One general-purpose register ( R0 ) is hardwired to zero, a common trait in RISC designs. 32-bi"
+        },
+        "RAM": {
+          "value": "2 MB",
+          "sources": [
+            "technical-psx"
+          ],
+          "evidence": " Scratchpad and it\u2019s used as \u2018fast SRAM\u2019. Four 512 KB chips of EDO RAM. To do something meaningful, Sony provided 2 MB of RAM for general-purpose use. Curiously enough, they fitted Extended Data Out (EDO) chips on the motherboard. These are slightly more efficient than typical DRAM, obtaining lower latency. Taking over the CPU At certain points, any subsystem (graphics, audio or the CD drive) will require large chunks of data at a fast rate. However, the CPU is not always capable of keeping up with the demand. For this reason, the CD-ROM contro"
+        },
+        "Price": {
+          "value": "JP \u00a539,800",
+          "sources": [
+            "vgcl-psx-price"
+          ],
+          "evidence": "The PlayStation launched in Japan on December 3, 1994 at \u00a539,800, followed by North America on September 9, 1995 at $299."
+        }
+      }
+    },
+    "ps2": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "psp": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "n64": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "64-bit CPU",
+          "sources": [
+            "canvas-n64"
+          ],
+          "evidence": "Named for its 64-bit central processing unit, it was released in June 1996 in Japan, September 1996 in North America, March 1997 in Europe and Australia, September 1997 in France and December 1997 in Brazil. As part of the fifth generation of gaming, the N64 competed primarily with the PlayStation and the Sega Saturn. The Nintendo 64 was launched with three games: Super Mario 64 and Pilotwings 64, released worldwide; and Saikyo Habu Shogi, released only in Japan. While the N64 was succeeded by Nintendo's MiniDVD-based GameCube in November 2001, N64 consoles remained available until the system was retired in late 2003."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "gc": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "wii": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "dreamcast": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Hitachi SH-4",
+          "sources": [
+            "canvas-dreamcast"
+          ],
+          "evidence": "The Dreamcast is a home video game console released by Sega on November 27, 1998 in Japan, September 9, 1999 in North America, and October 14, 1999 in Europe. It was the first in the sixth generation of video game consoles, preceding Sony's PlayStation 2, Nintendo's GameCube, and Microsoft's Xbox. The Dreamcast was Sega's final home console, marking the end of the company's eighteen years in the console market.\n\nIn contrast to the expensive hardware of the unsuccessful Sega Saturn, the Dreamcast was designed to reduce costs with \"off-the-shelf\" components, including a Hitachi SH-4 CPU and an NEC PowerVR2 GPU. Released in Japan to a subdued reception, the Dreamcast enjoyed a successful U.S. launch backed by a large marketing campaign, but interest in the system steadily declined as Sony built hype for the upcoming PlayStation 2. Sales did not meet Sega's expectations despite several price cuts, and the company continued to incur significant financial losses. After a change in leadership, Sega discontinued the Dreamcast on March 31, 2001, withdrawing from the console business and restructuring itself as a third-party publisher. In total, 9.13 million Dreamcast units were sold worldwide."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "saturn": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Dual-CPU",
+          "sources": [
+            "canvas-saturn"
+          ],
+          "evidence": "The Sega Saturn is a home video game console developed by Sega and released on November 22, 1994 in Japan, May 11, 1995 in North America, and July 8, 1995 in Europe. Part of the fifth generation of video game consoles, it was the successor to the successful Sega Genesis. The Saturn has a dual-CPU architecture and eight processors. Its games are in CD-ROM format, and its game library contains several ports of arcade games as well as original games.\n\nDevelopment of the Saturn began in 1992, the same year Sega's groundbreaking 3D Model 1 arcade hardware debuted. The Saturn was designed around a new CPU from Japanese electronics company Hitachi. Sega added another video display processor in early 1994 to better compete with Sony's forthcoming PlayStation."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "atari2600": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "US $199",
+          "sources": [
+            "canvas-atari2600"
+          ],
+          "evidence": "The Atari Video Computer System (VCS), later named the Atari 2600, is a second generation (1976\u20131992) home video game console developed and distributed by Atari, Inc. It was released on September 11, 1977 in North America at a retail price of $199. The console was later released in Europe (1978) and Japan (1983 - as the Atari 2800). The Atari 2600 popularized the use of microprocessor-based hardware and games contained on ROM cartridges. The console was discontinued on January 1, 1992."
+        }
+      }
+    },
+    "amiga": {
+      "variant": "Family-level source and 1985 release year retained; Amiga 500/1200 aliases intentionally keep unsupported specs Unknown. Not a claim about either model.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "amstradcpc": {
+      "variant": "Initial CPC packages; source gives \u00a3199\u2013299 depending on package, not a single universal price.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-amstradcpc"
+          ],
+          "evidence": "The Amstrad Colour Personal Computer, better known as the Amstrad CPC, is a series of 8-bit home computers designed by Amstrad. The first models were released in April 1984 in Europe at a retail price ranging from \u00a3199 to \u00a3299, depending on the package bought. The computers were not released outside of Europe. The CPC series had five distinct models: The CPC464, CPC664, CPC6128, 464plus, and 6128plus. The computers were manufactured until an unspecified time in 1990."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "UK \u00a3199\u2013299",
+          "sources": [
+            "canvas-amstradcpc"
+          ],
+          "evidence": "The Amstrad Colour Personal Computer, better known as the Amstrad CPC, is a series of 8-bit home computers designed by Amstrad. The first models were released in April 1984 in Europe at a retail price ranging from \u00a3199 to \u00a3299, depending on the package bought. The computers were not released outside of Europe. The CPC series had five distinct models: The CPC464, CPC664, CPC6128, 464plus, and 6128plus. The computers were manufactured until an unspecified time in 1990."
+        }
+      }
+    },
+    "zxspectrum": {
+      "variant": "1982 entry-level 16 KB model only; not later Spectrum 48K/128K or +3.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit",
+          "sources": [
+            "canvas-zxspectrum"
+          ],
+          "evidence": "The ZX Spectrum is an 8-bit personal home computer released in the United Kingdom in 1982 by Sinclair Research Ltd. It was the follow-up to the Sinclair ZX81. The Spectrum was ultimately released as eight different models (although the models after the Spectrum 128K were technically developed and manufactured by Amstrad), ranging from the entry level model with 16 kB RAM released in 1982 to the ZX Spectrum +3 with 128 kB RAM and built in floppy disk drive. The Spectrum was among the first mainstream audience home computers in the UK, similar in significance to the Commodore 64 in the USA. The Commodore 64, BBC Microcomputer and later the Amstrad CPC range were major rivals to the Spectrum in the UK market during the early 1980s."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "16 KB (base model)",
+          "sources": [
+            "canvas-zxspectrum"
+          ],
+          "evidence": "The ZX Spectrum is an 8-bit personal home computer released in the United Kingdom in 1982 by Sinclair Research Ltd. It was the follow-up to the Sinclair ZX81. The Spectrum was ultimately released as eight different models (although the models after the Spectrum 128K were technically developed and manufactured by Amstrad), ranging from the entry level model with 16 kB RAM released in 1982 to the ZX Spectrum +3 with 128 kB RAM and built in floppy disk drive. The Spectrum was among the first mainstream audience home computers in the UK, similar in significance to the Commodore 64 in the USA. The Commodore 64, BBC Microcomputer and later the Amstrad CPC range were major rivals to the Spectrum in the UK market during the early 1980s."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "nds": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "32-bit",
+          "sources": [
+            "canvas-nds"
+          ],
+          "evidence": "The Nintendo DS or simply, DS, is a 32-bit dual-screen handheld game console developed and released by Nintendo. The device went on sale in North America on November 21, 2004. The DS, short for \"Developers' System\" or \"Dual Screen\", introduced distinctive new features to handheld gaming: two LCD screens working in tandem (the bottom one featuring a touchscreen), a built-in microphone, and support for wireless connectivity. Both screens are encompassed within a clamshell design similar to the Game Boy Advance SP. The Nintendo DS also features the ability for multiple DS consoles to directly interact with each other over Wi-Fi within a short range without the need to connect to an existing wireless network. Alternatively, they could interact online using the now-closed Nintendo Wi-Fi Connection service."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "3ds": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    },
+    "pcengine": {
+      "variant": "Original/base system; RAM means general-purpose work RAM, not total video/audio memory.",
+      "fields": {
+        "Architecture": {
+          "value": "8-bit CPU / 16-bit video",
+          "sources": [
+            "canvas-pcengine"
+          ],
+          "evidence": "The PC Engine is a 16-bit fourth-generation home video game console designed by Hudson Soft and sold by NEC Home Electronics. It was released in Japan in 1987 and in North America in 1989. The Japanese model was imported and distributed in France in 1989, and the United Kingdom and Spain received a version based on the American model known as simply TurboGrafx. It was the first console released in the 16-bit era, although it used a modified 8-bit CPU. In Japan, the system was launched as a competitor to the Famicom, but the delayed United States release meant that it ended up competing with the Sega Genesis and later the Super Nintendo Entertainment System.\n\nThe PC Engine has an 8-bit CPU, a 16-bit video color encoder, and a 16-bit video display controller. The GPUs are capable of displaying 482 colors simultaneously, out of 512. With dimensions of just 14 cm \u00d7 14 cm \u00d7 3.8 cm (5.5 in \u00d7 5.5 in \u00d7 1.5 in), the Japanese PC Engine is the smallest major home game console ever made. Games were released on HuCard cartridges and later the CD-ROM optical format."
+        },
+        "CPU": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "RAM": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        },
+        "Price": {
+          "value": "Unknown",
+          "sources": [],
+          "evidence": "Not established by reviewed sources."
+        }
+      }
+    }
+  }
+}

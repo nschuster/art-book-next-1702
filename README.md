@@ -17,15 +17,35 @@ For this playtime update, only `aspect-ratio-4-3.xml` needs replacing on an exis
 
 Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, system selection, Basic view and help-footer geometry remain; original colors remain unless the optional palette is selected. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
 
-## Optional system total playtime (native format)
+## Optional Canvas console carousel (local candidate)
 
-Enable **Theme Configuration → System Playtime → On**. **Off is the default**; **System Count** remains independent. The native selected-system total appears below the unchanged count, without moving original artwork or logos. No helper, RA setup or gamelist edits are required.
+**Console Hardware & Info → On (Canvas hardware)** replaces only the system-selection presentation with the original Art Book logo above Canvas hardware in a left column. The right column contains **values only**: hardware type, release year, architecture, CPU, RAM and market-labelled launch price—no repeated manufacturer/name or field headings. Verified-data coverage is partial; unsupported values remain `Unknown`. **Off is the default** and preserves the previous presentation, including Custom Full Screen. Game lists, launch screens, controller status and achievement panels are unchanged. Source metadata is inherited, not newly historically certified; missing artwork has a text fallback.
 
-The display preserves `mm:ss`, `hh:mm:ss`, or `dd:hh:mm:ss`, **including days** (which may exceed two digits). Empty/unplayed totals show `00:00`. This is a **sum over visible games**, so filters can change the total. It is separate from the individual-game hours/minutes formatter above.
+The left-column refinement anchors both images at 7% of screen width, preserving aspect ratio and original logo bytes. Hardware was already alpha-cropped during import; intrinsic transparency in some original/custom SVG logos can still indent their visible ink. The C64 review fixture has matching visible left edges at both resolutions. This is not permission to crop or replace all host logos.
 
-All ratios share the existing count geometry, so this option applies to all ratios. Primary review is 640×480, with a separate 320×240 check. The new line is centered at `.5 .85`, height `.05`, below the unchanged count at `.5 .78`, above the unchanged help footer. Font presets and the count's white text/Roboto Bold styling are retained. Extra Large text and physical CRT readability still need on-device review.
+[All eight palette previews](previews/canvas-carousel-left-palettes/README.md) include readable 2×2 sheets, individual **640×480** frames and independently composed **320×240** frames, with identical C64 artwork. **Custom means the shipped template**, not private device settings. Default/Light/OLED/Custom share much of their system-view styling; their game-list differences are not invented here. These are labeled static approximations, not native frontend or CRT captures. The initial `previews/canvas-carousel/` gallery is retained unchanged.
 
-Update the theme, including **`theme.xml`, `system-playtime.xml` and `menu-font-size.xml`**, restart EmulationStation, then enable the setting if desired. The native timecode format is optional and remains Off by default. Verified against Batocera 42 ES `4adf26b43900d1a33887af6d8af3da2e99e398a5`; parser/static checks are not a live device capture. See [native system-playtime QA](docs/qa/system-playtime-native.md).
+**Not committed, pushed or installed.** Canvas's source-license/README rights conflict remains unresolved; implementation and preview approval do not establish redistribution clearance. See [left-column QA](docs/qa/canvas-left-palettes.md) and `_inc/canvas-hardware/manifest.json` for evidence/provenance.
+
+## Controller status icons
+
+**Local candidate, not yet published or device-tested.** Select **User Interface Settings → Theme Configuration → Controller Status Icons → On / Off**. **On is the default**. Actual player controllers detected by EmulationStation appear at the **top left**, opposite the unchanged clock/network group. With no detected player controller, no gamepad icon is drawn. This uses the native `screen/controllerActivity` component—not permanent decorative icons, polling scripts or an emulator overlay. It applies across aspect ratios and keeps the existing metadata, media, palettes and achievement panel intact.
+
+Batocera's global setting must also be enabled: **Main Menu → Controller & Bluetooth Settings → Display Options → Show Controller Activity → On** (`ShowControllerActivity`, native default true). The theme option cannot override that global switch. **Show Controller Battery Level** in the same section is optional; it adds native battery text only when the device reports a level. For a compact icons-only row, leave that battery option Off. Many controllers with battery text can extend the row: the native component does not clip it to its configured width. Native activity/hotkey flashes are retained; this is player-device detection, not a list of all paired Bluetooth devices. Native small-screen menus may temporarily hide the row.
+
+At **640×480**, the first icon slot starts at **20,20**, with a **20×20** slot and **4px** spacing; at **320×240**, these become **10,10**, **10×10**, and **2px**. The gamepad silhouette has transparent margins inside its slot. Physical CRT overscan/readability and hotplug behavior still need on-device checking.
+
+For the currently active **`/userdata/themes/art-book-next-1702-master/`** installation, update **`theme.xml`**, **`controller-status.xml`**, and **`_inc/images/controller-status.svg`** together, keeping their relative paths. Do not rename the active folder or reinstall/resync the RA helper for this feature. Reload the theme; if restarting via SSH, `batocera-es-swissknife --restart` force-restarts EmulationStation, so do it only with no game running and after saving changes. Source/schema checks and resolved-theme tests are not a native GUI capture. See [controller status QA](docs/qa/controller-status.md).
+
+## Optional system total playtime (hours and minutes)
+
+Enable **Theme Configuration → System Playtime → On**. **Off is the default**; **System Count** remains independent. The selected-system total appears below the unchanged count, without moving original artwork or logos.
+
+The display uses **total hours and minutes**, for example `51h 4m`, with `0h 0m` for a refreshed unplayed system. Stock Batocera 42 exposes only a preformatted system timecode, unlike the individual-game raw-seconds binding. A small **independent local helper** therefore generates these totals using integer arithmetic from saved gamelists. It does not use RetroAchievements credentials or make network requests. Missing generated totals show `Playtime unavailable`, never an invented zero.
+
+**Snapshot limitation:** totals cover saved games in each mapped gamelist, not the native visible-game/filter aggregate. Unsaved playtime is not included; refresh the saved totals and reload the theme to see changes. Collections/custom paths require correct system-to-gamelist mapping. The helper does not alter gamelists, poll in the background, change display settings or restart the frontend automatically.
+
+All ratios share the existing count geometry. The line stays centered at `.5 .85`, height `.05`, below the count at `.5 .78` and above the help footer. Font presets are retained. Primary review is 640×480 with an independent 320×240 check; physical CRT readability remains unverified. Update `system-playtime.xml` together with the helper sources; this does not change individual-game playtime or require an achievement resync.
 
 ## Optional menu font size
 
@@ -65,7 +85,18 @@ Primary target: **640×480 physical 4:3**, secondary **320×240**. This revised 
 
 Keep the original theme installed for easy comparison/rollback. Install this fork into its **own** folder; do not overwrite `art-book-next`.
 
-### Copy-paste directly on Batocera (no Git required)
+### Controller-friendly feature setup (no repeated SSH)
+
+With this updated theme installed, copy **[`Install Art Book Next Features.sh`](scripts/retroachievements/Install%20Art%20Book%20Next%20Features.sh)** once to `\\BATOCERA\share\roms\ports\` using the network share or Batocera's file manager. Update game lists so **Ports → Install Art Book Next Features** appears. No shell commands are required for subsequent setup.
+
+- **A / Enter:** install/update the local sync helper, controller-friendly full-library refresh entry and after-game hook. Saved Batocera RA login is reused; existing private helper settings are preserved. Installation does not start a full sync.
+- After successful installation, **A** opens the refresh screen. **X** opens the separately confirmed optional startup-sync setting; startup remains unchanged unless explicitly selected.
+- **Y:** refresh saved system totals in total **hours/minutes**, independently of RA login. Reload the theme afterwards, and enable **System Playtime → On**. Saved gamelists include hidden/stale entries and do not mirror live filters or unsaved playtime; unsupported collections show unavailable.
+- **B / Back / Esc:** leave the setup screen. A started local operation is allowed to finish before returning.
+
+The self-contained bootstrap embeds only its UI and license-covered font assets. Installation uses the selected local theme (or a recognized Art Book Next 1702 folder), never downloads or evaluates remote code, and does **not** install/update the theme itself. Keep the theme scripts updated; when present, its newer setup screen is used without recopying the bootstrap. Multiple playtime refreshes are serialized; modified/unmanaged generated totals are refused rather than overwritten. Initial copying and the game-list refresh are still necessary for a new Ports entry to appear.
+
+### Advanced alternative: SSH installation (no Git required)
 
 Run these blocks in an **SSH terminal connected to Batocera**, not on your PC. First enable/sign into RetroAchievements in Batocera's normal settings if you want the progress bar. These commands do not ask for credentials.
 

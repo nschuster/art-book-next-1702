@@ -201,7 +201,8 @@ def save_bmp(lib, renderer, path):
 
 
 def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
-           frames=None, screenshot=None, stale_after=180, raw_back_button=None, status_reader=None):
+           frames=None, screenshot=None, stale_after=180, raw_back_button=None, status_reader=None,
+           screen=None):
     """Initialize first, callback second, read-only poll last. Return 0 or safe 2.
 
     fullscreen uses SDL_WINDOW_FULLSCREEN_DESKTOP: never changes display mode.
@@ -264,13 +265,15 @@ def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
                 raw = raw_back_button if not devices.get(instance, (None, False))[1] else None
                 if should_quit(ev, raw):
                     return 0
+                if screen is not None:
+                    screen.handle_event(ev)
                 if ev.type == 0x605:  # JOYDEVICEADDED (device index)
                     open_device(instance)
                 elif ev.type == 0x606 and instance in devices:
                     handle, mapped = devices.pop(instance)
                     (lib.SDL_GameControllerClose if mapped else lib.SDL_JoystickClose)(handle)
             now = time.monotonic()
-            if now >= next_read:
+            if screen is None and now >= next_read:
                 model = build_model(status_reader() if status_reader is not None else read_status(state_path), stale_after=stale_after)
                 next_read = now + .2
             lib.SDL_SetRenderDrawColor(renderer, 42, 40, 37, 255)
@@ -279,10 +282,11 @@ def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
             colors = [(167,69,57), (190,119,62), (197,169,78), (108,145,105), (77,119,151)]
             for i, color in enumerate(colors):
                 fill(488+i*24, 39, 24, 8, color)
-            fill(32, 288, 576, 16, (78, 74, 66))
-            if model['fraction'] is not None:
-                fill(32, 288, round(576*model['fraction']), 16, (193, 177, 140))
-            for x, y, text, scale in layout(model):
+            if screen is None:
+                fill(32, 288, 576, 16, (78, 74, 66))
+                if model['fraction'] is not None:
+                    fill(32, 288, round(576*model['fraction']), 16, (193, 177, 140))
+            for x, y, text, scale in (screen.layout() if screen is not None else layout(model)):
                 pen = float(x)
                 for ch in text:
                     code = ord(ch) if 32 <= ord(ch) <= 255 else 63

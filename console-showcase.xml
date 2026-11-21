@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+   <!-- Opt-in only. Defaults precede per-system includes; never import Canvas layout/palette. -->
+   <include>./_inc/canvas-hardware/metadata/default.xml</include>
+   <include>./_inc/canvas-hardware/metadata/${system.theme}.xml</include>
+   <!-- Reviewed additive facts; original imported metadata remains untouched. -->
+   <include>./_inc/canvas-hardware/specs/default.xml</include>
+   <include>./_inc/canvas-hardware/specs/${system.theme}.xml</include>
+   <view name="system">
+      <!-- Native navigation remains active; its old artwork is not a background layer. -->
+      <image name="logo"><visible>false</visible></image>
+      <image name="system-logo,system-artwork"><visible>false</visible></image>
+      <text name="system-name"><visible>false</visible></text>
+      <text name="logoText"><color>00000000</color></text>
+      <carousel name="systemcarousel">
+         <pos>0 0.13</pos><size>1 0.18</size><logoSize>0.6 0.16</logoSize>
+         <maxLogoCount>1</maxLogoCount><color>00000000</color><defaultTransition>instant</defaultTransition>
+      </carousel>
+      <image name="canvas-logo" extra="true">
+         <!-- Left anchors align fitted image rectangles; intrinsic SVG padding is retained. -->
+         <origin>0 0.5</origin><pos>0.07 0.22</pos><maxSize>0.43 0.17</maxSize>
+         <path>./_inc/systems/logos/${system.theme}.svg</path>
+         <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.svg</path>
+         <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.png</path>
+         <color>${systemLogoColor}</color><zIndex>3</zIndex>
+      </image>
+      <text name="canvas-name" extra="true">
+         <origin>0 0.5</origin><pos>0.07 0.22</pos><size>0.43 0.17</size>
+         <fontPath>${fontLogo}</fontPath><fontSize>0.03</fontSize><alignment>left</alignment>
+         <color>${systemLogoColor}</color><text>${system.fullName}</text><zIndex>3</zIndex>
+         <visible>!exists("${themePath}/_inc/systems/logos/${system.theme}.svg")</visible>
+         <visible ifSubset="system-logos:custom">!exists("${themePath}/_inc/systems/logos/${system.theme}.svg") &amp;&amp; !exists("${themeCustomizationsPath}logos/${system.theme}.svg") &amp;&amp; !exists("${themeCustomizationsPath}logos/${system.theme}.png")</visible>
+      </text>
+      <image name="canvas-hardware" extra="true">
+         <origin>0 0.5</origin><pos>0.07 0.535</pos><maxSize>0.43 0.36</maxSize>
+         <path>${canvasHardware}</path><visible>${canvasHasHardware}</visible><color>ffffff</color><zIndex>3</zIndex>
+      </image>
+      <text name="canvas-missing" extra="true">
+         <origin>0 0.5</origin><pos>0.07 0.535</pos><size>0.43 0.1</size>
+         <fontPath>${fontRegular}</fontPath><fontSize>0.028</fontSize><alignment>left</alignment>
+         <text>${canvasMissing}</text><visible>!${canvasHasHardware}</visible><color>${systemLogoColor}</color><zIndex>3</zIndex>
+      </text>
+      <!-- Values only: type/year, closely spaced specifications, then launch price.
+           Identity remains exclusively in the unchanged left logo column. -->
+      <text name="canvas-type,canvas-year,canvas-architecture,canvas-cpu,canvas-ram,canvas-price" extra="true">
+         <size>0.4 0.04</size><fontPath>${fontRegular}</fontPath><fontSize>0.028</fontSize>
+         <color>${systemLogoColor}</color><alignment>left</alignment><verticalAlignment>center</verticalAlignment>
+         <multiLine>false</multiLine><zIndex>3</zIndex>
+      </text>
+      <text name="canvas-type" extra="true"><pos>0.55 0.26</pos><fontPath>${fontBold}</fontPath><text>${canvasType}</text></text>
+      <text name="canvas-year" extra="true"><pos>0.55 0.31</pos><fontSize>0.025</fontSize><text>${canvasYear}</text></text>
+      <text name="canvas-architecture" extra="true"><pos>0.55 0.405</pos><text>${canvasArchitecture}</text></text>
+      <text name="canvas-cpu" extra="true"><pos>0.55 0.46</pos><text>${canvasCPU}</text></text>
+      <text name="canvas-ram" extra="true"><pos>0.55 0.515</pos><text>${canvasRAM}</text></text>
+      <text name="canvas-price" extra="true"><pos>0.55 0.61</pos><text>${canvasPrice}</text></text>
+      <text name="system-count,system-count-single,system-count-null" extra="true" ifSubset="system-count:on">
+         <color>${systemLogoColor}</color><fontSize>0.03</fontSize>
+      </text>
+      <text name="system-playtime" extra="true" ifSubset="system-playtime:on">
+         <color>${systemLogoColor}</color><fontSize>0.03</fontSize>
+      </text>
+   </view>
+</theme>

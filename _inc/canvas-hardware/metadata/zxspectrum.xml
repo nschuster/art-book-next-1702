@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasHardware>${themePath}/_inc/canvas-hardware/zxspectrum.png</canvasHardware>
+      <canvasManufacturer>Sinclair</canvasManufacturer>
+      <canvasYear>1982</canvasYear>
+      <canvasType>Computer</canvasType>
+      <canvasMissing />
+      <canvasHasHardware>true</canvasHasHardware>
+   </variables>
+</theme>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasArchitecture>Unknown</canvasArchitecture>
+      <canvasCPU>Hitachi SH-4</canvasCPU>
+      <canvasRAM>Unknown</canvasRAM>
+      <canvasPrice>Unknown</canvasPrice>
+   </variables>
+</theme>

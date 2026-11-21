@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+   <!-- Native player-device status, not decorative connected-controller extras.
+        Loaded after the screen reset. ShowControllerActivity remains a global gate.
+        Fixed 20px icons at 640x480 / 10px at 320x240; no clock/network changes. -->
+   <view name="screen">
+      <controllerActivity name="controllerActivity">
+         <visible>true</visible>
+         <visible ifSubset="controller-status:off">false</visible>
+         <pos>0.03125 0.041666666666667</pos>
+         <size>0.4 0.041666666666667</size>
+         <horizontalAlignment>left</horizontalAlignment>
+         <itemSpacing>0.00625</itemSpacing>
+         <imagePath>./_inc/images/controller-status.svg</imagePath>
+         <color>${systemIndicatorColor}</color>
+      </controllerActivity>
+   </view>
+</theme>

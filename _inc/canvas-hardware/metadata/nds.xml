@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasHardware>${themePath}/_inc/canvas-hardware/nds.png</canvasHardware>
+      <canvasManufacturer>Nintendo</canvasManufacturer>
+      <canvasYear>2004</canvasYear>
+      <canvasType>Portable</canvasType>
+      <canvasMissing />
+      <canvasHasHardware>true</canvasHasHardware>
+   </variables>
+</theme>

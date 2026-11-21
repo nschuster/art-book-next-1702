@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<theme>
+   <variables>
+      <canvasHardware>${themePath}/_inc/canvas-hardware/psx.png</canvasHardware>
+      <canvasManufacturer>Sony</canvasManufacturer>
+      <canvasYear>1994</canvasYear>
+      <canvasType>Console</canvasType>
+      <canvasMissing />
+      <canvasHasHardware>true</canvasHasHardware>
+   </variables>
+</theme>

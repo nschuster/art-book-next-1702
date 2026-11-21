@@ -815,10 +815,20 @@ https://github.com/anthonycaccese/art-book-next-es
    </subset>
    <include ifSubset="retroachievements-progress:on">./retroachievements.xml</include>
    <include ifSubset="system-playtime:on">./system-playtime.xml</include>
+   <subset name="controller-status" displayName="Controller Status Icons">
+      <include name="on" displayName="On" />
+      <include name="off" displayName="Off" />
+   </subset>
+   <include>./controller-status.xml</include>
    <subset name="menu-font-size" displayName="Menu Font Size">
       <include name="default" displayName="Default" />
       <include name="large" displayName="Large" />
       <include name="xlarge" displayName="Extra Large" />
    </subset>
+   <subset name="console-showcase" displayName="Console Hardware &amp; Info">
+      <include name="off" displayName="Off" />
+      <include name="on" displayName="On (Canvas hardware)" />
+   </subset>
+   <include ifSubset="console-showcase:on">./console-showcase.xml</include>
    <include>./menu-font-size.xml</include>
 </theme>

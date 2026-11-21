@@ -70,6 +70,10 @@ class C64Tests(unittest.TestCase):
                 approved_system_playtime_transform(expected)
                 from test_menu_fonts import approved_menu_transform
                 approved_menu_transform(expected)
+                from test_controller_status import approved_controller_transform
+                approved_controller_transform(expected)
+                from test_canvas_carousel import approved_canvas_transform
+                approved_canvas_transform(expected)
             self.assertEqual(structure(root), structure(expected), path)
 
 
