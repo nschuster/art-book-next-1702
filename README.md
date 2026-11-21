@@ -31,11 +31,11 @@ The left-column refinement anchors both images at 7% of screen width, preserving
 
 **Local candidate, not yet published or device-tested.** Select **User Interface Settings → Theme Configuration → Controller Status Icons → On / Off**. **On is the default**. Actual player controllers detected by EmulationStation appear at the **top left**, opposite the unchanged clock/network group. With no detected player controller, no gamepad icon is drawn. This uses the native `screen/controllerActivity` component—not permanent decorative icons, polling scripts or an emulator overlay. It applies across aspect ratios and keeps the existing metadata, media, palettes and achievement panel intact.
 
-Batocera's global setting must also be enabled: **Main Menu → Controller & Bluetooth Settings → Display Options → Show Controller Activity → On** (`ShowControllerActivity`, native default true). The theme option cannot override that global switch. **Show Controller Battery Level** in the same section is optional; it adds native battery text only when the device reports a level. For a compact icons-only row, leave that battery option Off. Many controllers with battery text can extend the row: the native component does not clip it to its configured width. Native activity/hotkey flashes are retained; this is player-device detection, not a list of all paired Bluetooth devices. Native small-screen menus may temporarily hide the row.
+Batocera's global setting must also be enabled: **Main Menu → Controller & Bluetooth Settings → Display Options → Show Controller Activity → On** (`ShowControllerActivity`, native default true). The theme option cannot override that global switch. **Show Controller Battery Level** in the same section adds battery text only when the device reports a level. Battery text now matches the clock's nominal font size for each font preset. Stock Batocera couples that text size to the icon height, so the controller icons grow too; the first anchor and clock stay unchanged. Battery uses the native regular font while the clock is bold, so their glyph shapes are not identical. Input and hotkey feedback use the selected palette's menu accent rather than the native pink/blue defaults.
 
-At **640×480**, the first icon slot starts at **20,20**, with a **20×20** slot and **4px** spacing; at **320×240**, these become **10,10**, **10×10**, and **2px**. The gamepad silhouette has transparent margins inside its slot. Physical CRT overscan/readability and hotplug behavior still need on-device checking.
+At **640×480**, the first slot still starts at **20,20**, with **4px** spacing; at **320×240**, these become **10,10** and **2px**. Native `tinyScreen` conditions select the correct battery scaling, including the frontend's small-screen override. The row does not clip or wrap: many battery-bearing controllers can still overlap right-side indicators. Two battery-bearing controllers are covered by conservative layout checks; unusual FontScale settings and physical CRT readability need on-device checking.
 
-For the currently active **`/userdata/themes/art-book-next-1702-master/`** installation, update **`theme.xml`**, **`controller-status.xml`**, and **`_inc/images/controller-status.svg`** together, keeping their relative paths. Do not rename the active folder or reinstall/resync the RA helper for this feature. Reload the theme; if restarting via SSH, `batocera-es-swissknife --restart` force-restarts EmulationStation, so do it only with no game running and after saving changes. Source/schema checks and resolved-theme tests are not a native GUI capture. See [controller status QA](docs/qa/controller-status.md).
+Update **`controller-status.xml`** in **`/userdata/themes/art-book-next-1702/`**, retaining the existing `theme.xml` include and `_inc/images/controller-status.svg`. Reload the theme; no RA reinstall/resync is needed for the controller appearance. Source/schema and resolved-theme tests are not a native GUI capture. See [controller overlay QA](docs/qa/controller-overlay.md).
 
 ## Optional system total playtime (hours and minutes)
 
@@ -43,7 +43,17 @@ Enable **Theme Configuration → System Playtime → On**. **Off is the default*
 
 The display uses **total hours and minutes**, for example `51h 4m`, with `0h 0m` for a refreshed unplayed system. Stock Batocera 42 exposes only a preformatted system timecode, unlike the individual-game raw-seconds binding. A small **independent local helper** therefore generates these totals using integer arithmetic from saved gamelists. It does not use RetroAchievements credentials or make network requests. Missing generated totals show `Playtime unavailable`, never an invented zero.
 
-**Snapshot limitation:** totals cover saved games in each mapped gamelist, not the native visible-game/filter aggregate. Unsaved playtime is not included; refresh the saved totals and reload the theme to see changes. Collections/custom paths require correct system-to-gamelist mapping. The helper does not alter gamelists, poll in the background, change display settings or restart the frontend automatically.
+**Snapshot limitation:** totals cover saved games in each mapped gamelist, not the native visible-game/filter aggregate. The Ports refresh also reads compatible saved EmulationStation recovery records, replacing the matching game's old value rather than counting it twice. Collections/custom paths require correct native system and ROM-path mapping. The helper never alters gamelists or recovery records.
+
+**Optional automatic background updates:** use **Ports → Enable Playtime Sync** after installing the features. Installation and manual refresh do not enable it. Use **Refresh Saved Playtime** for an immediate local refresh, or **Disable Playtime Sync** to retain the totals while suppressing automatic updates. After a game exits, a detached, bounded worker waits for Batocera to save that game's updated metadata, then refreshes only the affected system. It does not require RetroAchievements, scan every system after each game, contact a server, or restart/reload the frontend. If saving is disabled, no eligible fresh save appears, or validation fails, it leaves existing totals unchanged rather than estimating time.
+
+**The displayed number still updates only when the theme reloads.** Returning to the carousel or reselecting a system does not reload its XML include. Toggle **System Playtime Off → On** to display the latest generated snapshot. This background-only behavior deliberately avoids disruptive full-library reloads. The independent game-detail playtime field continues to use native live metadata.
+
+The worker requires an existing saved base gamelist and a compatible, unambiguous recovery record (or freshly saved base). Recovery-only systems without a base remain unsupported. Invalid or duplicate records fail closed; the last valid total is retained. Each exit worker waits at most 120 seconds, then stops. There is no perpetual polling service or automatic startup scan.
+
+For diagnostics, `/userdata/system/configs/art-book-next-system-playtime/.last-result.json` records the last completed CLI refresh as `updated` or `not-refreshed`, a system count and completion time, without game names, paths or credentials. This is not proof that the currently displayed theme has reloaded. Manual refresh and automatic enable are separate actions: a failed refresh does not change your enable setting.
+
+Use **Ports → Disable Playtime Sync** to disable background updates without removing helpers or saved totals. **Refresh Saved Playtime** remains available while automatic updates are disabled.
 
 All ratios share the existing count geometry. The line stays centered at `.5 .85`, height `.05`, below the count at `.5 .78` and above the help footer. Font presets are retained. Primary review is 640×480 with an independent 320×240 check; physical CRT readability remains unverified. Update `system-playtime.xml` together with the helper sources; this does not change individual-game playtime or require an achievement resync.
 
@@ -57,6 +67,18 @@ Select **Theme Configuration → Menu Font Size → Default / Large / Extra Larg
 - Larger text means fewer visible rows. Native fixed-width progress areas, long game names/descriptions, translations and CRT overscan can still clip; this does not add wrapping or resize the native dialogs. It does not change emulator achievement popups or in-game RetroArch menus.
 
 These presets are source/semantic-tested, not device-tested. Update the complete theme (including both new XML includes), restart EmulationStation, then select the option and reopen the menus. Static previews also indicate possible summary/progress overlap at larger sizes; verify on the device. See [menu font QA and exact source evidence](docs/qa/menu-font-size.md).
+
+## Independent Ports controls and sync status
+
+Install Features adds separate Enable/Disable entries for achievements and
+playtime, plus Refresh Achievement Progress and Refresh Saved Playtime. Each
+screen shows live checkbox-style **automatic sync** status for both features:
+`[x] Enabled`, `[ ] Disabled` or `Not installed`, and `[?] Unavailable` if state
+cannot safely be read. These indicators are read-only; change settings with the
+separate actions. They are inside the helper screen, not native Ports-list
+checkboxes, and do not claim a worker is running or the latest refresh succeeded.
+Opening a screen never enables sync. Installation preserves upgrade settings;
+fresh installs start disabled. See [Ports controls](docs/qa/ports-actions.md).
 
 ## Optional sync launcher with live progress
 
@@ -105,14 +127,21 @@ Keep the original theme installed for easy comparison/rollback. Install this for
 
 ### Controller-friendly feature setup (no repeated SSH)
 
-With this updated theme installed, copy **[`Install Art Book Next Features.sh`](scripts/retroachievements/Install%20Art%20Book%20Next%20Features.sh)** once to `\\BATOCERA\share\roms\ports\` using the network share or Batocera's file manager. Update game lists so **Ports → Install Art Book Next Features** appears. No shell commands are required for subsequent setup.
+With this updated theme installed, copy **[`Install Art Book Next Features.sh`](scripts/retroachievements/Install%20Art%20Book%20Next%20Features.sh)** to `\\BATOCERA\share\roms\ports\`, replacing an older bootstrap if present. Update game lists, launch it and confirm **A / Enter**. Then run native **Update Gamelists** again to discover these independent entries:
 
-- **A / Enter:** install/update the local sync helper, controller-friendly full-library refresh entry and after-game hook. Saved Batocera RA login is reused; existing private helper settings are preserved. Installation does not start a full sync.
-- After successful installation, **A** opens the refresh screen. **X** opens the separately confirmed optional startup-sync setting; startup remains unchanged unless explicitly selected.
-- **Y:** refresh saved system totals in total **hours/minutes**, independently of RA login. Reload the theme afterwards, and enable **System Playtime → On**. Saved gamelists include hidden/stale entries and do not mirror live filters or unsaved playtime; unsupported collections show unavailable.
-- **B / Back / Esc:** leave the setup screen. A started local operation is allowed to finish before returning.
+| Ports entry | Action |
+| --- | --- |
+| **Install Features** | Install/update local helpers and Ports entries; preserve existing sync settings. Fresh installations start disabled. |
+| **Enable Achievements Sync** | Enable after-game achievement updates; reuse saved Batocera login. |
+| **Disable Achievements Sync** | Suppress after-game and optional startup updates; retain login and cached progress. |
+| **Enable Playtime Sync** | Enable local saved-playtime updates after games, independently of achievements. |
+| **Disable Playtime Sync** | Suppress automatic playtime updates; retain existing totals. |
+| **Refresh Achievement Progress** | Open the manual progress screen, including while automatic syncing is disabled. |
+| **Refresh Saved Playtime** | Refresh saved totals without changing automatic-sync settings. Reload the theme to display them. |
 
-The self-contained bootstrap embeds only its UI and license-covered font assets. Installation uses the selected local theme (or a recognized Art Book Next 1702 folder), never downloads or evaluates remote code, and does **not** install/update the theme itself. Keep the theme scripts updated; when present, its newer setup screen is used without recopying the bootstrap. Multiple playtime refreshes are serialized; modified/unmanaged generated totals are refused rather than overwritten. Initial copying and the game-list refresh are still necessary for a new Ports entry to appear.
+Each entry has a name, description, Utilities genre and project attribution in the Ports gamelist. Existing unrelated entries and edited metadata are preserved. Each action has its own controller-friendly confirmation/feedback screen; **B / Back / Esc** exits. No all-in-one menu is required. The theme's 4:3 metadata layout may not show game descriptions, so the action screen also explains the operation.
+
+The self-contained bootstrap embeds the installers, helpers, UI and license-covered fonts from this update. It never downloads code and does **not** install/update the theme itself. Recopy it when upgrading this delivery. After setup, the original bootstrap can be removed manually; the installed **Install Features** entry handles reinstalls of its installed version. To upgrade to a newer release, use that release's bootstrap. No credentials or user state are bundled. The legacy setup CLI remains available for compatibility, but is not the primary Ports workflow.
 
 ### Advanced alternative: SSH installation (no Git required)
 

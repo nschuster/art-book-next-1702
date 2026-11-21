@@ -48,12 +48,12 @@ def install_files(root, uninstall=False, ports_menu=False):
         'system/scripts/ra-progress-sync.sh': (
             '#!/bin/sh\n# Managed by RA extras installer.\n'
             'case "$1" in\n  gameStop)\n'
-            f'    {command} --watch --system "$2" --rom "$5" --force </dev/null >/dev/null 2>&1 &\n'
+            f'    {command} --automatic --watch --system "$2" --rom "$5" --force </dev/null >/dev/null 2>&1 &\n'
             '    ;;\nesac\n').encode(),
         'system/services/ra_progress_sync': (
             '#!/bin/sh\n# Managed by RA extras installer; exits when durable queue drains.\n'
             'case "$1" in\n  start)\n'
-            f'    {command} --watch </dev/null >/dev/null 2>&1 &\n'
+            f'    {command} --automatic --watch </dev/null >/dev/null 2>&1 &\n'
             f'    ;;\n  stop) {command} --stop ;;\nesac\n').encode(),
     }
     example = safe_path(state / 'config.example.json')
@@ -78,6 +78,15 @@ def install_files(root, uninstall=False, ports_menu=False):
             '#!/bin/sh\n# Managed RA progress screen; closing it leaves sync running.\n'
             f'exec python3 {q(str(state / "launcher.py"))} --data-root {q(str(root))}\n'
         ).encode()
+    for filename in ('install.py', 'ports_actions.py', 'ports_setup.py', 'launcher.py', 'progress_ui.py', 'ui_palette.py'):
+        files['system/retroachievements/' + filename] = (source / filename).read_bytes()
+    for asset in sorted((source / 'ui-assets').iterdir()):
+        if asset.is_file():
+            files['system/retroachievements/ui-assets/' + asset.name] = safe_path(asset).read_bytes()
+    # Fresh install is inactive. Upgrades preserve the previous active state.
+    disabled = safe_path(state / 'auto-disabled')
+    if not old and not uninstall and not disabled.exists():
+        atomic_write(disabled, b'Automatic sync not enabled.\n')
     # Preflight every target before writing anything. Exact known allowlist only.
     legacy = 'system/services/ra-progress-sync'
     targets = [*files, legacy]

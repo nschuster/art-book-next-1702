@@ -48,6 +48,18 @@ def test_standard_directory_fallback_when_config_absent(tmp_path):
     assert module().discover(tmp_path, tmp_path / 'stock') == [f'c64={rom}/gamelist.xml']
 
 
+def test_details_preserve_configured_rom_root_with_fallback_gamelist(tmp_path):
+    config = tmp_path / 'system/configs/emulationstation'
+    saved = config / 'gamelists/nes/gamelist.xml'
+    saved.parent.mkdir(parents=True)
+    saved.write_text('<gameList/>')
+    (config / 'es_systems.cfg').write_text('<systemList><system><name>nes</name>'
+        '<path>/userdata/roms/custom nes</path><theme>famicom</theme></system></systemList>')
+    assert module().discover_details(tmp_path, tmp_path / 'stock') == {
+        'nes': {'gamelist': saved, 'rom_root': tmp_path / 'roms/custom nes'}}
+    assert module().discover(tmp_path, tmp_path / 'stock') == [f'nes={saved}']
+
+
 def test_invalid_config_is_not_silently_reinterpreted(tmp_path):
     config = tmp_path / 'system/configs/emulationstation'
     config.mkdir(parents=True)

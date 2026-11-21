@@ -1,5 +1,25 @@
 # RetroAchievements per-game extras helper (Batocera v42)
 
+## Independent Ports controls
+
+The current controller workflow is documented in the repository README under
+**Controller-friendly feature setup**. Use the new standalone bootstrap once,
+then select individual **Install Features**, **Enable/Disable Achievements Sync**,
+**Enable/Disable Playtime Sync**, **Refresh Achievement Progress** and
+**Refresh Saved Playtime** entries. Fresh installation leaves automatic syncing
+disabled; explicit enabling is required. Existing enabled/disabled state is
+preserved on upgrades. The legacy setup and CLI instructions below remain for
+advanced compatibility; installation alone is no longer consent to background
+sync. Disable retains configuration and cached progress, and manual refresh works
+while automatic syncing is disabled.
+
+Every action screen also shows live read-only checkbox-style status for both
+**automatic** sync settings. `[x]` means enabled; `[ ]` means disabled or not
+installed (the label distinguishes these); `[?]` means state is unavailable.
+Use the separate Enable/Disable entries to change settings. The indicators do
+not report whether a worker is currently running or whether a refresh succeeded.
+They appear inside the helper screens, not in the native Ports list.
+
 Queue update, tested upgrade instructions and evidence limits:
 [reliable refresh queue](../../docs/qa/ra-reliable-queue.md).
 

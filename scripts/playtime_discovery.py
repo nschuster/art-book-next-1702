@@ -10,6 +10,11 @@ import xml.etree.ElementTree as ET
 
 
 def discover(root, stock=Path('/usr/share/emulationstation')):
+    return [f"{name}={detail['gamelist']}" for name, detail in discover_details(root, stock).items()]
+
+
+def discover_details(root, stock=Path('/usr/share/emulationstation')):
+    """Keep configured ROM roots: fallback gamelists live outside their ROM tree."""
     root, stock = Path(root), Path(stock)
     user = root / 'system/configs/emulationstation'
     candidates = [user / 'es_systems_custom.cfg', user / 'es_systems.cfg', stock / 'es_systems.cfg']
@@ -43,7 +48,7 @@ def discover(root, stock=Path('/usr/share/emulationstation')):
                             systems.pop(name, None)
         except ET.ParseError as error:
             raise ValueError('invalid systems config') from error
-    mappings = []
+    mappings = {}
     for name, directory in sorted(systems.items()):
         if not re.fullmatch(r'[A-Za-z0-9_-]+', name) or not directory.is_absolute():
             continue
@@ -51,5 +56,5 @@ def discover(root, stock=Path('/usr/share/emulationstation')):
         saved = user / 'gamelists' / name / 'gamelist.xml'
         path = local if local.is_file() else saved
         if path.is_file():
-            mappings.append(f'{name}={path}')
+            mappings[name] = {'gamelist': path, 'rom_root': directory}
     return mappings

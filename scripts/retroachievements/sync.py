@@ -400,6 +400,10 @@ class StopRequested(Exception):
     """Cooperative stop; deliberately not a per-game SyncError."""
 
 
+class AutomaticCancelled(Exception):
+    """Cancel this automatic job, not the worker's manual queue obligations."""
+
+
 class LiveProgress:
     """Atomic UI snapshot. Activated only after acquiring sync.lock.
 
@@ -535,7 +539,13 @@ def run(args):
         # settings and reconcile before any further publication.
 
 
+def automatic_disabled(args, job=None):
+    automatic = getattr(args, 'automatic', False) if job is None else job.get('automatic', False)
+    return automatic and safe_path(Path(args.data_root).absolute() / 'system/retroachievements/auto-disabled').exists()
+
+
 def run_worker(args):
+    if automatic_disabled(args): return 0
     cfg_path = Path(args.config).absolute()
     cfg = load_config(cfg_path)
     root = Path(args.data_root).absolute()
@@ -569,6 +579,7 @@ def run_worker(args):
                     if args.watch: previous['watch'] = True
                     continue  # Startup must not erase force intent or retry backoff.
                 pending[str(gid)] = {'generation': uuid.uuid4().hex,
+                    'automatic': getattr(args, 'automatic', False),
                     'force': args.force or previous.get('force', False),
                     'watch': args.watch or previous.get('watch', False), 'attempts': 0, 'due': 0}
     status_event(state, 'queued', len(set(records.values())))
@@ -630,7 +641,9 @@ def run_worker(args):
                     if int(item) not in valid_ids: del pending[item]
                 live.observe(pending)
                 watch = args.watch or any(job.get('watch', False) for job in pending.values())
-                eligible = [(item, job) for item, job in pending.items() if job['attempts'] < max_attempts]
+                disabled = safe_path(state / 'auto-disabled').exists()
+                eligible = [(item, job) for item, job in pending.items()
+                            if job['attempts'] < max_attempts and not (disabled and job.get('automatic', False))]
                 ready = [(item, job) for item, job in eligible
                          if job['due'] <= time.time() and (watch or job['generation'] not in attempted)]
                 ready.sort(key=lambda pair: not pair[1]['force'])
@@ -664,10 +677,12 @@ def run_worker(args):
                 cached = data is not None
                 if data is None:
                     data = client.fetch(gid)
+                    if automatic_disabled(args, job): raise AutomaticCancelled()
                     if source_stamp(cfg_path, cfg, root) != stamp: return None
                     atomic_write(cache, json.dumps(data).encode())
                 if source_stamp(cfg_path, cfg, root) != stamp: return None
                 for key in (key for key, value in all_records.items() if value == gid):
+                    if automatic_disabled(args, job): raise AutomaticCancelled()
                     target = targets[key]
                     relative = str(target.relative_to(state / 'extras'))
                     if target.exists():
@@ -686,6 +701,11 @@ def run_worker(args):
                     atomic_write(manifest, json.dumps(owned).encode())
                     count += 1
                 live.outcomes[gid] = 'cached' if cached else 'updated'
+            except AutomaticCancelled:
+                # Retain the canceled generation, but service manual work that
+                # arrived during HTTP. The next transaction filters automatic
+                # jobs and releases the lock atomically if none are eligible.
+                continue
             except (SyncError, OSError):
                 failed = True
                 failures += 1
@@ -714,6 +734,7 @@ def main():
     parser.add_argument('--rom', help='only this ROM (requires --system)')
     parser.add_argument('--force', action='store_true', help='refresh even if cache is fresh')
     parser.add_argument('--drain', action='store_true', help='process pending work without adding a scan')
+    parser.add_argument('--automatic', action='store_true', help='respect automatic-sync disable state')
     parser.add_argument('--watch', action='store_true', help='wait and retry pending failures until drained')
     parser.add_argument('--stop', action='store_true', help='stop active worker after current job, retaining pending work')
     parser.add_argument('--test-api-base', help='TEST ONLY: loopback HTTP mock API; never a live-success claim')

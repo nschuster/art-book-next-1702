@@ -2,17 +2,31 @@
 <theme>
    <!-- Native player-device status, not decorative connected-controller extras.
         Loaded after the screen reset. ShowControllerActivity remains a global gate.
-        Fixed 20px icons at 640x480 / 10px at 320x240; no clock/network changes. -->
+        Clock and first-icon anchor preserved; icon height follows clock preset. -->
    <view name="screen">
       <controllerActivity name="controllerActivity">
          <visible>true</visible>
          <visible ifSubset="controller-status:off">false</visible>
          <pos>0.03125 0.041666666666667</pos>
-         <size>0.4 0.041666666666667</size>
+         <!-- Match system-clock's small/default, large and xlarge font requests.
+              tinyScreen is the native Renderer::isSmallScreen condition, including
+              ForceSmallScreen. Height enlargement also enlarges the square icons.
+              Tiny epsilon avoids float32 truncation below the target integer. -->
+         <size tinyScreen="false" ifSubset="font-size:small|default">0.4 0.04761905</size>
+         <size tinyScreen="false" ifSubset="font-size:large">0.4 0.05952382</size>
+         <size tinyScreen="false" ifSubset="font-size:xlarge">0.4 0.07142858</size>
+         <size tinyScreen="true" ifSubset="font-size:small|default">0.4 0.06060607</size>
+         <size tinyScreen="true" ifSubset="font-size:large">0.4 0.07575759</size>
+         <size tinyScreen="true" ifSubset="font-size:xlarge">0.4 0.09090910</size>
          <horizontalAlignment>left</horizontalAlignment>
          <itemSpacing>0.00625</itemSpacing>
          <imagePath>./_inc/images/controller-status.svg</imagePath>
          <color>${systemIndicatorColor}</color>
+         <!-- Both native input states follow the palette's menu selection accent.
+              Battery text shares these colors; its font is native height-derived,
+              not independently themeable (see docs/qa/controller-overlay.md). -->
+         <activityColor>${menuSelectorColor}</activityColor>
+         <hotkeyColor>${menuSelectorColor}</hotkeyColor>
       </controllerActivity>
    </view>
 </theme>

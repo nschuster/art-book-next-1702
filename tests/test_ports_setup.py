@@ -27,7 +27,9 @@ def run(root, *args, env=None):
     copied = root / 'roms/ports/Install Art Book Next Features.sh'
     copied.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(BOOT, copied)
-    return subprocess.run(['sh', str(copied), '--data-root', str(root), *args], input='', text=True, capture_output=True, timeout=20, env=env)
+    # Preserve explicit compatibility coverage; default/new entry semantics are
+    # exercised separately in test_ports_actions_bundle.py.
+    return subprocess.run(['sh', str(copied), '--legacy-setup', '--data-root', str(root), *args], input='', text=True, capture_output=True, timeout=20, env=env)
 
 
 def test_bootstrap_installs_and_repeats_without_sync(tmp_path):
@@ -43,6 +45,8 @@ def test_bootstrap_installs_and_repeats_without_sync(tmp_path):
     assert (root / 'system/scripts/ra-progress-sync.sh').exists()
     assert not (state / 'progress.json').exists()
     assert not (state / 'launcher-process.json').exists()
+    assert not (root / 'system/scripts/art-book-playtime.sh').exists()
+    assert not (root / 'system/art-book-next-playtime').exists()
     assert run(root, '--apply').returncode == 0
     assert cfg.read_bytes() == original
     assert 'SECRET_FIXTURE' not in result.stdout + result.stderr

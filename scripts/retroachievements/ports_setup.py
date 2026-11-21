@@ -16,6 +16,7 @@ MESSAGES = {
     13: ('Private configuration needs attention', 'Existing settings were not overwritten.'),
     14: ('Startup setting could not be changed', 'Check Batocera service support.'),
     15: ('Playtime refresh refused', 'Check saved gamelists / modified totals.'),
+    16: ('Background updates enabled; initial refresh failed', 'Check saved gamelists / modified totals.'),
 }
 
 
@@ -75,6 +76,11 @@ def apply(root):
 
 def refresh_playtime(root):
     source = find_source(root)
+    candidates = ([source.parent / 'system-playtime'] if source else [])
+    candidates += [Path(__file__).resolve().parent / 'system-playtime']
+    candidates += sorted((root / 'themes').glob('*/scripts/system-playtime'))
+    source = next((path for path in candidates if all((path / name).is_file()
+                   for name in ('install.py', 'auto_refresh.py', 'refresh.py'))), None)
     if source is None:
         return 11
     def load(path, name):
@@ -84,16 +90,17 @@ def refresh_playtime(root):
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module
+    enabled = False
     try:
-        discovery = load(source.parent / 'playtime_discovery.py', 'playtime_discovery')
-        helper = load(source.parent / 'system-playtime/refresh.py', 'system_hours')
-        mappings = discovery.discover(root)
-        if not mappings:
-            return 15
-        helper.refresh(mappings, root / 'system/configs/art-book-next-system-playtime')
-        return 0
+        installer = load(source / 'install.py', 'playtime_installer')
+        installer.install(root)
+        enabled = True
+        result = subprocess.run([sys.executable, str(root / 'system/art-book-next-playtime/auto_refresh.py'),
+                                 '--data-root', str(root), '--refresh-all'],
+                                stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return 0 if result.returncode == 0 else 16
     except (OSError, ValueError, ET.ParseError, ImportError):
-        return 15
+        return 16 if enabled else 15
 
 
 def startup_enabled(root):
@@ -178,7 +185,7 @@ class SetupScreen:
             lines += ['Refreshing saved playtime...' if self.task == 'playtime' else 'Installing local helper...', 'Please wait. No library sync is started.', 'Existing private settings are preserved.']
         elif self.playtime_result is not None:
             if self.playtime_result == 0:
-                lines += ['Saved totals refreshed: hours / minutes', 'Reload the theme to see the new totals.', 'Saved games only; filters do not apply.']
+                lines += ['Saved totals refreshed: hours / minutes', 'Reload the theme to see the new totals.', 'Background updates enabled after games.']
             else:
                 lines += list(MESSAGES.get(self.playtime_result, MESSAGES[15]))
             lines += ['A / Enter: Back', 'Y: Refresh saved playtime', 'B / Back / Esc: Exit']
@@ -197,7 +204,7 @@ class SetupScreen:
         else:
             lines += ['Install / update local features', 'Uses your saved Batocera RA login.', 'Refresh screen + after-game hook.', 'No download or automatic full sync.', 'A / Enter: Install / update', 'B / Back / Esc: Exit']
         if self.child is None and self.playtime_result is None and not self.startup_menu:
-            lines.insert(-1, 'Y: Refresh saved system playtime')
+            lines.insert(-1, 'Y: Enable auto playtime + refresh')
         return [(32, y, ellipsis(text, 576), 1.0) for y, text in zip((28, 90, 138, 180, 230, 310, 366, 418), lines)]
 
 

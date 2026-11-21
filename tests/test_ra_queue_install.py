@@ -70,7 +70,7 @@ def test_installed_background_hook_releases_capture_pipes(tmp_path, hook, args):
         worker = json.loads(ready.read_text())
         os.kill(worker['pid'], 0)  # Capture returned while worker is still alive.
         expected = ['--config', str(state / 'config.json'), '--data-root',
-                    str(root), '--watch']
+                    str(root), '--automatic', '--watch']
         if args[0] == 'gameStop':
             expected += ['--system', 'snes', '--rom', args[4], '--force']
         assert worker['args'] == expected
