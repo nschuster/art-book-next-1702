@@ -67,7 +67,7 @@ def install_files(root, uninstall=False, ports_menu=False):
     port = 'roms/ports/Refresh RetroAchievements Progress.sh'
     # Keep opt-in on normal upgrades; do not touch an unrelated Ports gamelist.
     if ports_menu or port in old:
-        for filename in ('launcher.py', 'progress_ui.py'):
+        for filename in ('launcher.py', 'progress_ui.py', 'ui_palette.py'):
             files['system/retroachievements/' + filename] = (source / filename).read_bytes()
         assets = source / 'ui-assets'
         if assets.exists():

@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import struct
+import sys
 import tempfile
 import time
 import unittest
@@ -18,7 +19,10 @@ class ProgressUITest(unittest.TestCase):
         if MODULE.exists():
             spec = importlib.util.spec_from_file_location('ra_progress_ui_test', MODULE)
             cls.ui = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(cls.ui)
+            # Match direct script execution without depending on another test's
+            # collection-time sys.path changes for the sibling palette module.
+            with patch.object(sys, 'path', [str(MODULE.parent), *sys.path]):
+                spec.loader.exec_module(cls.ui)
 
     def setUp(self):
         self.assertTrue(MODULE.exists(), 'Progress UI implementation is missing')

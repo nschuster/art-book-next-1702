@@ -67,6 +67,24 @@ status. Closing the screen returns to browsing while synchronization continues;
 reopening during a run attaches without restarting it. This is a stock-compatible
 Ports application, not a new native Main Menu item or ScreenScraper dialog.
 
+The sync and feature-setup screens read the active **ThemeSet / Color Scheme**
+when opened, using the installed Art Book palette for the background, text,
+separator, progress track and fill. This includes Custom's existing
+`/userdata/theme-customizations/art-book-next/colors.xml`; the adapter supports
+this fork's colour-variable format, not arbitrary third-party theme expressions.
+Missing or malformed settings/palettes use a safe readable fallback. No settings
+or credentials are changed. After changing colours, close and reopen the screen.
+To update an already-installed sync screen, update the theme files and run
+**Ports → Install Art Book Next Features → A** once; no full-library resync is
+needed for this appearance change. The game-list rainbow bar is unchanged.
+
+**Native achievement-menu bar:** stock Batocera 42 hardcodes blue Softcore and
+gold/yellow Hardcore progress. Theme XML controls the label/font, not those bar
+colours. The companion screen's palette support does not recolour that native
+bar or change achievement mode. A native bar recolour would require frontend
+support; this fork does not install a custom frontend. See the
+[source-backed limitation](docs/qa/native-ra-menu-progress.md).
+
 Existing login/configuration is reused. No custom frontend, pip packages, or ROM
 hashing is involved. It refreshes safely mapped achievement-enabled games; the
 work count refers to unique RA game IDs, not every ROM. See the

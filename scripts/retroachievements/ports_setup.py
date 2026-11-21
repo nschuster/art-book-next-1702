@@ -20,7 +20,7 @@ MESSAGES = {
 
 
 def find_source(root):
-    required = ('install.py', 'configure.py', 'sync.py', 'launcher.py', 'progress_ui.py', 'config.example.json', 'ui-assets/font.bmp')
+    required = ('install.py', 'configure.py', 'sync.py', 'launcher.py', 'progress_ui.py', 'ui_palette.py', 'config.example.json', 'ui-assets/font.bmp')
     def valid(theme):
         helper = theme / 'scripts/retroachievements'
         return helper if all((helper / name).is_file() for name in required) else None
@@ -231,7 +231,7 @@ def main(argv=None):
         return result
     from progress_ui import run_ui
     screen = SetupScreen(root)
-    result = run_ui(None, screen=screen, fullscreen=not args.windowed,
+    result = run_ui(None, screen=screen, data_root=args.data_root, fullscreen=not args.windowed,
                     frames=args.frames, screenshot=args.screenshot)
     # An in-progress local installation is allowed to finish if the screen closes.
     if screen.child is not None: screen.child.wait()

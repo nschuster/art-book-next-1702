@@ -1,0 +1,226 @@
+[
+  {
+    "palette": "default",
+    "label": "Default",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "default-640.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "default",
+    "label": "Default",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "default-320.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "light",
+    "label": "Light",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "light-640.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "light",
+    "label": "Light",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "light-320.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "steam-os",
+    "label": "SteamOS",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "steam-os-640.png",
+    "background": [
+      13,
+      20,
+      28
+    ]
+  },
+  {
+    "palette": "steam-os",
+    "label": "SteamOS",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "steam-os-320.png",
+    "background": [
+      13,
+      20,
+      28
+    ]
+  },
+  {
+    "palette": "snes",
+    "label": "SNES",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "snes-640.png",
+    "background": [
+      20,
+      14,
+      38
+    ]
+  },
+  {
+    "palette": "snes",
+    "label": "SNES",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "snes-320.png",
+    "background": [
+      20,
+      14,
+      38
+    ]
+  },
+  {
+    "palette": "famicom",
+    "label": "Famicom",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "famicom-640.png",
+    "background": [
+      47,
+      9,
+      14
+    ]
+  },
+  {
+    "palette": "famicom",
+    "label": "Famicom",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "famicom-320.png",
+    "background": [
+      47,
+      9,
+      14
+    ]
+  },
+  {
+    "palette": "oled",
+    "label": "OLED",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "oled-640.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "oled",
+    "label": "OLED",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "oled-320.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "commodore-64",
+    "label": "Commodore 64",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "commodore-64-640.png",
+    "background": [
+      41,
+      41,
+      41
+    ]
+  },
+  {
+    "palette": "commodore-64",
+    "label": "Commodore 64",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "commodore-64-320.png",
+    "background": [
+      41,
+      41,
+      41
+    ]
+  },
+  {
+    "palette": "custom",
+    "label": "Custom",
+    "resolution": [
+      640,
+      480
+    ],
+    "path": "custom-640.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  },
+  {
+    "palette": "custom",
+    "label": "Custom",
+    "resolution": [
+      320,
+      240
+    ],
+    "path": "custom-320.png",
+    "background": [
+      17,
+      17,
+      17
+    ]
+  }
+]

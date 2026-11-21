@@ -16,6 +16,7 @@ import struct
 import sys
 import time
 import unicodedata
+from ui_palette import load_palette
 
 ASSETS = Path(__file__).resolve().parent / 'ui-assets'
 WIDTHS = json.loads((ASSETS / 'widths.json').read_text())
@@ -169,6 +170,7 @@ def load_sdl():
         'SDL_RWFromFile': (ptr, [C.c_char_p, C.c_char_p]), 'SDL_LoadBMP_RW': (ptr, [ptr, integer]),
         'SDL_SetColorKey': (integer, [ptr, integer, C.c_uint32]), 'SDL_FreeSurface': (None, [ptr]),
         'SDL_CreateTextureFromSurface': (ptr, [ptr, ptr]), 'SDL_DestroyTexture': (None, [ptr]),
+        'SDL_SetTextureColorMod': (integer, [ptr, C.c_uint8, C.c_uint8, C.c_uint8]),
         'SDL_RenderCopy': (integer, [ptr, ptr, C.POINTER(Rect), C.POINTER(Rect)]),
         'SDL_GetRendererOutputSize': (integer, [ptr, C.POINTER(integer), C.POINTER(integer)]),
         'SDL_RenderReadPixels': (integer, [ptr, ptr, C.c_uint32, ptr, integer]),
@@ -202,7 +204,7 @@ def save_bmp(lib, renderer, path):
 
 def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
            frames=None, screenshot=None, stale_after=180, raw_back_button=None, status_reader=None,
-           screen=None):
+           screen=None, data_root=None):
     """Initialize first, callback second, read-only poll last. Return 0 or safe 2.
 
     fullscreen uses SDL_WINDOW_FULLSCREEN_DESKTOP: never changes display mode.
@@ -212,6 +214,8 @@ def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
     devices = {}; initialized = False; started = False; cursor = None
     flags = 0x20 | 0x200 | 0x2000  # VIDEO, JOYSTICK, GAMECONTROLLER
     try:
+        root = Path(data_root) if data_root is not None else (Path(state_path).absolute().parents[2] if state_path is not None and len(Path(state_path).absolute().parents) > 2 else Path('/userdata'))
+        palette = load_palette(root)
         lib = load_sdl()
         if lib.SDL_InitSubSystem(flags):
             raise RuntimeError('init')
@@ -236,6 +240,8 @@ def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
             lib.SDL_FreeSurface(surface)
         if not texture:
             raise RuntimeError('texture')
+        if lib.SDL_SetTextureColorMod(texture, *palette['text']):
+            raise RuntimeError('font tint')
         def open_device(index):
             mapped = bool(lib.SDL_IsGameController(index))
             handle = lib.SDL_GameControllerOpen(index) if mapped else lib.SDL_JoystickOpen(index)
@@ -276,16 +282,16 @@ def run_ui(state_path, start_callback=None, *, fullscreen=True, size=(640, 480),
             if screen is None and now >= next_read:
                 model = build_model(status_reader() if status_reader is not None else read_status(state_path), stale_after=stale_after)
                 next_read = now + .2
-            lib.SDL_SetRenderDrawColor(renderer, 42, 40, 37, 255)
+            lib.SDL_SetRenderDrawColor(renderer, *palette['background'], 255)
             lib.SDL_RenderClear(renderer)
-            fill(32, 67, 576, 3, (109, 101, 85))
+            fill(32, 67, 576, 3, palette['divider'])
             colors = [(167,69,57), (190,119,62), (197,169,78), (108,145,105), (77,119,151)]
             for i, color in enumerate(colors):
                 fill(488+i*24, 39, 24, 8, color)
             if screen is None:
-                fill(32, 288, 576, 16, (78, 74, 66))
+                fill(32, 288, 576, 16, palette['track'])
                 if model['fraction'] is not None:
-                    fill(32, 288, round(576*model['fraction']), 16, (193, 177, 140))
+                    fill(32, 288, round(576*model['fraction']), 16, palette['progress'])
             for x, y, text, scale in (screen.layout() if screen is not None else layout(model)):
                 pen = float(x)
                 for ch in text:

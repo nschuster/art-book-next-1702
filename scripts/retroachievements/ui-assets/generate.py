@@ -12,7 +12,7 @@ draw.fontmode = '1'
 widths = {}
 for i in range(32, 256):
     x, y = ((i-32) % 16)*32, ((i-32)//16)*32
-    draw.text((x, y+2), chr(i), font=font, fill=(233,225,204), stroke_width=0)
+    draw.text((x, y+2), chr(i), font=font, fill=(255,255,255), stroke_width=0)
     widths[str(i)] = round(font.getlength(chr(i)))
 im.save(out / 'font.bmp')
 (out / 'widths.json').write_text(json.dumps(widths, sort_keys=True)+'\n')

@@ -12,7 +12,7 @@ SOURCE = Path(__file__).resolve().parent
 def build():
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
-        files = [SOURCE / 'ports_setup.py', SOURCE / 'progress_ui.py', *sorted((SOURCE / 'ui-assets').iterdir())]
+        files = [SOURCE / 'ports_setup.py', SOURCE / 'progress_ui.py', SOURCE / 'ui_palette.py', *sorted((SOURCE / 'ui-assets').iterdir())]
         for path in files:
             if not path.is_file(): continue
             info = zipfile.ZipInfo(path.relative_to(SOURCE).as_posix(), date_time=(2020, 1, 1, 0, 0, 0))
