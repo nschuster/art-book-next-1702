@@ -22,13 +22,16 @@
          <path>./_inc/systems/logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.png</path>
+         <path ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">./_inc/systems/logos-comic/${system.theme}.png</path>
          <color>${systemLogoColor}</color><zIndex>3</zIndex>
+         <color ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">ffffff</color>
       </image>
       <text name="canvas-name" extra="true">
          <origin>0 0.5</origin><pos>0.07 0.22</pos><size>0.43 0.17</size>
          <fontPath>${fontLogo}</fontPath><fontSize>0.03</fontSize><alignment>left</alignment>
          <color>${systemLogoColor}</color><text>${system.fullName}</text><zIndex>3</zIndex>
          <visible>!exists("${themePath}/_inc/systems/logos/${system.theme}.svg")</visible>
+         <visible ifSubset="system-logos:comic">!exists("${themePath}/_inc/systems/logos/" + {system:theme} + ".svg") &amp;&amp; !exists("${themePath}/_inc/systems/logos-comic/" + {system:theme} + ".png")</visible>
          <visible ifSubset="system-logos:custom">!exists("${themePath}/_inc/systems/logos/${system.theme}.svg") &amp;&amp; !exists("${themeCustomizationsPath}logos/${system.theme}.svg") &amp;&amp; !exists("${themeCustomizationsPath}logos/${system.theme}.png")</visible>
       </text>
       <image name="canvas-hardware" extra="true">

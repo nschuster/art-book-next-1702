@@ -1,0 +1,1186 @@
+{
+  "repository": "https://github.com/lipebello/es-theme-retrorama-ce",
+  "commit": "afb1f4121c2de594349dba963d13b9d477cb2029",
+  "raw_base": "https://raw.githubusercontent.com/lipebello/es-theme-retrorama-ce/afb1f4121c2de594349dba963d13b9d477cb2029/",
+  "author": "Filipe Bello (lipebello)",
+  "processing": "Trim transparent padding only; proportionally downsample within 1024x512; add 2px transparent margin; preserve original RGBA colours. No drawing changes.",
+  "pillow_version": "12.2.0",
+  "assets": [
+    {
+      "file": "3ds.png",
+      "source_path": "art/logo/3ds.png",
+      "source_git_blob": "b4eccf7b8c5950acec0ebe7f0ecdb89d63d0e96c",
+      "source_sha256": "b0ff4b4a9e077fa67491f1d6cd1b99cf43511a15e8734735ec6a728d4695f85e",
+      "source_dimensions": [
+        768,
+        453
+      ],
+      "source_alpha_bounds": [
+        4,
+        1,
+        765,
+        451
+      ],
+      "dimensions": [
+        765,
+        454
+      ],
+      "sha256": "1d683d39963566b6e6c89b338e3446e723d965ccd4a99e40c6c375cb5e35ae66"
+    },
+    {
+      "file": "arcade.png",
+      "source_path": "art/logo/arcade.png",
+      "source_git_blob": "6ff11b2712b7b7d0e2e0cb762a2a935086a3090f",
+      "source_sha256": "63e0612ecabd07e1c0a6445bd0b10deba99565e6f3ea1a414318d3472752d8f9",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        4,
+        11,
+        1126,
+        440
+      ],
+      "dimensions": [
+        1028,
+        396
+      ],
+      "sha256": "a341a6058f96474bdce3b666d2343e352fc62e01008cdfbfb88046da9faa6c32"
+    },
+    {
+      "file": "atari2600.png",
+      "source_path": "art/logo/atari2600.png",
+      "source_git_blob": "06e32bae60617bdef316e96d99a2c76683c97c2e",
+      "source_sha256": "82582ddb608896c786d49fa750c832988edf245cdcf674063ff8e277a4304005",
+      "source_dimensions": [
+        758,
+        453
+      ],
+      "source_alpha_bounds": [
+        4,
+        4,
+        753,
+        449
+      ],
+      "dimensions": [
+        753,
+        449
+      ],
+      "sha256": "ff7f5577b00b8e1c125439975c42eb9b655807903e9161721cdea2745150e961"
+    },
+    {
+      "file": "atari5200.png",
+      "source_path": "art/logo/atari5200.png",
+      "source_git_blob": "ed3453f191a93c0023ea8f6471715fa00b22c128",
+      "source_sha256": "2adc2495f080e0d60998336858be98b584c1ea4e883a84b423616397b46703ef",
+      "source_dimensions": [
+        1072,
+        453
+      ],
+      "source_alpha_bounds": [
+        4,
+        4,
+        1067,
+        449
+      ],
+      "dimensions": [
+        1028,
+        433
+      ],
+      "sha256": "25a58347e632b0df283559854c56018a082d736cf4579bf02073fe184f905286"
+    },
+    {
+      "file": "atari7800.png",
+      "source_path": "art/logo/atari7800.png",
+      "source_git_blob": "ad769be173aea00a42d96c401038c0b52a2a9653",
+      "source_sha256": "d9fe7c6e4af780582fca002c3b394ceda417373383a1b1805b1537410e36234b",
+      "source_dimensions": [
+        694,
+        453
+      ],
+      "source_alpha_bounds": [
+        5,
+        5,
+        690,
+        449
+      ],
+      "dimensions": [
+        689,
+        448
+      ],
+      "sha256": "66030bbf1adac18d427967b82a62fddae8173dd3f6f6557aa4532729365bbebc"
+    },
+    {
+      "file": "auto-action.png",
+      "source_path": "art/logo/auto-action.png",
+      "source_git_blob": "a437abad17d7bbe7209a55f99f531c570e2f7460",
+      "source_sha256": "f937ff4b71570899a3131a5e675ab9899e9831fa9c2885e0b1d87589e362b0fa",
+      "source_dimensions": [
+        1080,
+        453
+      ],
+      "source_alpha_bounds": [
+        3,
+        3,
+        1075,
+        448
+      ],
+      "dimensions": [
+        1028,
+        429
+      ],
+      "sha256": "d5782052ac40e5f2f3bdeaf5d39c425be00f015fb32c2692763ff859de4bc267"
+    },
+    {
+      "file": "auto-adventure.png",
+      "source_path": "art/logo/auto-adventure.png",
+      "source_git_blob": "6781f5c566c2155bd9d4f02d27aaa60ce80acff4",
+      "source_sha256": "17ad93aeaf88fc53fc9e9592e18f70eb2dbe0d79f3d85734303cdcdfc420ca01",
+      "source_dimensions": [
+        1130,
+        439
+      ],
+      "source_alpha_bounds": [
+        4,
+        5,
+        1125,
+        432
+      ],
+      "dimensions": [
+        1028,
+        394
+      ],
+      "sha256": "0e32b72af40c9dd32ea38dfb71ab308ce155b05c3b284ccfa75530a9be9820e0"
+    },
+    {
+      "file": "auto-allgames.png",
+      "source_path": "art/logo/auto-allgames.png",
+      "source_git_blob": "2bf8faa64d8b79db1cec67d6ab0339978bbb9b3c",
+      "source_sha256": "50423a2d42e5af523f476a9c3764b2a3cc5beb1ad466920dbf55f94b8800e86e",
+      "source_dimensions": [
+        922,
+        453
+      ],
+      "source_alpha_bounds": [
+        2,
+        1,
+        919,
+        452
+      ],
+      "dimensions": [
+        921,
+        455
+      ],
+      "sha256": "1b9579565df0a6c2cce1e0b9e60e754d5571bfeaa5db4813e2a177916827f996"
+    },
+    {
+      "file": "auto-at2players.png",
+      "source_path": "art/logo/auto-at2players.png",
+      "source_git_blob": "1db591c2209fbcec9028c57723d28606e25135ac",
+      "source_sha256": "861ec0f9be4033ad15c9d9d8e1110c27f25a1b91c6398e82ab858034c00f66c0",
+      "source_dimensions": [
+        1115,
+        383
+      ],
+      "source_alpha_bounds": [
+        3,
+        12,
+        1113,
+        370
+      ],
+      "dimensions": [
+        1028,
+        334
+      ],
+      "sha256": "f175332662f67eafae8ad16e32cabc5952f1c6a8a136d9d35361c113e13087c0"
+    },
+    {
+      "file": "auto-at4players.png",
+      "source_path": "art/logo/auto-at4players.png",
+      "source_git_blob": "7fd72bf13caca57c0788a027c20e50d8a7a098e0",
+      "source_sha256": "9c30ed05737d8c5922f3563628eb1ddcb1da63114dd4870382d402a59c517039",
+      "source_dimensions": [
+        1114,
+        419
+      ],
+      "source_alpha_bounds": [
+        1,
+        4,
+        1111,
+        412
+      ],
+      "dimensions": [
+        1028,
+        380
+      ],
+      "sha256": "e7daf25891cd3bc3896cb65cc5707843aec09840ab6a6e4349963e2a3aa3de73"
+    },
+    {
+      "file": "auto-beatemup.png",
+      "source_path": "art/logo/auto-beatemup.png",
+      "source_git_blob": "4aa257499e738ead148aed89cd2abce9ee0b527e",
+      "source_sha256": "0a70f87d9a282fda5975d81886caafbb3df89298a58475d4c7be063ffcd81e5e",
+      "source_dimensions": [
+        908,
+        453
+      ],
+      "source_alpha_bounds": [
+        6,
+        3,
+        904,
+        452
+      ],
+      "dimensions": [
+        902,
+        453
+      ],
+      "sha256": "adf4bc88d3bfd6697fb20de49b03c6810cc9aa70aff25931e926f3893c38dd07"
+    },
+    {
+      "file": "auto-favorites.png",
+      "source_path": "art/logo/auto-favorites.png",
+      "source_git_blob": "61d671b221ae8801f9d329d489318a6ee67a1c43",
+      "source_sha256": "054954b81e06fa2aae6bd84404122869402819d3582eb2b5ccc28db2a7c1589b",
+      "source_dimensions": [
+        1037,
+        448
+      ],
+      "source_alpha_bounds": [
+        101,
+        2,
+        1033,
+        445
+      ],
+      "dimensions": [
+        936,
+        447
+      ],
+      "sha256": "3f7b27dcbba93128bb7573a8312c6350b29ba4fd62463ba933882d3b68823f85"
+    },
+    {
+      "file": "auto-fight.png",
+      "source_path": "art/logo/auto-fight.png",
+      "source_git_blob": "b52b387091df9828f92fb9eeed6ad31abdcf3082",
+      "source_sha256": "9204fd03aead81e323180d4ebaaf8d8351f4aea2472d919ba0b19fb9ec959e86",
+      "source_dimensions": [
+        1002,
+        473
+      ],
+      "source_alpha_bounds": [
+        11,
+        2,
+        999,
+        455
+      ],
+      "dimensions": [
+        992,
+        457
+      ],
+      "sha256": "dbdb13c836cf1a5223733d75a19e72362f582562b2de63e706ad496d3e0b32fa"
+    },
+    {
+      "file": "auto-lastplayed.png",
+      "source_path": "art/logo/auto-lastplayed.png",
+      "source_git_blob": "d1e3c1d5af5ab40ea0ce13ef3e066b4e832cb8ea",
+      "source_sha256": "d8ee54e7c592a46b47d0780ca90d828687a4caa01f88e7f72dd1567ab55162e1",
+      "source_dimensions": [
+        1130,
+        301
+      ],
+      "source_alpha_bounds": [
+        4,
+        3,
+        1125,
+        296
+      ],
+      "dimensions": [
+        1028,
+        272
+      ],
+      "sha256": "57e76e2611804b18f2e254aee987d5b13b9856ec834f31cfc611b1bbd9e94d73"
+    },
+    {
+      "file": "auto-platform.png",
+      "source_path": "art/logo/auto-platform.png",
+      "source_git_blob": "6ca89395d58dde7786b6cc586310a3c9c4c9da25",
+      "source_sha256": "2f292ccb8c8461fe8da4ed2554af0f6d367eab64e8c10babfd9b1ad88e28c4fe",
+      "source_dimensions": [
+        1064,
+        453
+      ],
+      "source_alpha_bounds": [
+        2,
+        4,
+        1061,
+        449
+      ],
+      "dimensions": [
+        1028,
+        434
+      ],
+      "sha256": "2b56f0924792c501542a6f9afc99002c3d29ac4b601aae010b2fdb33741d4f25"
+    },
+    {
+      "file": "auto-retroachievements.png",
+      "source_path": "art/logo/auto-retroachievements.png",
+      "source_git_blob": "5c1a52b6e38d4793ff358775e66e5fef94c4ed0f",
+      "source_sha256": "f48b18c97d3fa764fb4c1608cba9a13c222730973222c1fc29523b4d6d452f41",
+      "source_dimensions": [
+        1130,
+        411
+      ],
+      "source_alpha_bounds": [
+        3,
+        5,
+        1125,
+        405
+      ],
+      "dimensions": [
+        1028,
+        369
+      ],
+      "sha256": "295580b5b5d45d9c0c8a8d8d39378b12640ba63e3f7d6f7f7b53da7ce261931c"
+    },
+    {
+      "file": "auto-shootemup.png",
+      "source_path": "art/logo/auto-shootemup.png",
+      "source_git_blob": "09eee3f47c84e0968f7657c9c0dabee2f28ea433",
+      "source_sha256": "4d8793b07dbd8c8991d31d83711c5d75e5240d41e9c7cfa6f5f247303913620b",
+      "source_dimensions": [
+        1130,
+        325
+      ],
+      "source_alpha_bounds": [
+        2,
+        4,
+        1129,
+        320
+      ],
+      "dimensions": [
+        1028,
+        291
+      ],
+      "sha256": "dd67b911f3bb31feb5cd794afec8c20da3894f394d4314539fd6df9f83030b04"
+    },
+    {
+      "file": "auto-shooter.png",
+      "source_path": "art/logo/auto-shooter.png",
+      "source_git_blob": "61ae1d902a0f475658c8841444bb922a352f01cc",
+      "source_sha256": "b001c535b7ad714e0b1ba397c2ebbae9cdaa530592c82e6a09a6949ec9c3aae8",
+      "source_dimensions": [
+        798,
+        453
+      ],
+      "source_alpha_bounds": [
+        6,
+        0,
+        793,
+        453
+      ],
+      "dimensions": [
+        791,
+        457
+      ],
+      "sha256": "dbaeaa7c38a0ab04e85f19cafc5be22b6647d75bad277b1d541681e5d5025b14"
+    },
+    {
+      "file": "capcom.png",
+      "source_path": "art/logo/capcom.png",
+      "source_git_blob": "1d0a45e177ad5d01e06464d0699a70669afc4b54",
+      "source_sha256": "c0f6b991c45aeedba75f338fb6d28f9fb991ce8b720d611ce3452d79c764a0ea",
+      "source_dimensions": [
+        1060,
+        453
+      ],
+      "source_alpha_bounds": [
+        5,
+        4,
+        1055,
+        449
+      ],
+      "dimensions": [
+        1028,
+        438
+      ],
+      "sha256": "1efca640bfae575b706b3eabf0de32b5996130011d18e6cbae7698652b380c45"
+    },
+    {
+      "file": "classics.png",
+      "source_path": "art/logo/classics.png",
+      "source_git_blob": "6ff11b2712b7b7d0e2e0cb762a2a935086a3090f",
+      "source_sha256": "63e0612ecabd07e1c0a6445bd0b10deba99565e6f3ea1a414318d3472752d8f9",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        4,
+        11,
+        1126,
+        440
+      ],
+      "dimensions": [
+        1028,
+        396
+      ],
+      "sha256": "a341a6058f96474bdce3b666d2343e352fc62e01008cdfbfb88046da9faa6c32"
+    },
+    {
+      "file": "cps1.png",
+      "source_path": "art/logo/cps1.png",
+      "source_git_blob": "9b742224dbe0bf6ef238fed1915261b2c296825b",
+      "source_sha256": "49331f384fdb4ec69e15b91423c6656651ecc6c0a0902f43dd67214f7a762bf1",
+      "source_dimensions": [
+        1060,
+        453
+      ],
+      "source_alpha_bounds": [
+        5,
+        4,
+        1055,
+        449
+      ],
+      "dimensions": [
+        1028,
+        438
+      ],
+      "sha256": "1efca640bfae575b706b3eabf0de32b5996130011d18e6cbae7698652b380c45"
+    },
+    {
+      "file": "dreamcast.png",
+      "source_path": "art/logo/dreamcast.png",
+      "source_git_blob": "4bd8a983aded0a05a1247443dd3f83db6610f9e9",
+      "source_sha256": "7173ca9909b494879a2a07ff1e1a1506635208f9252a4e110d6689f91d607593",
+      "source_dimensions": [
+        1130,
+        223
+      ],
+      "source_alpha_bounds": [
+        4,
+        2,
+        1126,
+        219
+      ],
+      "dimensions": [
+        1028,
+        202
+      ],
+      "sha256": "8304956847ae92579437299a606417e36474549bca8f463998e5c55f149cb846"
+    },
+    {
+      "file": "fds.png",
+      "source_path": "art/logo/fds.png",
+      "source_git_blob": "92ab3b1f2828792eb68171d6aceba5a328714be2",
+      "source_sha256": "e7cb0ecd34b1bb7e7bfaf25c3a7f858bd765d4cc35d2b8a17591bac25244a6ca",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        24,
+        1130,
+        428
+      ],
+      "dimensions": [
+        1028,
+        370
+      ],
+      "sha256": "b871265b0d5b5a63b11ee48ad4d368d316e0211fbd95eabdf6b8dcf2f486fe8b"
+    },
+    {
+      "file": "gameandwatch.png",
+      "source_path": "art/logo/gameandwatch.png",
+      "source_git_blob": "c62a4db66e2a2b4a29f5d598c71106e2455dbb57",
+      "source_sha256": "e1502ffe4def27cc349a0dfac7378f6bf54021a35ec1d0924f1dd480fd2d91dc",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        10,
+        33,
+        1125,
+        393
+      ],
+      "dimensions": [
+        1028,
+        335
+      ],
+      "sha256": "e96fa36fd86b19545ee838405e7c25e78e9b30972c59dbc85cf6c215b2d6c661"
+    },
+    {
+      "file": "gamegear.png",
+      "source_path": "art/logo/gamegear.png",
+      "source_git_blob": "5a150cec4bc185cfaf206470893a1bf4c56ee4e1",
+      "source_sha256": "f47ea53a06b6c5df3d853fcbe8b7fa017c59cab9bbb2aac60630c0410cb47ac5",
+      "source_dimensions": [
+        1130,
+        423
+      ],
+      "source_alpha_bounds": [
+        4,
+        3,
+        1126,
+        418
+      ],
+      "dimensions": [
+        1028,
+        383
+      ],
+      "sha256": "12094d623a85677a07e7e8d91325455ff2cb36a3d41de23d8f484dc65c9fbd97"
+    },
+    {
+      "file": "gb.png",
+      "source_path": "art/logo/gb.png",
+      "source_git_blob": "7e2ffb8bf91284bc77444f6b023c7f0efa041911",
+      "source_sha256": "e6ce89b70f64befdfccbce2ec40cfc059e06b35597282292eb6e9b4bdff4dbd5",
+      "source_dimensions": [
+        1130,
+        437
+      ],
+      "source_alpha_bounds": [
+        4,
+        2,
+        1128,
+        435
+      ],
+      "dimensions": [
+        1028,
+        398
+      ],
+      "sha256": "cdeb54a810eae295463962442e08ba3428a7438f9065ad2ec6937da443172cf0"
+    },
+    {
+      "file": "gb2players.png",
+      "source_path": "art/logo/gb2players.png",
+      "source_git_blob": "1de52d9992365d6482814ecc8a82998ed4917b8d",
+      "source_sha256": "721aea31e4cf2a6b5805125d0bd79557eec25f408f15e659f9c10cf79efe75e4",
+      "source_dimensions": [
+        1130,
+        437
+      ],
+      "source_alpha_bounds": [
+        4,
+        2,
+        1128,
+        435
+      ],
+      "dimensions": [
+        1028,
+        398
+      ],
+      "sha256": "3138653d561f103d2c87b8880e6a230340bee50c0f49e6a3801e226c99117e90"
+    },
+    {
+      "file": "gba.png",
+      "source_path": "art/logo/gba.png",
+      "source_git_blob": "1537e9c3000ef0850c4a9b334cc454c46dd83256",
+      "source_sha256": "762ff96687fc086d749464d13cb588f273255467f32a8b1e755903077322521f",
+      "source_dimensions": [
+        1130,
+        307
+      ],
+      "source_alpha_bounds": [
+        4,
+        3,
+        1126,
+        302
+      ],
+      "dimensions": [
+        1028,
+        277
+      ],
+      "sha256": "35424452ecdca80f3317bf52284f4d523ccd508c03792341e1983d2e87fbcc0f"
+    },
+    {
+      "file": "gbc.png",
+      "source_path": "art/logo/gbc.png",
+      "source_git_blob": "cdc8b96a4a8cc3ddd3ca464b2a517a7a818c9d55",
+      "source_sha256": "c19ee8af8abcf5ac3dd349354421b0cfda9134c96b208a47b9fdac843876f734",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        17,
+        5,
+        1113,
+        450
+      ],
+      "dimensions": [
+        1028,
+        420
+      ],
+      "sha256": "ea3315d38e68fa04ee69512a662eb3cb6295158769c450c0cf3118881a4324ef"
+    },
+    {
+      "file": "gbc2players.png",
+      "source_path": "art/logo/gbc2players.png",
+      "source_git_blob": "dd3db64c50de83322d91f62d71fa72b15d6c9efe",
+      "source_sha256": "8badc7fe407d73d60d1c3c87b5635e82c94ef490144da3f71e66d77827a8dcaa",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        17,
+        5,
+        1113,
+        450
+      ],
+      "dimensions": [
+        1028,
+        420
+      ],
+      "sha256": "2436ef8a8a3999428d3232449965a1fa33f6a666f323dbfd1298825f05dcfc45"
+    },
+    {
+      "file": "gc.png",
+      "source_path": "art/logo/gc.png",
+      "source_git_blob": "ab72935b187c47a32900d988073588c56cc1291d",
+      "source_sha256": "06cc49f5833ed49a1f2c04b14a958ce3cd5cf754e83e9b76ca347f85bc1c955e",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        28,
+        1130,
+        424
+      ],
+      "dimensions": [
+        1028,
+        363
+      ],
+      "sha256": "46153539018622da9cbb9db20fdc777745047dbce1b5f49a6403fab6d061c9d0"
+    },
+    {
+      "file": "mastersystem.png",
+      "source_path": "art/logo/mastersystem.png",
+      "source_git_blob": "d2e00c1a790a82121107459993c2e5b0ca705a89",
+      "source_sha256": "2b5b10769355133c9e6adfc5359a3f06be3720d01043b84889eab01d9b265a03",
+      "source_dimensions": [
+        1130,
+        392
+      ],
+      "source_alpha_bounds": [
+        4,
+        4,
+        1125,
+        389
+      ],
+      "dimensions": [
+        1028,
+        356
+      ],
+      "sha256": "65ba818c26ea70f01f725a9574ef87f23330c7f36cf7cfde3dea5d031c84586c"
+    },
+    {
+      "file": "megadrive.png",
+      "source_path": "art/logo/megadrive.png",
+      "source_git_blob": "167071a88b6e409971b3782589790da2d1eb9f76",
+      "source_sha256": "7797a59ab70ea34e3fe6fa61ff32ade04dfd59617b6b62d51a0f7e657a05fb03",
+      "source_dimensions": [
+        968,
+        453
+      ],
+      "source_alpha_bounds": [
+        5,
+        4,
+        963,
+        449
+      ],
+      "dimensions": [
+        962,
+        449
+      ],
+      "sha256": "475f93c95e38c9451f5a9732d1fc4492b0d8cf0dcf9a856834e5cf9aacdfc2a0"
+    },
+    {
+      "file": "msu-md.png",
+      "source_path": "art/logo/msu-md.png",
+      "source_git_blob": "86cdda1740e0007d7800c240060f9ab7051a1eef",
+      "source_sha256": "238ab7ac8d2206f34c272379ba685f3f8b827c11cf41d6cceab645ec23aabf13",
+      "source_dimensions": [
+        968,
+        519
+      ],
+      "source_alpha_bounds": [
+        5,
+        4,
+        963,
+        519
+      ],
+      "dimensions": [
+        956,
+        516
+      ],
+      "sha256": "bef19b892d0d4d8c6f248b96c85d16b2b05fb97f7686e1976c2b6af070c51fff"
+    },
+    {
+      "file": "n64.png",
+      "source_path": "art/logo/n64.png",
+      "source_git_blob": "36f538d8e1b35c531743d42c115fed85805f8011",
+      "source_sha256": "4f32c11e0f1ee3fa23d8ba4cc88a84075e037414ffe871d642595e44ce2d9607",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        18,
+        1130,
+        434
+      ],
+      "dimensions": [
+        1028,
+        381
+      ],
+      "sha256": "c03cb18c6f247e63aa49b2e36e2c79a7f424f55873285738440943954210523d"
+    },
+    {
+      "file": "n64dd.png",
+      "source_path": "art/logo/n64dd.png",
+      "source_git_blob": "e82e989991331e1a48b61ac289cc9e188300389a",
+      "source_sha256": "da56af15c856711a9039db1498ed3ccf233749cf2ed866c9198d31e8b6b31ea7",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        18,
+        1130,
+        434
+      ],
+      "dimensions": [
+        1028,
+        381
+      ],
+      "sha256": "c03cb18c6f247e63aa49b2e36e2c79a7f424f55873285738440943954210523d"
+    },
+    {
+      "file": "naomi.png",
+      "source_path": "art/logo/naomi.png",
+      "source_git_blob": "5b2ce5be050d403abcf6d1e7e3d142198f0b418c",
+      "source_sha256": "780ecd56832a4bab8511bf519721231eb64314d56ddba5d0f8d9c2a4eb5c2f7d",
+      "source_dimensions": [
+        1125,
+        350
+      ],
+      "source_alpha_bounds": [
+        2,
+        2,
+        1123,
+        348
+      ],
+      "dimensions": [
+        1028,
+        320
+      ],
+      "sha256": "28ebd8802f9f971265a7116e4ca42b2a1edd3c52f72d37bfbb592b458ebc4e60"
+    },
+    {
+      "file": "nds.png",
+      "source_path": "art/logo/nds.png",
+      "source_git_blob": "eba5e91916a2dbb494980e5dd8baab3507e078c0",
+      "source_sha256": "4c5733aa09f4ea0ed9748211044d549c4f2941e80a0ae6d961cdf0ab2c83cba4",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        23,
+        1130,
+        430
+      ],
+      "dimensions": [
+        1028,
+        373
+      ],
+      "sha256": "b8f02fc5f415c1176d1dde6939adb6440dc3c0fff9ab76e2ac564d56a0ad424a"
+    },
+    {
+      "file": "neogeo.png",
+      "source_path": "art/logo/neogeo.png",
+      "source_git_blob": "6d8b99676923ccc3bcc6ca34433f3cffde55b050",
+      "source_sha256": "62805253332e5f372443611f1bc13e2fd71260b61a5bb9e89032dc228b0319ef",
+      "source_dimensions": [
+        1117,
+        365
+      ],
+      "source_alpha_bounds": [
+        4,
+        3,
+        1111,
+        361
+      ],
+      "dimensions": [
+        1028,
+        335
+      ],
+      "sha256": "dd88264c4112ab9c4ddb94427123b880d59e56a6fd74cf0c042fee1f5d5e7716"
+    },
+    {
+      "file": "nes.png",
+      "source_path": "art/logo/nes.png",
+      "source_git_blob": "7aa5bdfbef7f0ca2b8b57600b74f966d733e7f6f",
+      "source_sha256": "fa422c7544a692027ad55843b668d3526099dc021b279d0da849ed58ea59e7ee",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        10,
+        5,
+        1110,
+        448
+      ],
+      "dimensions": [
+        1028,
+        416
+      ],
+      "sha256": "d2e7fc284ab0be142ad5d4d709c2edb5b5301f187a812533286be64a1de7c62e"
+    },
+    {
+      "file": "ngpc.png",
+      "source_path": "art/logo/ngpc.png",
+      "source_git_blob": "fc16fe2a7d5814a6ac871560a67e31e4d313b838",
+      "source_sha256": "500afba70e9c63e65c1ee3345244d004ef7c2182ee8736a736aed1f22096feba",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        4,
+        33,
+        1126,
+        419
+      ],
+      "dimensions": [
+        1028,
+        356
+      ],
+      "sha256": "37b04cf12c5e13897e8d796d0855ae256bf777af8b38f55af6acbd7d5c6a5aa6"
+    },
+    {
+      "file": "pcengine.png",
+      "source_path": "art/logo/pcengine.png",
+      "source_git_blob": "c0e7d156c7581f3d6a05cd9dc837ea6f59034163",
+      "source_sha256": "1d04f26eaac7dbe39a93b97cedbb7c9f44296eba2d49692b323bc4826f1ffed7",
+      "source_dimensions": [
+        1130,
+        407
+      ],
+      "source_alpha_bounds": [
+        3,
+        5,
+        1125,
+        401
+      ],
+      "dimensions": [
+        1028,
+        365
+      ],
+      "sha256": "b02ec2ccf9681f9abdd648bbec864170b02a8789fd41021263f6643e422ca0e7"
+    },
+    {
+      "file": "pokemini.png",
+      "source_path": "art/logo/pokemini.png",
+      "source_git_blob": "9e9cb39e22e5e5bbbd59460e2c9db0c814039618",
+      "source_sha256": "2e6601d459d66392763fc7df797a2ba85182b72b477cd7ec99aa9ff8cdf8d6c3",
+      "source_dimensions": [
+        1130,
+        414
+      ],
+      "source_alpha_bounds": [
+        3,
+        6,
+        1125,
+        409
+      ],
+      "dimensions": [
+        1028,
+        372
+      ],
+      "sha256": "cfeb98e6564adbe403bf2f0896d79bb06f2f7912f7eaa6b257ff7a3b0c074089"
+    },
+    {
+      "file": "psx.png",
+      "source_path": "art/logo/psx.png",
+      "source_git_blob": "731b08c92a6308d269ccad203dd2e2653238db14",
+      "source_sha256": "d9153ff11eade20d2dbb63cedf8b97aef83bd47160903d64459fce6c2902cf9f",
+      "source_dimensions": [
+        1130,
+        313
+      ],
+      "source_alpha_bounds": [
+        4,
+        5,
+        1126,
+        308
+      ],
+      "dimensions": [
+        1028,
+        281
+      ],
+      "sha256": "021916a1e8427132ca0cf59d7a93ae28fd3cb6c810f1ca2811d46cf4e2611ef4"
+    },
+    {
+      "file": "satellaview.png",
+      "source_path": "art/logo/satellaview.png",
+      "source_git_blob": "84007f704bc5364b4c4db58f1c460b601a45ab36",
+      "source_sha256": "e1139b957377be95b178a42b37e0c031eb49f246afd1b1225c86102dd3112e97",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        40,
+        1130,
+        412
+      ],
+      "dimensions": [
+        1028,
+        341
+      ],
+      "sha256": "50efd2e06f892f21403ae8409dc3082ee9655ca3623130546db483519f9aaa16"
+    },
+    {
+      "file": "saturn.png",
+      "source_path": "art/logo/saturn.png",
+      "source_git_blob": "631cf03f7a56580fa14b2572102325a6d3745b5a",
+      "source_sha256": "c4b78411405f6c93b9ba9b72eb082ec9c04c31aa2cb46d9a3d6fc226c2d27f20",
+      "source_dimensions": [
+        1130,
+        367
+      ],
+      "source_alpha_bounds": [
+        0,
+        0,
+        1130,
+        365
+      ],
+      "dimensions": [
+        1028,
+        335
+      ],
+      "sha256": "829668fc3b988236a95655eec8ce6bdffd4f2c82b8113cf5545424958ace9ffc"
+    },
+    {
+      "file": "sega32x.png",
+      "source_path": "art/logo/sega32x.png",
+      "source_git_blob": "7cd2081570f6efdcd564283b60d6218f0d64923d",
+      "source_sha256": "69f8dccb528f35872ddabf16ae559b82340e2856083b8a2e7e441135b7dc0dc9",
+      "source_dimensions": [
+        962,
+        453
+      ],
+      "source_alpha_bounds": [
+        5,
+        2,
+        958,
+        451
+      ],
+      "dimensions": [
+        957,
+        453
+      ],
+      "sha256": "0dc0b67f632073cb22efcf6ff7749c09f91968dcd98fe882548ecbce74d30642"
+    },
+    {
+      "file": "segacd.png",
+      "source_path": "art/logo/segacd.png",
+      "source_git_blob": "eadcb9c7ae18bdb0db4b773d0c0af3f9055152f8",
+      "source_sha256": "fae3d609be862606bf760b70d5f2a9c83e4e0dd48e71cf6a6cb2dea3d4828b81",
+      "source_dimensions": [
+        1130,
+        285
+      ],
+      "source_alpha_bounds": [
+        0,
+        7,
+        1130,
+        277
+      ],
+      "dimensions": [
+        1028,
+        249
+      ],
+      "sha256": "5601e39659863e326acf5caee9a93dac88d969d35f22e1f3618b01c133321976"
+    },
+    {
+      "file": "sg-1000.png",
+      "source_path": "art/logo/sg-1000.png",
+      "source_git_blob": "fe35cae6b85d9e8077c2fa63adbc6eb9448f8f31",
+      "source_sha256": "8030aa6478925aa17f864df3f38cadcf77748a3ad5350cafb0312455abb005d7",
+      "source_dimensions": [
+        1130,
+        349
+      ],
+      "source_alpha_bounds": [
+        4,
+        5,
+        1124,
+        344
+      ],
+      "dimensions": [
+        1028,
+        314
+      ],
+      "sha256": "38be49bf79a4b1707f50f108300cca1d68580bf67eb97e3d66773f5d9498c682"
+    },
+    {
+      "file": "sgb.png",
+      "source_path": "art/logo/sgb.png",
+      "source_git_blob": "63759325dccacd779ca29286f15610c12080c55a",
+      "source_sha256": "58b381e45c0d77764c7ba46c667f5079c6453ff18289c2cfbe5e728c1318364a",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        40,
+        1130,
+        412
+      ],
+      "dimensions": [
+        1028,
+        341
+      ],
+      "sha256": "d606ac732aa11b931e81914f0c705d43b42ca1367fffbbac4b44d4221253363c"
+    },
+    {
+      "file": "snes-msu1.png",
+      "source_path": "art/logo/snes-msu1.png",
+      "source_git_blob": "935a16683b9efeb948664f3d15363ccd7f499e3f",
+      "source_sha256": "4f7e1151c1b5ecbf7c84921ab9b8e9842493381a3f54ddf8264b166b4684a9be",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        43,
+        1130,
+        409
+      ],
+      "dimensions": [
+        1028,
+        336
+      ],
+      "sha256": "6d7474121dcd5658a129b3ef4a71179a1c914e72b7cbd1958f14a97ee650132d"
+    },
+    {
+      "file": "snes.png",
+      "source_path": "art/logo/snes.png",
+      "source_git_blob": "8688061536eb0e5487c06665dc4b7d9fc4507da6",
+      "source_sha256": "3aac22f7e52027950be1dff2920857fba41f525c28aafdbc100383bf11556738",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        0,
+        2,
+        1130,
+        451
+      ],
+      "dimensions": [
+        1028,
+        411
+      ],
+      "sha256": "3c38265f6d55da639d215cfe64d291a1a58d7567934e2837b168a6b26a335ddf"
+    },
+    {
+      "file": "switch.png",
+      "source_path": "art/logo/switch.png",
+      "source_git_blob": "b3a62d38afb1cf261f14c9370b666f2ed05fa5f5",
+      "source_sha256": "aee9dd32f3e3dd692c187b32eadaf93e8dc9f00e1f6608fc223b4019429afbbe",
+      "source_dimensions": [
+        713,
+        453
+      ],
+      "source_alpha_bounds": [
+        1,
+        3,
+        711,
+        450
+      ],
+      "dimensions": [
+        714,
+        451
+      ],
+      "sha256": "56ad6ee0f24cfadeddb7908facc3782b6fd4568ce8471f9ae3061409a94d62e3"
+    },
+    {
+      "file": "virtualboy.png",
+      "source_path": "art/logo/virtualboy.png",
+      "source_git_blob": "06dca9fbd4c86d98f4b1cb74669da88938f9674c",
+      "source_sha256": "7cfb9389e5e0a2384e2ecd8582b7fa119b841ed44369593f586a13341b763c61",
+      "source_dimensions": [
+        1008,
+        442
+      ],
+      "source_alpha_bounds": [
+        3,
+        4,
+        1001,
+        439
+      ],
+      "dimensions": [
+        1002,
+        439
+      ],
+      "sha256": "aa667463a1fed03f60fe542478c02f5101e6cb0b38ffc6098ee8f8bbc583b766"
+    },
+    {
+      "file": "wii.png",
+      "source_path": "art/logo/wii.png",
+      "source_git_blob": "6f730d12e0bb35379942d558dea092aa51860bdf",
+      "source_sha256": "e7e68815d43c84a5053055e9e90477cd8073aab7eed122ef5f27eea5f0641743",
+      "source_dimensions": [
+        661,
+        453
+      ],
+      "source_alpha_bounds": [
+        3,
+        2,
+        659,
+        452
+      ],
+      "dimensions": [
+        660,
+        454
+      ],
+      "sha256": "40bbd157c2e81286432a1fbb75e6c5ac7f5cf7558d84636e2b20da4e41c416cf"
+    },
+    {
+      "file": "wiiu.png",
+      "source_path": "art/logo/wiiu.png",
+      "source_git_blob": "960cd67ae7fcd80adaa29844f6259d176cbcced3",
+      "source_sha256": "e607fce2163568792f7b4038ced2022ae64665ae065344434454fcbe555d860f",
+      "source_dimensions": [
+        1130,
+        453
+      ],
+      "source_alpha_bounds": [
+        6,
+        2,
+        1012,
+        451
+      ],
+      "dimensions": [
+        1010,
+        453
+      ],
+      "sha256": "0616396a55bb273f4038ff68af14bbc0b120f21f227642d0319ba41ef5dede67"
+    }
+  ]
+}

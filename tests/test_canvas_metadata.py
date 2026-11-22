@@ -19,6 +19,18 @@ def test_imported_bytes_and_nonmetadata_components_preserved():
     for serialized in baseline['components']:
         old=ET.fromstring(serialized)
         actual=next(n for n in view if n.tag==old.tag and n.get('name')==old.get('name'))
+        # Comic is opt-in; the default component must remain byte-identical.
+        # Its new path/tint/fallback behavior is covered by test_comic_logos.py.
+        for child in list(actual):
+            if child.get('ifSubset') == 'system-logos:comic':
+                assert (actual.get('name'), child.tag) in {
+                    ('canvas-logo', 'path'), ('canvas-logo', 'color'),
+                    ('canvas-name', 'visible'),
+                }
+                if child is list(actual)[-1]:
+                    # Preserve the closing indentation carried by the appended node.
+                    list(actual)[-2].tail = child.tail
+                actual.remove(child)
         assert ET.tostring(actual,encoding='unicode').strip()==serialized
 
 

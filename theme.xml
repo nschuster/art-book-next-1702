@@ -96,6 +96,7 @@ https://github.com/anthonycaccese/art-book-next-es
    <subset name="system-logos" displayName="System Logos">
       <include name="default" displayName="Default" />
       <include name="custom" displayName="Custom" />
+      <include name="comic" displayName="Comic (Retrorama)" />
    </subset>
 
    <!--
@@ -396,6 +397,8 @@ https://github.com/anthonycaccese/art-book-next-es
          <path>./_inc/systems/logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.png</path>
+         <path ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">./_inc/systems/logos-comic/${system.theme}.png</path>
+         <color ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">ffffff</color>
          <zIndex>2</zIndex>
          <storyboard ifSubset="system-logo-animation:logo-fade-in">
             <animation property="opacity" from="0" to="1" duration="400" mode="easeIn"/>
@@ -435,6 +438,7 @@ https://github.com/anthonycaccese/art-book-next-es
          <text>${system.fullName}</text>
          <zIndex>2</zIndex>
          <visible ifSubset="system-logos:default">!exists("${themePath}/_inc/systems/logos/" + {system:theme} + ".svg")</visible>
+         <visible ifSubset="system-logos:comic">!exists("${themePath}/_inc/systems/logos/" + {system:theme} + ".svg") &amp;&amp; !exists("${themePath}/_inc/systems/logos-comic/" + {system:theme} + ".png")</visible>
          <visible ifSubset="system-logos:custom">!exists("${themePath}/_inc/systems/logos/" + {system:theme} + ".svg") &amp;&amp; !exists("${themeCustomizationsPath}logos/" + {system:theme} + ".png") &amp;&amp; !exists("${themeCustomizationsPath}logos/" + {system:theme} + ".svg")</visible>
          <storyboard ifSubset="system-logo-animation:logo-fade-in">
             <animation property="opacity" from="0" to="1" duration="400" mode="easeIn"/>
@@ -477,6 +481,8 @@ https://github.com/anthonycaccese/art-book-next-es
          <path>./_inc/systems/logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.png</path>
+         <path ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">./_inc/systems/logos-comic/${system.theme}.png</path>
+         <color ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">ffffff</color>
       </image>
       <carousel name="systemcarousel">
          <origin>0 0</origin>
@@ -516,7 +522,9 @@ https://github.com/anthonycaccese/art-book-next-es
          <path>./_inc/systems/logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.svg</path>
          <path ifSubset="system-logos:custom">${themeCustomizationsPath}logos/${system.theme}.png</path>
+         <path ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">./_inc/systems/logos-comic/${system.theme}.png</path>
          <color>${gamelistListLogoColor}</color>
+         <color ifSubset="system-logos:comic" if="exists(${themePath} + &quot;/_inc/systems/logos-comic/&quot; + ${system.theme} + &quot;.png&quot;)">ffffff</color>
          <zIndex>5</zIndex>
       </image>
       <text name="logoText">

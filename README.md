@@ -17,6 +17,16 @@ For this playtime update, only `aspect-ratio-4-3.xml` needs replacing on an exis
 
 Image/video size, position, cropping and marquee geometry are **identical to upstream** for each artwork mode and help setting. The original list, fonts, system selection, Basic view and help-footer geometry remain; original colors remain unless the optional palette is selected. The metadata uses upstream icons, Roboto Bold and metadata colors in five compact rows beneath the original-size media. Font size is fixed across font presets; long text values use native single-line ellipsis. Other aspect ratios are unchanged.
 
+## Optional comic system logos
+
+Select **User Interface Settings → Theme Configuration → System Logos → Comic (Retrorama)**. **Default** and **Custom** remain available, and the default selection is unchanged. The 56 genuine Retrorama logos retain their original colours rather than taking the selected palette's tint. They apply to the large system logo, Canvas overview, Custom Full Screen logo carousel and Basic/Detailed game-list headers. Small hardware/carousel icons and game marquees are unchanged.
+
+Coverage follows Retrorama's exact system identifiers. A missing comic PNG falls back to the existing Art Book logo with its normal palette colour; the existing text fallback remains available when neither logo exists. C64, for example, keeps its original logo. This does not change loading screens, display timing, metadata or saved settings.
+
+For an existing installation, merge the comic update into **`/userdata/themes/art-book-next-1702/`**, replacing `theme.xml` and `console-showcase.xml` and adding `_inc/systems/logos-comic/`; do not delete other theme files. Reload the theme, then select the new option. No Ports/RA setup or resync is required.
+
+Artwork: **Filipe Bello (lipebello), Retrorama: Champion Edition**. Pinned sources, hashes, processing and retained upstream licensing notices are in [the asset attribution](./_inc/systems/logos-comic/ATTRIBUTION.md). Upstream states non-commercial/share-alike and “not for sale”; no commercial permission is claimed. See [Comic logo QA](docs/qa/comic-logos.md) for test coverage and device-validation limits.
+
 ## Optional Canvas console carousel (local candidate)
 
 **Console Hardware & Info → On (Canvas hardware)** replaces only the system-selection presentation with the original Art Book logo above Canvas hardware in a left column. The right column contains **values only**: hardware type, release year, architecture, CPU, RAM and market-labelled launch price—no repeated manufacturer/name or field headings. Verified-data coverage is partial; unsupported values remain `Unknown`. **Off is the default** and preserves the previous presentation, including Custom Full Screen. Game lists, launch screens, controller status and achievement panels are unchanged. Source metadata is inherited, not newly historically certified; missing artwork has a text fallback.

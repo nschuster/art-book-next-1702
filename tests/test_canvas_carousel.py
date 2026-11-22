@@ -17,6 +17,8 @@ INCLUDE = '<include ifSubset="console-showcase:on">./console-showcase.xml</inclu
 def approved_canvas_transform(root):
     root.insert(len(root)-1, ET.fromstring(REGISTRATION))
     root.insert(len(root)-1, ET.fromstring(INCLUDE))
+    from test_comic_logos import approved_comic_transform
+    approved_comic_transform(root)
 
 def test_default_off_registration_and_only_system_scope():
     root = parse((ROOT/'theme.xml').read_bytes())
